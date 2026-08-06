@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rede Rosa - Início</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body class="home-body">
+
+<header class="topo">
+    <h1>🌸 Rede Rosa</h1>
+    <p>Segurança, acolhimento e confiança</p>
+</header>
+
+<section class="boas-vindas">
+    <h2>Olá, seja bem-vinda!</h2>
+    <p>Como podemos ajudar você hoje?</p>
+</section>
+
+<main class="cards">
+
+    <!-- CHECK-IN -->
+    <a href="checkin.html" class="card">
+        <i class="fa-solid fa-shield-heart"></i>
+        <h3>Check-in Seguro</h3>
+        <p>Confirme que você está bem</p>
+    </a>
+
+    <!-- MAPA -->
+    <a href="mapa.html" class="card">
+        <i class="fa-solid fa-location-dot"></i>
+        <h3>Mapa Seguro</h3>
+        <p>Locais de apoio</p>
+    </a>
+
+    <!-- BIBLIOTECA -->
+    <a href="biblioteca.html" class="card">
+        <i class="fa-solid fa-book"></i>
+        <h3>Biblioteca</h3>
+        <p>Direitos e orientações</p>
+    </a>
+
+    <!-- COMUNIDADE -->
+    <a href="chat.html" class="card">
+        <i class="fa-solid fa-comments"></i>
+        <h3>Comunidade</h3>
+        <p>Rede de apoio</p>
+    </a>
+
+    <!-- PERFIL -->
+    <a href="perfil.html" class="card">
+        <i class="fa-solid fa-user"></i>
+        <h3>Perfil</h3>
+        <p>Dados pessoais</p>
+    </a>
+
+    <!-- OCORRÊNCIAS -->
+    <a href="ocorrencias.html" class="card">
+        <i class="fa-solid fa-file-lines"></i>
+        <h3>Ocorrências</h3>
+        <p>Registros pessoais</p>
+    </a>
+
+</main>
+
+<!-- BOTÃO SOS -->
+<button class="sos-btn" onclick="abrirSOS()">
+    🚨
+</button>
+
+<script>
+    let checkins = JSON.parse(localStorage.getItem("checkins")) || [];
+    
+    // TEMPO LIMITE (ex: 6 horas)
+    const LIMITE_HORAS = 6;
+    
+    function registrarCheckin(){
+        let agora = new Date();
+        let dataHora = agora.toLocaleString("pt-BR");
+    
+        checkins.unshift(agora.toISOString());
+    
+        localStorage.setItem("checkins", JSON.stringify(checkins));
+    
+        mostrarHistorico();
+    
+        alert("Check-in registrado! 🌸 Você está segura 💗");
+    }
+    
+    function excluirCheckin(index){
+        if(!confirm("Deseja excluir este check-in?")) return;
+    
+        checkins.splice(index,1);
+    
+        localStorage.setItem("checkins", JSON.stringify(checkins));
+    
+        mostrarHistorico();
+    }
+    
+    function mostrarHistorico(){
+        let historico = document.getElementById("historico");
+        let ultimo = document.getElementById("ultimoCheckin");
+    
+        historico.innerHTML = "";
+    
+        if(checkins.length == 0){
+            historico.innerHTML = "<p>Nenhum check-in registrado.</p>";
+            ultimo.innerHTML = "Nenhum check-in realizado.";
+            return;
+        }
+    
+        let ultimoCheck = new Date(checkins[0]);
+        ultimo.innerHTML = ultimoCheck.toLocaleString("pt-BR");
+    
+        checkins.forEach((item, index) => {
+            let data = new Date(item);
+    
+            historico.innerHTML += `
+            <div class="registro">
+                <p>✅ ${data.toLocaleString("pt-BR")}</p>
+                <button onclick="excluirCheckin(${index})">🗑️</button>
+            </div>
+            `;
+        });
+    
+        verificarAlerta();
+    }
+    
+    // 🚨 ALERTA AUTOMÁTICO
+    function verificarAlerta(){
+        if(checkins.length == 0) return;
+    
+        let ultimoCheck = new Date(checkins[0]);
+        let agora = new Date();
+    
+        let diffHoras = (agora - ultimoCheck) / (1000 * 60 * 60);
+    
+        if(diffHoras >= LIMITE_HORAS){
+            alert("⚠️ Você está há muito tempo sem fazer check-in!\nConfirme se está segura.");
+        }
+    }
+    
+    mostrarHistorico();
+    mostrarHistorico();
+
+function abrirSOS(){
+    window.location.href = "sos.html";
+}
+    </script>
+
+</body>
+</html>

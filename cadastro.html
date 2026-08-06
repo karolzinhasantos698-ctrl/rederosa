@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rede Rosa - Cadastro</title>
+
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+</head>
+
+
+<body class="cadastro-body">
+
+
+
+<div class="cadastro-container">
+
+
+
+<div class="cadastro-logo">
+
+<span>🌸</span>
+
+<h1>rede rosa</h1>
+
+</div>
+
+
+
+
+
+<div class="cadastro-box">
+
+
+<h2>Criar conta</h2>
+
+
+<p>
+Cadastre-se para entrar na Rede Rosa
+</p>
+
+
+
+
+
+<form onsubmit="cadastrar(event)">
+
+
+
+
+
+<input
+
+id="nome"
+
+class="cadastro-input"
+
+type="text"
+
+placeholder="Nome completo"
+
+required>
+
+
+
+
+
+<input
+
+id="email"
+
+class="cadastro-input"
+
+type="email"
+
+placeholder="E-mail"
+
+required>
+
+
+
+
+
+<input
+
+id="senha"
+
+class="cadastro-input"
+
+type="password"
+
+placeholder="Senha"
+
+required>
+
+
+
+
+
+<input
+
+id="confirmar"
+
+class="cadastro-input"
+
+type="password"
+
+placeholder="Confirmar senha"
+
+required>
+
+
+
+
+
+<button 
+type="submit"
+class="cadastro-btn">
+
+Criar conta 🌸
+
+</button>
+
+
+
+
+
+</form>
+
+
+
+
+
+
+<div class="cadastro-links">
+
+
+<a href="index.html">
+
+Já tenho uma conta
+
+</a>
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+<div class="cadastro-footer">
+
+Segurança, acolhimento e confiança 💗
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+
+
+
+function cadastrar(event){
+
+
+event.preventDefault();
+
+
+
+
+
+let nome =
+document.getElementById("nome").value;
+
+
+
+let email =
+document.getElementById("email").value;
+
+
+
+let senha =
+document.getElementById("senha").value;
+
+
+
+let confirmar =
+document.getElementById("confirmar").value;
+
+
+
+
+
+
+if(senha !== confirmar){
+
+alert("As senhas não são iguais");
+
+return;
+
+}
+
+
+
+
+
+
+
+fetch("http://localhost:8080/usuarias/cadastro", {
+
+
+
+method:"POST",
+
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+
+},
+
+
+
+
+body:JSON.stringify({
+
+
+nome:nome,
+
+email:email,
+
+senha:senha
+
+
+})
+
+
+
+})
+
+
+
+.then(response=>{
+
+
+if(!response.ok){
+
+throw new Error("Erro no cadastro");
+
+}
+
+
+return response.json();
+
+
+})
+
+
+
+.then(data=>{
+
+
+alert("Cadastro realizado com sucesso 🌸");
+
+
+
+document.querySelector("form").reset();
+
+
+
+console.log(data);
+
+
+
+})
+
+
+
+.catch(error=>{
+
+
+console.log(error);
+
+
+alert("Não foi possível cadastrar");
+
+
+});
+
+
+
+}
+
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Comunidade - Rede Rosa</title>
+
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+</head>
+
+
+
+<body class="comunidade-body">
+
+
+
+
+
+<header class="comunidade-header">
+
+
+    <a href="home.html" class="voltar">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Voltar</span>
+        </a>
+
+
+
+<h1>💬 Comunidade</h1>
+
+
+<p>
+Um espaço seguro de apoio e acolhimento
+</p>
+
+
+
+</header>
+
+
+
+
+
+
+
+<main class="comunidade-container">
+
+
+
+
+
+<section class="chat-card">
+
+
+
+
+
+<h2>🌸 Conversa de apoio</h2>
+
+
+
+
+
+<div class="mensagens" id="mensagens">
+
+
+
+<div class="mensagem outra">
+
+Olá 💗 Eu sou a  Rosa. Como posso ajudar?
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="campo-chat">
+
+
+
+<input 
+
+type="text"
+
+id="texto"
+
+placeholder="Digite uma mensagem..."
+
+onkeypress="tecla(event)">
+
+
+
+
+
+
+<button onclick="enviarMensagem()">
+
+
+Enviar
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="salas">
+
+
+
+
+
+<h2>Salas de conversa</h2>
+
+
+
+
+
+
+<div class="sala">
+
+<i class="fa-solid fa-heart"></i>
+
+<h3>Apoio emocional</h3>
+
+<p>Conversas e acolhimento</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="sala">
+
+<i class="fa-solid fa-scale-balanced"></i>
+
+<h3>Direitos das mulheres</h3>
+
+<p>Informações e orientações</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="sala">
+
+<i class="fa-solid fa-shield-heart"></i>
+
+<h3>Segurança</h3>
+
+<p>Dicas e proteção</p>
+
+</div>
+
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<button class="denuncia" onclick="denunciar()">
+
+🚨 Denunciar mensagem
+
+</button>
+
+
+
+
+
+
+</main>
+
+
+
+
+
+
+
+
+
+<script>
+
+
+
+
+
+function tecla(event){
+
+
+if(event.key === "Enter"){
+
+
+enviarMensagem();
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+function enviarMensagem(){
+
+
+
+
+
+let campo = 
+document.getElementById("texto");
+
+
+
+let texto =
+campo.value;
+
+
+
+if(texto.trim()==""){
+
+
+return;
+
+
+}
+
+
+
+
+
+
+mostrarMensagem(
+"Você",
+texto,
+"minha"
+);
+
+
+
+
+
+
+campo.value="";
+
+
+
+
+
+
+
+fetch("http://localhost:8080/chat",{
+
+
+method:"POST",
+
+
+
+headers:{
+
+
+"Content-Type":"text/plain"
+
+
+},
+
+
+
+body:texto
+
+
+
+})
+
+
+
+.then(res=>res.text())
+
+
+
+.then(resposta=>{
+
+
+
+
+
+mostrarMensagem(
+"Rede Rosa IA 🌸",
+resposta,
+"outra"
+);
+
+
+
+
+
+})
+
+
+
+.catch(()=>{
+
+
+
+mostrarMensagem(
+
+"Rede Rosa",
+
+"Não consegui conectar com o servidor 💗",
+
+"outra"
+
+);
+
+
+
+});
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function mostrarMensagem(nome,texto,tipo){
+
+
+
+
+
+let div =
+document.createElement("div");
+
+
+
+
+div.className =
+"mensagem " + tipo;
+
+
+
+
+
+div.innerHTML =
+
+"<b>"+nome+"</b><br>"+texto;
+
+
+
+
+
+
+
+document
+
+.getElementById("mensagens")
+
+.appendChild(div);
+
+
+
+
+
+
+
+let caixa =
+document.getElementById("mensagens");
+
+
+
+caixa.scrollTop =
+caixa.scrollHeight;
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function denunciar(){
+
+
+
+alert(
+
+"Denúncia enviada para moderação."
+
+);
+
+
+
+}
+
+
+
+
+
+</script>
+
+
+
+
+
+
+</body>
+
+
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Recuperar Senha - Rede Rosa</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<div class="overlay">
+
+
+<div class="logo-area">
+
+<div class="rosa-logo">🌹</div>
+
+<h1>rede rosa</h1>
+
+</div>
+
+
+
+
+
+<div class="login-card">
+
+
+<h2>Recuperar Senha</h2>
+
+
+<p>
+Informe seu e-mail para recuperar sua conta.
+</p>
+
+
+
+
+
+<div class="input-box">
+
+
+<i class="fa-regular fa-envelope"></i>
+
+
+<input
+id="email"
+type="email"
+placeholder="Digite seu e-mail">
+
+
+</div>
+
+
+
+
+
+<button class="btn-login" onclick="recuperarSenha()">
+
+Enviar Instruções
+
+</button>
+
+
+
+
+
+<div class="links">
+
+
+<a href="index.html">
+
+Voltar para o Login
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="rodape">
+
+❤
+
+<p>
+Conectando histórias, compartilhando cuidado.
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+function recuperarSenha(){
+
+
+
+let email =
+document.getElementById("email").value;
+
+
+
+if(email==""){
+
+
+alert("Digite seu e-mail");
+
+return;
+
+
+}
+
+
+
+
+
+fetch("http://localhost:8080/recuperar-senha",
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+},
+
+
+body:JSON.stringify({
+
+
+email:email
+
+
+})
+
+
+})
+
+
+.then(res=>res.text())
+
+.then(msg=>{
+
+
+alert(msg);
+
+
+if(msg.includes("confirmado")){
+
+
+window.location.href="nova-senha.html";
+
+
+}
+
+
+})
+
+.catch(()=>{
+
+
+alert("Erro ao conectar com servidor");
+
+
+});
+
+
+
+}
+
+
+
+</script>
+
+
+
+
+</body>
+
+</html>

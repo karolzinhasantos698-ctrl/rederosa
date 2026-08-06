@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ocorrências - Rede Rosa</title>
+
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+</head>
+
+
+
+<body class="ocorrencia-body">
+
+
+
+<header class="ocorrencia-header">
+
+
+<a href="home.html" class="voltar">
+
+← Voltar
+
+</a>
+
+
+<h1>📋 Ocorrências</h1>
+
+
+<p>Registre e acompanhe seus alertas</p>
+
+
+</header>
+
+
+
+
+
+
+
+<main class="ocorrencia-container">
+
+
+
+
+
+
+<section class="ocorrencia-card">
+
+
+<h2>📝 Nova ocorrência</h2>
+
+
+
+
+<input 
+id="titulo"
+placeholder="Título da ocorrência">
+
+
+
+
+
+
+<textarea
+
+id="descricao"
+
+placeholder="Descreva o que aconteceu">
+
+</textarea>
+
+
+
+
+
+
+
+<button onclick="salvarOcorrencia()">
+
+Enviar ocorrência 🌸
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="ocorrencia-card">
+
+
+<h2>📚 Histórico</h2>
+
+
+
+
+<div id="lista">
+
+
+<p>Nenhuma ocorrência registrada.</p>
+
+
+</div>
+
+
+
+
+
+
+
+<a href="tel:190" class="botao emergencia-link">
+
+🚨 Ligar 190 (Emergência)
+
+</a>
+
+
+
+
+
+<a href="tel:180" class="botao emergencia-link">
+
+🌸 Ligar 180 (Central da Mulher)
+
+</a>
+
+
+
+
+
+<button onclick="enviarPolicia()" class="botao">
+
+🚔 Enviar última ocorrência para Polícia Civil
+
+</button>
+
+
+
+
+<p>
+
+📞 Polícia Civil: 197  
+<br>
+
+📱 WhatsApp: (61) 98626-1197
+<br>
+
+📧 denuncia197@pcdf.df.gov.br
+
+</p>
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+</main>
+
+
+
+
+
+
+
+
+
+<script>
+
+
+
+let ocorrencias=[];
+
+
+
+
+
+
+function carregar(){
+
+
+
+fetch("http://localhost:8080/ocorrencias")
+
+
+
+.then(res=>res.json())
+
+
+
+.then(data=>{
+
+
+ocorrencias=data;
+
+
+mostrar();
+
+
+
+})
+
+
+
+.catch(()=>{
+
+
+document.getElementById("lista").innerHTML =
+
+"<p>Erro ao carregar ocorrências.</p>";
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function salvarOcorrencia(){
+
+
+
+let titulo =
+
+document.getElementById("titulo").value;
+
+
+
+let descricao =
+
+document.getElementById("descricao").value;
+
+
+
+
+
+
+
+if(titulo=="" || descricao==""){
+
+
+alert("Preencha todos os campos");
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+
+fetch("http://localhost:8080/ocorrencias",
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+
+},
+
+
+
+body:JSON.stringify({
+
+
+titulo:titulo,
+
+
+descricao:descricao,
+
+
+status:"Pendente"
+
+
+})
+
+
+
+})
+
+
+
+.then(res=>res.json())
+
+
+
+.then(()=>{
+
+
+
+alert("Ocorrência registrada 🌸");
+
+
+
+document.getElementById("titulo").value="";
+
+
+document.getElementById("descricao").value="";
+
+
+
+carregar();
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function mostrar(){
+
+
+
+let lista =
+
+document.getElementById("lista");
+
+
+
+
+lista.innerHTML="";
+
+
+
+
+
+
+if(ocorrencias.length==0){
+
+
+
+lista.innerHTML =
+
+"<p>Nenhuma ocorrência registrada.</p>";
+
+
+
+return;
+
+
+
+}
+
+
+
+
+
+
+
+
+ocorrencias.forEach(o=>{
+
+
+
+
+
+lista.innerHTML += `
+
+
+<div class="registro">
+
+
+
+<h3>${o.titulo}</h3>
+
+
+
+<p>${o.descricao}</p>
+
+
+
+<p>Status: ${o.status}</p>
+
+
+
+
+
+
+
+<button onclick="enviarPoliciaTexto('${o.titulo}','${o.descricao}')">
+
+🚔 Enviar para Polícia Civil
+
+</button>
+
+
+
+
+
+
+
+<button onclick="excluirOcorrencia(${o.id})">
+
+🗑️ Excluir
+
+</button>
+
+
+
+
+
+
+</div>
+
+
+`;
+
+
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function excluirOcorrencia(id){
+
+
+
+let confirmar = confirm(
+
+"Deseja excluir essa ocorrência?"
+
+);
+
+
+
+
+
+
+if(!confirmar){
+
+return;
+
+}
+
+
+
+
+
+
+fetch(
+
+"http://localhost:8080/ocorrencias/"+id,
+
+{
+
+method:"DELETE"
+
+}
+
+
+
+)
+
+.then(res=>{
+
+
+if(res.ok){
+
+
+alert("Ocorrência excluída 🌸");
+
+
+carregar();
+
+
+
+}else{
+
+
+alert("Erro ao excluir");
+
+
+}
+
+
+})
+
+.catch(()=>{
+
+
+alert("Erro de conexão");
+
+
+});
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+function enviarPoliciaTexto(titulo, descricao){
+
+
+
+let mensagem =
+
+
+
+`🚨 DENÚNCIA - REDE ROSA
+
+
+Título:
+
+${titulo}
+
+
+Descrição:
+
+${descricao}
+
+
+Solicito atendimento da Polícia Civil.`;
+
+
+
+
+
+
+
+
+let numeroPolicia = "5561986261197";
+
+
+
+
+
+
+let link =
+
+
+`https://wa.me/${numeroPolicia}?text=${encodeURIComponent(mensagem)}`;
+
+
+
+
+
+
+window.open(link,"_blank");
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+function enviarPolicia(){
+
+
+
+if(ocorrencias.length==0){
+
+
+alert("Registre uma ocorrência primeiro.");
+
+
+return;
+
+
+}
+
+
+
+
+
+
+let ultima = ocorrencias[ocorrencias.length - 1];
+
+
+
+
+enviarPoliciaTexto(
+
+ultima.titulo,
+
+ultima.descricao
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+carregar();
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+
+</html>

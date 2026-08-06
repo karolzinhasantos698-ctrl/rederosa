@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check-in Seguro</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="checkin-body">
+
+<header class="checkin-header">
+<a href="home.html" class="voltar">← Voltar</a>
+
+<h1>🛡️ Check-in Seguro</h1>
+<p>Confirme que você está bem</p>
+</header>
+
+<main class="checkin-container">
+
+<section class="checkin-card">
+<h2>💗 Estou Segura</h2>
+<p>Clique para registrar seu check-in</p>
+
+<button class="botao-checkin" onclick="registrarCheckin()">
+✅ Registrar Check-in
+</button>
+</section>
+
+<section class="checkin-card">
+<h2>📅 Último Check-in</h2>
+<p id="ultimoCheckin">Nenhum check-in realizado.</p>
+</section>
+
+<section class="checkin-card">
+<h2>📚 Histórico</h2>
+<div id="historico">
+<p>Nenhum check-in registrado.</p>
+</div>
+</section>
+
+</main>
+
+<script>
+let checkins = JSON.parse(localStorage.getItem("checkins")) || [];
+
+// 🔥 FUNÇÃO CORRIGIDA (AGORA SALVA NO BANCO)
+function registrarCheckin(){
+
+let usuario = JSON.parse(localStorage.getItem("usuario"));
+
+if(!usuario){
+    alert("Você precisa estar logada!");
+    window.location.href = "index.html";
+    return;
+}
+
+let agora = new Date();
+
+// ENVIA PARA O BACKEND
+fetch("http://localhost:8080/checkin", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        usuarioId: usuario.id,
+        dataHora: agora.toISOString()
+    })
+})
+
+.then(response => {
+    if(response.ok){
+
+        // continua salvando local (para mostrar na tela)
+        let dataHora = agora.toLocaleString("pt-BR");
+
+        checkins.unshift(dataHora);
+        localStorage.setItem("checkins", JSON.stringify(checkins));
+
+        mostrarHistorico();
+
+        alert("🌸 Check-in registrado com sucesso! Sua segurança é a nossa prioridade.");
+
+    } else {
+        alert("Erro ao salvar no servidor");
+    }
+})
+
+.catch(error => {
+    console.log(error);
+    alert("Erro ao conectar com backend");
+});
+
+}
+
+// ------------------------------
+
+function excluirCheckin(index){
+if(!confirm("Deseja excluir?")) return;
+
+checkins.splice(index,1);
+
+localStorage.setItem("checkins", JSON.stringify(checkins));
+
+mostrarHistorico();
+}
+
+function mostrarHistorico(){
+let historico = document.getElementById("historico");
+let ultimo = document.getElementById("ultimoCheckin");
+
+historico.innerHTML="";
+
+if(checkins.length==0){
+historico.innerHTML="<p>Nenhum check-in registrado.</p>";
+ultimo.innerHTML="Nenhum check-in realizado.";
+return;
+}
+
+ultimo.innerHTML = checkins[0];
+
+checkins.forEach((item,index)=>{
+historico.innerHTML += `
+<div class="registro">
+<p>✅ ${item}</p>
+<button onclick="excluirCheckin(${index})">🗑️</button>
+</div>
+`;
+});
+}
+
+mostrarHistorico();
+</script>
+
+</body>
+</html>

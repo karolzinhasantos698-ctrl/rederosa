@@ -1,12 +1,247 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login - Rede Rosa</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* CENTRALIZAÇÃO */
+.login-body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ffe6eb, #ffd6e0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* CONTAINER */
+.login-container {
+  text-align: center;
+}
+
+/* LOGO SVG */
+.logo-svg {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+/* CAIXA */
+.login-box {
+  background: #fff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  width: 300px;
+}
+
+/* TITULO */
+.login-box h2 {
+  color: #ff4d6d;
+  margin-bottom: 5px;
+}
+
+/* TEXTO */
+.login-box p {
+  color: #777;
+  font-size: 14px;
+}
+
+/* INPUT */
+.login-input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* BOTÃO */
+.btn-login {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-login:hover {
+  background: #e6004c;
+}
+
+/* LINKS */
+.login-links {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-links a {
+  font-size: 12px;
+  color: #ff4d6d;
+  text-decoration: none;
+}
+
+/* RODAPÉ */
+.login-footer {
+  margin-top: 15px;
+  font-size: 12px;
+  color: #999;
+}
+
+</style>
+
 </head>
-<body>
-    
+
+<body class="login-body">
+
+<div class="login-container">
+
+    <!-- LOGO (AGORA FUNCIONA SEM IMAGEM) -->
+    <div class="logo-svg">
+        <svg viewBox="0 0 200 200" width="90" height="90">
+            <defs>
+                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ff4d6d"/>
+                    <stop offset="100%" style="stop-color:#ff80a0"/>
+                </linearGradient>
+            </defs>
+
+            <circle cx="100" cy="100" r="90" fill="none" stroke="url(#grad)" stroke-width="6"/>
+
+            <path d="M110 60
+                     C140 60, 140 120, 100 130
+                     C80 135, 70 120, 80 100
+                     C90 80, 100 60, 110 60Z"
+                  fill="url(#grad)"/>
+
+            <path d="M90 110 L110 110 L120 130 L100 150 L80 130 Z"
+                  fill="none" stroke="url(#grad)" stroke-width="3"/>
+        </svg>
+    </div>
+
+    <div class="login-box">
+
+        <h2>Bem-vinda!</h2>
+
+        <p>Faça login para continuar</p>
+
+        <form onsubmit="entrar(event)">
+
+            <input 
+            id="email"
+            class="login-input"
+            type="email"
+            placeholder="E-mail (Gmail)"
+            required>
+
+            <input 
+            id="senha"
+            class="login-input"
+            type="password"
+            placeholder="Senha"
+            required>
+
+            <button type="submit" class="btn-login">
+                Entrar 
+            </button>
+
+        </form>
+
+        <div class="login-links">
+
+            <a href="recuperar-senha.html">
+            Esqueci minha senha
+            </a>
+
+            <a href="cadastro.html">
+            Cadastrar
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="login-footer">
+        💗 Conectando histórias, compartilhando cuidado.
+    </div>
+
+</div>
+<button class="sos-btn" onclick="abrirSOS()">
+    🚨
+</button>
+<script>
+
+function entrar(event){
+
+event.preventDefault();
+
+let email = document.getElementById("email").value;
+let senha = document.getElementById("senha").value;
+
+fetch("http://localhost:8080/login", {
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+email:email,
+senha:senha
+})
+
+})
+
+.then(response=>response.json())
+
+.then(usuario=>{
+
+if(usuario){
+
+localStorage.setItem("usuario", JSON.stringify(usuario));
+
+alert("Login realizado 🌸");
+
+window.location.href="home.html";
+
+}else{
+
+alert("Email ou senha incorretos");
+
+}
+
+})
+
+.catch(error=>{
+
+console.log(error);
+
+alert("Erro ao conectar com servidor");
+
+});
+
+}
+function abrirSOS(){
+    window.location.href = "sos.html";
+}
+</script>
+
 </body>
 </html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mapa Seguro - Rede Rosa</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body class="mapa-body">
+
+<header class="mapa-header">
+
+<a href="home.html" class="voltar">
+← Voltar
+</a>
+
+<h1>🌍 Mapa Seguro</h1>
+
+<p>
+Encontre locais de apoio próximos
+</p>
+
+</header>
+
+<main class="mapa-container">
+
+<div class="mapa-card">
+
+<h2>📍 Minha localização</h2>
+
+<p>
+Clique abaixo para encontrar sua posição.
+</p>
+
+<button
+class="mapa-btn"
+onclick="minhaLocalizacao()">
+
+Encontrar localização
+
+</button>
+
+<div id="mapa">
+
+<p>
+O mapa aparecerá aqui</p>
+
+</div>
+
+</div>
+
+<section class="locais">
+
+<div class="local-card" onclick="abrirLocal('Delegacia da Mulher Brasília DF')">
+
+<i class="fa-solid fa-building-shield"></i>
+
+<h3>Delegacia da Mulher</h3>
+
+<p>
+Delegacias especializadas próximas
+</p>
+
+</div>
+
+<div class="local-card" onclick="abrirLocal('Hospital Brasília DF')">
+
+<i class="fa-solid fa-hospital"></i>
+
+<h3>Hospitais</h3>
+
+<p>
+Atendimento médico
+</p>
+
+</div>
+
+<div class="local-card" onclick="abrirLocal('Posto Policial Brasília DF')">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+<h3>Postos Policiais</h3>
+
+<p>
+Segurança e proteção
+</p>
+
+</div>
+
+<div class="local-card" onclick="abrirLocal('Centro de Apoio à Mulher Brasília DF')">
+
+<i class="fa-solid fa-heart"></i>
+
+<h3>Centro de Apoio</h3>
+
+<p>
+Acolhimento e orientação
+</p>
+
+</div>
+
+<div class="local-card" onclick="mostrarSalaLilas()">
+
+    <i class="fa-solid fa-person-shelter"></i>
+    
+    <h3>Sala Lilás - DF</h3>
+    
+    <p>
+    Informações e localização
+    </p>
+    
+    </div>
+
+    <div class="local-card" onclick="mostrarLeiMariaPenha()">
+
+        <i class="fa-solid fa-scale-balanced"></i>
+    
+        <h3>Lei Maria da Penha</h3>
+    
+        <p>
+            Conheça seus direitos
+        </p>
+    
+    </div>
+</section>
+
+</main>
+
+<script>
+
+function minhaLocalizacao(){
+
+    if(!navigator.geolocation){
+
+        alert("Seu navegador não suporta localização");
+
+        return;
+
+    }
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(pos){
+
+            let latitude = pos.coords.latitude;
+            let longitude = pos.coords.longitude;
+
+            document.getElementById("mapa").innerHTML = `
+
+            <iframe
+            width="100%"
+            height="350"
+            style="border:0"
+            loading="lazy"
+            allowfullscreen
+            src="https://www.google.com/maps?q=${latitude},${longitude}&output=embed">
+            </iframe>
+
+            `;
+
+        },
+
+        function(){
+
+            alert("Não foi possível acessar sua localização");
+
+        }
+
+    );
+
+}
+
+function abrirLocal(tipo){
+
+    let link =
+    "https://www.google.com/maps/search/" +
+    encodeURIComponent(tipo);
+
+    window.open(link,"_blank");
+
+}
+
+function abrirSalaLilas(){
+
+    let link =
+    "https://www.google.com/maps/search/" +
+    encodeURIComponent("Sala Lilás Brasília Distrito Federal");
+
+    window.open(link,"_blank");
+
+}
+
+function mostrarSalaLilas(){
+
+document.getElementById("modalSalaLilas").style.display="flex";
+
+}
+
+function fecharSalaLilas(){
+
+document.getElementById("modalSalaLilas").style.display="none";
+
+}
+
+window.onclick = function(event){
+
+let modal = document.getElementById("modalSalaLilas");
+
+if(event.target == modal){
+
+    modal.style.display="none";
+
+}
+
+}
+function mostrarLeiMariaPenha(){
+    document.getElementById("modalLei").style.display="flex";
+}
+
+function fecharLeiMariaPenha(){
+    document.getElementById("modalLei").style.display="none";
+}
+</script>
+<!-- Modal Sala Lilás -->
+
+<div id="modalSalaLilas" class="modal">
+
+    <div class="modal-conteudo">
+
+        <span class="fechar" onclick="fecharSalaLilas()">&times;</span>
+
+        <h2>🌸 Sala Lilás - Distrito Federal</h2>
+
+        <p>
+            As Salas Lilás são espaços de acolhimento e atendimento especializado às mulheres em situação de violência.
+        </p>
+
+        <hr>
+
+        <h3>📍 Centro Integrado de Operações de Brasília (CIOB)</h3>
+
+        <p>
+            Setor de Diversões Norte (SDN), Conjunto A, Edifício Sede.
+        </p>
+
+        <button class="mapa-btn"
+        onclick="window.open('https://maps.google.com/?q=Centro+Integrado+de+Operações+de+Brasília+CIOB','_blank')">
+
+        🗺️ Abrir no Google Maps
+
+        </button>
+
+        <hr>
+
+        <h3>📍 Aeroporto Internacional de Brasília</h3>
+
+        <p>
+            Lago Sul - 2º piso (mezanino), dentro do posto da Polícia Militar.
+        </p>
+
+        <button class="mapa-btn"
+        onclick="window.open('https://maps.google.com/?q=Aeroporto+Internacional+de+Brasília','_blank')">
+
+        🗺️ Abrir no Google Maps
+
+        </button>
+
+        <hr>
+
+        <h3>📍 27º Batalhão da Polícia Militar</h3>
+
+        <p>
+            Recanto das Emas - Distrito Federal.
+        </p>
+
+        <button class="mapa-btn"
+        onclick="window.open('https://maps.google.com/?q=27+Batalhão+PM+Recanto+das+Emas','_blank')">
+
+        🗺️ Abrir no Google Maps
+
+        </button>
+
+    </div>
+</div>
+<!-- Modal Sala Lilás -->
+
+<div id="modalSalaLilas" class="modal">
+
+    <div class="modal-conteudo">
+
+        ...
+        <!-- conteúdo da Sala Lilás -->
+
+    </div>
+
+</div>
+
+<!-- Modal Lei Maria da Penha -->
+
+<div id="modalLei" class="modal">
+
+    <div class="modal-conteudo">
+
+        <span class="fechar" onclick="fecharLeiMariaPenha()">&times;</span>
+
+        <h2>⚖️ Lei Maria da Penha</h2>
+
+        <p>
+            A Lei nº 11.340/2006 protege mulheres em situação de violência doméstica e familiar.
+        </p>
+
+        <hr>
+
+        <h3>Você tem direito a:</h3>
+
+        <ul>
+            <li>✔ Medidas protetivas de urgência.</li>
+            <li>✔ Atendimento psicológico e social.</li>
+            <li>✔ Atendimento na Delegacia Especializada.</li>
+            <li>✔ Atendimento gratuito pela Defensoria Pública.</li>
+            <li>✔ Proteção policial quando houver risco.</li>
+            <li>✔ Afastamento do agressor do lar.</li>
+        </ul>
+
+        <hr>
+
+        <h3>Telefones importantes</h3>
+
+        <p>
+            📞 180 - Central de Atendimento à Mulher<br>
+            🚓 190 - Polícia Militar<br>
+            👮 197 - Polícia Civil
+        </p>
+        <hr>
+
+        <button class="mapa-btn"
+        onclick="window.open('https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm','_blank')">
+        
+        📖 Ler a Lei Maria da Penha
+        
+        </button>
+    </div>
+
+</div>
+
+</body>
+</html>
+</body>
+</html>

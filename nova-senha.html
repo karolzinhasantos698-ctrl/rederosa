@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Nova senha - Rede Rosa</title>
+
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+</head>
+
+
+
+<body class="perfil-body">
+
+
+
+<div class="overlay">
+
+
+
+<div class="login-card recuperar-card">
+
+
+
+<div class="rosa-logo">
+🌸
+</div>
+
+
+
+<h1>Rede Rosa</h1>
+
+
+
+<h2>
+Nova senha 🔒
+</h2>
+
+
+
+<p>
+Crie uma nova senha para sua conta
+</p>
+
+
+
+
+
+<div class="input-box">
+
+
+<i class="fa-regular fa-envelope"></i>
+
+
+<input 
+id="email"
+type="email"
+placeholder="Seu e-mail">
+
+
+
+</div>
+
+
+
+
+
+
+<div class="input-box">
+
+
+<i class="fa-solid fa-lock"></i>
+
+
+<input 
+id="senha"
+type="password"
+placeholder="Nova senha">
+
+
+
+</div>
+
+
+
+
+
+
+
+<button class="btn-login"
+onclick="trocarSenha()">
+
+
+
+Salvar nova senha 🌸
+
+
+
+</button>
+
+
+
+
+
+
+
+<div class="links">
+
+
+<a href="index.html">
+
+Voltar para login
+
+</a>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<script>
+
+
+function trocarSenha(){
+
+
+
+let email =
+document.getElementById("email").value;
+
+
+
+let senha =
+document.getElementById("senha").value;
+
+
+
+
+
+if(email=="" || senha==""){
+
+
+alert("Preencha todos os campos");
+
+
+return;
+
+
+}
+
+
+
+
+
+
+fetch("http://localhost:8080/recuperar-senha",
+{
+
+
+method:"PUT",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+
+},
+
+
+body:JSON.stringify({
+
+email:email,
+
+senha:senha
+
+})
+
+
+})
+
+
+
+.then(res=>res.text())
+
+
+
+.then(msg=>{
+
+
+alert(msg);
+
+
+
+window.location.href="index.html";
+
+
+
+})
+
+
+
+.catch(()=>{
+
+
+alert("Erro ao conectar");
+
+
+});
+
+
+
+
+
+}
+
+
+
+</script>
+
+
+
+
+</body>
+
+
+</html>

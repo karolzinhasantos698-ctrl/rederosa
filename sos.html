@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rede Rosa - SOS</title>
+
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+</head>
+
+
+<body class="seguranca-body">
+
+
+    <header>
+
+        <button class="voltar-btn" onclick="voltarInicio()">
+            ← Voltar
+        </button>
+        
+        
+        <h1>🌸 Rede Rosa 🌸</h1>
+        
+        <p>Segurança, acolhimento e confiança</p>
+        
+        
+        </header>
+
+
+
+
+
+<section class="banner">
+
+
+<h2>Meus contatos 🌸</h2>
+
+
+
+<button class="botao" onclick="abrirFormulario()">
+
+➕ Adicionar contato
+
+</button>
+
+
+</section>
+
+
+
+<div id="formulario" class="form-contato" style="display:none;">
+
+
+
+<h2>Novo contato</h2>
+
+
+<div class="campo">
+
+
+<i class="fa-solid fa-user"></i>
+
+
+<input id="nome"
+placeholder="Nome">
+
+
+
+</div>
+
+
+<div class="campo">
+
+
+<i class="fa-solid fa-phone"></i>
+
+
+
+<input
+id="telefone"
+type="tel"
+inputmode="numeric"
+placeholder="Telefone">
+
+
+
+</div>
+
+
+<button class="salvar-contato" onclick="salvarContato()">
+
+
+Salvar 💗
+
+
+</button>
+
+
+
+
+</div>
+
+<main class="container">
+
+
+
+<div class="cards" id="listaContatos">
+
+
+
+</div>
+
+
+
+</main>
+
+
+
+<button class="sos-btn" onclick="enviarSOS()">
+
+
+🚨
+
+
+</button>
+
+
+
+<script>
+
+
+
+let contatos=[];
+
+
+
+function voltarInicio(){
+
+
+window.location.href="home.html";
+
+
+}
+
+
+function abrirFormulario(){
+
+
+document.getElementById("formulario").style.display="block";
+
+
+}
+
+
+function carregarContatos(){
+
+
+
+fetch("http://localhost:8080/contatos")
+
+.then(res=>res.json())
+
+
+.then(data=>{
+
+
+contatos=data;
+
+
+mostrarContatos();
+
+
+
+});
+
+
+}
+
+
+function mostrarContatos(){
+
+
+
+let lista=document.getElementById("listaContatos");
+
+
+
+lista.innerHTML="";
+
+
+contatos.forEach((c,index)=>{
+
+
+lista.innerHTML += `
+
+
+
+
+<div class="card">
+
+
+
+<i class="fa-solid fa-user"></i>
+
+
+
+<h3>${c.nome}</h3>
+
+
+
+<p>${c.telefone}</p>
+
+<button class="botao emergencia"
+onclick="enviarSOS(${index})">
+🚨 Emergência
+</button>
+
+<button class="botao"
+onclick="editarContato(${c.id})">
+✏️ Editar
+</button>
+
+
+<button class="botao excluir"
+onclick="excluirContato(${c.id})">
+
+
+🗑️ Excluir
+
+
+</button>
+
+
+</div>
+
+
+
+
+`;
+
+
+
+});
+
+
+
+}
+
+
+function salvarContato(){
+
+
+let nome =
+document.getElementById("nome").value;
+
+
+
+let telefone =
+document.getElementById("telefone").value;
+
+
+if(nome=="" || telefone==""){
+
+
+alert("Preencha tudo");
+
+
+return;
+
+
+}
+
+
+
+fetch("http://localhost:8080/contatos",
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+},
+
+
+body:JSON.stringify({
+
+nome:nome,
+
+telefone:telefone
+
+
+})
+
+})
+
+
+.then(res=>res.json())
+
+
+.then(()=>{
+
+
+alert("Contato salvo 🌸");
+
+carregarContatos();
+
+document.getElementById("nome").value="";
+
+document.getElementById("telefone").value="";
+
+
+
+});
+
+
+}
+
+function excluirContato(id){
+
+
+
+let confirmar=confirm(
+"Deseja excluir esse contato?"
+);
+
+
+if(!confirmar){
+
+return;
+
+}
+
+
+fetch(
+"http://localhost:8080/contatos/"+id,
+
+{
+
+method:"DELETE"
+
+}
+
+)
+
+.then(res=>{
+
+
+if(res.ok){
+
+alert("Contato excluído 🌸");
+
+carregarContatos();
+
+
+}else{
+
+alert("Erro ao excluir");
+
+}
+
+
+});
+
+
+}
+
+
+function editarContato(id){
+
+let contato=contatos.find(
+c=>c.id==id
+);
+
+
+let novoNome=prompt(
+"Novo nome:",
+contato.nome
+);
+
+
+let novoTelefone=prompt(
+"Novo telefone:",
+contato.telefone
+);
+
+
+if(novoNome==null || novoTelefone==null){
+
+return;
+
+}
+
+
+fetch(
+"http://localhost:8080/contatos/"+id,
+
+{
+
+method:"PUT",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+
+body:JSON.stringify({
+
+    nome:novoNome,
+
+telefone:novoTelefone
+
+})
+
+
+}
+
+)
+
+.then(res=>res.json())
+
+.then(()=>{
+
+alert("Contato atualizado 🌸");
+
+carregarContatos();
+
+
+});
+
+
+}
+
+
+
+function enviarSOS(index){
+
+let contato = contatos[index];
+
+let usuario =
+JSON.parse(localStorage.getItem("usuario")) || {};
+
+let nomeUsuario =
+usuario.nome || "Usuária";
+
+let mensagem =
+`🚨 ALERTA REDE ROSA 🌸
+
+Olá ${contato.nome}.
+
+${nomeUsuario} precisa de ajuda.
+
+Ela acionou o botão de emergência.
+
+Por favor, entre em contato imediatamente. 💗`;
+
+let telefone = contato.telefone.replace(/\D/g,'');
+
+let link =
+`https://wa.me/55${telefone}?text=${encodeURIComponent(mensagem)}`;
+
+window.open(link,"_blank");
+}
+
+
+carregarContatos();
+
+
+</script>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rede Rosa - Perfil</title>
+
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+</head>
+
+
+<body class="perfil-body">
+
+
+
+<header class="perfil-header">
+
+
+<a href="home.html" class="voltar">
+
+← Voltar
+
+</a>
+
+
+<h1>Meu Perfil 🌸</h1>
+
+
+</header>
+
+
+
+
+
+
+<div class="perfil-container">
+
+
+<div class="perfil-card">
+
+
+
+
+
+<div class="foto-perfil" onclick="escolherFoto()">
+
+
+
+<img id="fotoPerfil" src="img/perfil.png">
+
+
+
+</div>
+
+
+
+
+<input 
+type="file"
+id="arquivoFoto"
+accept="image/*"
+style="display:none"
+onchange="salvarFoto(event)">
+
+
+
+
+
+
+
+<h2 id="nomePerfil">
+
+Usuária
+
+</h2>
+
+
+
+<p id="emailPerfil">
+
+email@email.com
+
+</p>
+
+
+
+
+
+
+
+
+<div class="info">
+
+
+
+<div class="info-item">
+
+👤 Nome:
+
+<span id="nomeInfo"></span>
+
+</div>
+
+
+
+
+<div class="info-item">
+
+📧 Email:
+
+<span id="emailInfo"></span>
+
+</div>
+
+
+
+
+
+<div class="info-item">
+
+🛡️ Segurança:
+
+<span>
+
+Ativada
+
+</span>
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<button 
+class="editar-btn"
+onclick="editar()">
+
+
+✏️ Editar perfil
+
+
+</button>
+
+
+
+
+
+
+
+
+
+
+<div id="editarArea" class="editar-area" style="display:none;">
+
+
+
+
+
+<h3>✏️ Editar informações</h3>
+
+
+
+
+
+
+<div class="campo">
+
+
+<i class="fa-solid fa-user"></i>
+
+
+
+<input 
+id="novoNome"
+placeholder="Novo nome">
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="campo">
+
+
+<i class="fa-solid fa-envelope"></i>
+
+
+
+<input 
+id="novoEmail"
+placeholder="Novo email">
+
+
+
+</div>
+
+
+
+
+
+
+
+<button 
+class="salvar-contato"
+onclick="salvar()">
+
+
+
+💗 Salvar alterações
+
+
+
+</button>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<button 
+class="editar-btn"
+onclick="sair()">
+
+
+
+🚪 Sair da conta
+
+
+</button>
+
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+    let usuario = {};
+    
+    // carregar usuário salvo
+    function carregarUsuario(){
+    
+        usuario = JSON.parse(localStorage.getItem("usuario")) || {};
+    
+        console.log("Usuário carregado:", usuario);
+    
+        document.getElementById("nomePerfil").innerHTML =
+        usuario.nome || "Usuária";
+    
+        document.getElementById("emailPerfil").innerHTML =
+        usuario.email || "email@email.com";
+    
+        document.getElementById("nomeInfo").innerHTML =
+        usuario.nome || "";
+    
+        document.getElementById("emailInfo").innerHTML =
+        usuario.email || "";
+    
+    }
+    
+    carregarUsuario();
+    
+    
+    // abrir editar
+    function editar(){
+    
+        document.getElementById("editarArea")
+        .style.display = "block";
+    
+        document.getElementById("novoNome").value =
+        usuario.nome || "";
+    
+        document.getElementById("novoEmail").value =
+        usuario.email || "";
+    
+    }
+    
+    
+    // salvar edição
+    function salvar(){
+    
+        let novoNome =
+        document.getElementById("novoNome").value.trim();
+    
+        let novoEmail =
+        document.getElementById("novoEmail").value.trim();
+    
+        if(!novoNome || !novoEmail){
+            alert("Preencha todos os campos.");
+            return;
+        }
+    
+        if(!usuario){
+            alert("Usuária não encontrada.");
+            return;
+        }
+    
+        console.log("Usuário antes do PUT:", usuario);
+    
+        if(!usuario.id){
+            alert("ID da usuária não encontrado.");
+            console.log("Objeto salvo no localStorage:", usuario);
+            return;
+        }
+    
+        fetch(
+            "http://localhost:8080/usuarias/" + usuario.id,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    nome: novoNome,
+                    email: novoEmail
+                })
+            }
+        )
+        .then(res => {
+    
+            if(!res.ok){
+                throw new Error("Erro HTTP: " + res.status);
+            }
+    
+            return res.json();
+    
+        })
+        .then(data => {
+    
+            console.log("Resposta do servidor:", data);
+    
+            usuario = data;
+    
+            localStorage.setItem(
+                "usuario",
+                JSON.stringify(usuario)
+            );
+    
+            carregarUsuario();
+    
+            document.getElementById("editarArea").style.display = "none";
+    
+            alert("Perfil atualizado 🌸");
+    
+        })
+        .catch(error => {
+    
+            console.error("Erro:", error);
+    
+            alert("Erro ao atualizar perfil: " + error.message);
+    
+        });
+    
+    }
+    
+    
+    // sair da conta
+    function sair(){
+    
+        localStorage.removeItem("usuario");
+    
+        alert("Você saiu da conta");
+    
+        window.location.href = "index.html";
+    
+    }
+    
+    
+    // FOTO
+    
+    let fotoSalva =
+    localStorage.getItem("fotoPerfil");
+    
+    if(fotoSalva){
+    
+        document.getElementById("fotoPerfil").src =
+        fotoSalva;
+    
+    }
+    
+    function escolherFoto(){
+    
+        document.getElementById("arquivoFoto").click();
+    
+    }
+    
+    function salvarFoto(event){
+    
+        let arquivo =
+        event.target.files[0];
+    
+        if(!arquivo){
+            return;
+        }
+    
+        let leitor = new FileReader();
+    
+        leitor.onload = function(e){
+    
+            localStorage.setItem(
+                "fotoPerfil",
+                e.target.result
+            );
+    
+            document.getElementById("fotoPerfil").src =
+            e.target.result;
+    
+            alert("Foto atualizada 🌸");
+    
+        };
+    
+        leitor.readAsDataURL(arquivo);
+    
+    }
+    
+    </script>
+
+
+
+
+</body>
+
+
+</html>
