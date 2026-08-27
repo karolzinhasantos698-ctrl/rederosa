@@ -14,94 +14,407 @@
 
 <style>
 
-/* CENTRALIZAÇÃO */
+/* =========================
+   RESET
+========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* =========================
+   BODY
+========================= */
+
 .login-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #ffe6eb, #ffd6e0);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    font-family: 'Poppins', sans-serif;
+
+    background: linear-gradient(
+        135deg,
+        #ffe6eb,
+        #ffd6e0
+    );
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
 }
 
-/* CONTAINER */
+/* =========================
+   CONTAINER
+========================= */
+
 .login-container {
-  text-align: center;
+    width: 100%;
+    max-width: 380px;
+
+    text-align: center;
 }
 
-/* LOGO SVG */
+/* =========================
+   LOGO
+========================= */
+
 .logo-svg {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 15px;
 }
 
-/* CAIXA */
+.logo-svg svg {
+    width: 90px;
+    height: 90px;
+    max-width: 100%;
+}
+
+/* =========================
+   CAIXA DE LOGIN
+========================= */
+
 .login-box {
-  background: #fff;
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-  width: 300px;
+    width: 100%;
+
+    background: #fff;
+
+    padding: 30px 25px;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* TITULO */
+/* =========================
+   TÍTULO
+========================= */
+
 .login-box h2 {
-  color: #ff4d6d;
-  margin-bottom: 5px;
+    color: #ff4d6d;
+
+    margin-bottom: 5px;
+
+    font-size: 25px;
+    font-weight: 700;
 }
 
-/* TEXTO */
+/* =========================
+   TEXTO
+========================= */
+
 .login-box p {
-  color: #777;
-  font-size: 14px;
+    color: #777;
+
+    font-size: 14px;
+
+    margin-bottom: 5px;
 }
 
-/* INPUT */
+/* =========================
+   FORMULÁRIO
+========================= */
+
+.login-box form {
+    width: 100%;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
 .login-input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+    display: block;
+
+    width: 100%;
+    height: 46px;
+
+    padding: 12px 14px;
+
+    margin-top: 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s;
 }
 
-/* BOTÃO */
+.login-input:focus {
+    border-color: #ff4d6d;
+
+    box-shadow:
+        0 0 0 3px rgba(255, 77, 109, 0.12);
+}
+
+.login-input::placeholder {
+    color: #aaa;
+}
+
+/* =========================
+   BOTÃO LOGIN
+========================= */
+
 .btn-login {
-  width: 100%;
-  padding: 12px;
-  margin-top: 15px;
-  background: #ff4d6d;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
+    display: block;
+
+    width: 100%;
+    height: 46px;
+
+    padding: 10px 15px;
+
+    margin-top: 15px;
+
+    background: #ff4d6d;
+
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s,
+        transform 0.1s;
 }
 
 .btn-login:hover {
-  background: #e6004c;
+    background: #e6004c;
 }
 
-/* LINKS */
+.btn-login:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+   LINKS
+========================= */
+
 .login-links {
-  margin-top: 15px;
-  display: flex;
-  justify-content: space-between;
+    margin-top: 15px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 10px;
 }
 
 .login-links a {
-  font-size: 12px;
-  color: #ff4d6d;
-  text-decoration: none;
+    font-size: 12px;
+
+    color: #ff4d6d;
+
+    text-decoration: none;
+
+    transition: 0.2s;
 }
 
-/* RODAPÉ */
+.login-links a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   RODAPÉ
+========================= */
+
 .login-footer {
-  margin-top: 15px;
-  font-size: 12px;
-  color: #999;
+    margin-top: 15px;
+
+    font-size: 12px;
+
+    color: #999;
+
+    line-height: 1.5;
+}
+
+/* =========================
+   BOTÃO SOS
+========================= */
+
+.sos-btn {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    width: 58px;
+    height: 58px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #e60000;
+
+    color: white;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.25);
+
+    z-index: 1000;
+
+    transition:
+        transform 0.2s,
+        background 0.2s;
+}
+
+.sos-btn:hover {
+    background: #c90000;
+    transform: scale(1.05);
+}
+
+/* =========================
+   CELULARES
+========================= */
+
+@media (max-width: 480px) {
+
+    .login-body {
+        padding: 15px;
+    }
+
+    .login-container {
+        max-width: 100%;
+    }
+
+    .logo-svg {
+        margin-bottom: 10px;
+    }
+
+    .logo-svg svg {
+        width: 75px;
+        height: 75px;
+    }
+
+    .login-box {
+        padding: 25px 18px;
+
+        border-radius: 13px;
+    }
+
+    .login-box h2 {
+        font-size: 22px;
+    }
+
+    .login-box p {
+        font-size: 13px;
+    }
+
+    .login-input,
+    .btn-login {
+        height: 45px;
+    }
+
+    .login-links a {
+        font-size: 11px;
+    }
+
+    .login-footer {
+        font-size: 11px;
+
+        padding: 0 10px;
+    }
+
+    .sos-btn {
+        width: 52px;
+        height: 52px;
+
+        right: 15px;
+        bottom: 15px;
+
+        font-size: 22px;
+    }
+}
+
+/* =========================
+   CELULARES MUITO PEQUENOS
+========================= */
+
+@media (max-width: 360px) {
+
+    .login-body {
+        padding: 10px;
+    }
+
+    .login-box {
+        padding: 22px 15px;
+    }
+
+    .login-box h2 {
+        font-size: 20px;
+    }
+
+    .login-links {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .login-links a {
+        font-size: 12px;
+    }
+
+    .sos-btn {
+        width: 48px;
+        height: 48px;
+
+        right: 12px;
+        bottom: 12px;
+
+        font-size: 20px;
+    }
+}
+
+/* =========================
+   TELAS BAIXAS
+========================= */
+
+@media (max-height: 650px) {
+
+    .login-body {
+        align-items: flex-start;
+
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+        overflow-y: auto;
+    }
+
+    .logo-svg svg {
+        width: 65px;
+        height: 65px;
+    }
+
+    .logo-svg {
+        margin-bottom: 8px;
+    }
+
+    .login-box {
+        padding: 20px;
+    }
+
+    .login-footer {
+        margin-top: 10px;
+    }
 }
 
 </style>
@@ -112,28 +425,69 @@
 
 <div class="login-container">
 
-    <!-- LOGO (AGORA FUNCIONA SEM IMAGEM) -->
+    <!-- LOGO -->
     <div class="logo-svg">
-        <svg viewBox="0 0 200 200" width="90" height="90">
+
+        <svg viewBox="0 0 200 200">
+
             <defs>
-                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#ff4d6d"/>
-                    <stop offset="100%" style="stop-color:#ff80a0"/>
+
+                <linearGradient
+                    id="grad"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                >
+
+                    <stop
+                        offset="0%"
+                        style="stop-color:#ff4d6d"
+                    />
+
+                    <stop
+                        offset="100%"
+                        style="stop-color:#ff80a0"
+                    />
+
                 </linearGradient>
+
             </defs>
 
-            <circle cx="100" cy="100" r="90" fill="none" stroke="url(#grad)" stroke-width="6"/>
+            <circle
+                cx="100"
+                cy="100"
+                r="90"
+                fill="none"
+                stroke="url(#grad)"
+                stroke-width="6"
+            />
 
-            <path d="M110 60
-                     C140 60, 140 120, 100 130
-                     C80 135, 70 120, 80 100
-                     C90 80, 100 60, 110 60Z"
-                  fill="url(#grad)"/>
+            <path
+                d="M110 60
+                   C140 60, 140 120, 100 130
+                   C80 135, 70 120, 80 100
+                   C90 80, 100 60, 110 60Z"
+                fill="url(#grad)"
+            />
 
-            <path d="M90 110 L110 110 L120 130 L100 150 L80 130 Z"
-                  fill="none" stroke="url(#grad)" stroke-width="3"/>
+            <path
+                d="M90 110
+                   L110 110
+                   L120 130
+                   L100 150
+                   L80 130 Z"
+                fill="none"
+                stroke="url(#grad)"
+                stroke-width="3"
+            />
+
         </svg>
+
     </div>
+
+
+    <!-- CAIXA DE LOGIN -->
 
     <div class="login-box">
 
@@ -143,105 +497,137 @@
 
         <form onsubmit="entrar(event)">
 
-            <input 
-            id="email"
-            class="login-input"
-            type="email"
-            placeholder="E-mail (Gmail)"
-            required>
+            <input
+                id="email"
+                class="login-input"
+                type="email"
+                placeholder="E-mail (Gmail)"
+                autocomplete="email"
+                required
+            >
 
-            <input 
-            id="senha"
-            class="login-input"
-            type="password"
-            placeholder="Senha"
-            required>
+            <input
+                id="senha"
+                class="login-input"
+                type="password"
+                placeholder="Senha"
+                autocomplete="current-password"
+                required
+            >
 
-            <button type="submit" class="btn-login">
-                Entrar 
+            <button
+                type="submit"
+                class="btn-login"
+            >
+                Entrar
             </button>
 
         </form>
 
+
+        <!-- LINKS -->
+
         <div class="login-links">
 
             <a href="recuperar-senha.html">
-            Esqueci minha senha
+                Esqueci minha senha
             </a>
 
             <a href="cadastro.html">
-            Cadastrar
+                Cadastrar
             </a>
 
         </div>
 
     </div>
 
+
+    <!-- RODAPÉ -->
+
     <div class="login-footer">
         💗 Conectando histórias, compartilhando cuidado.
     </div>
 
 </div>
-<button class="sos-btn" onclick="abrirSOS()">
+
+
+<!-- BOTÃO SOS -->
+
+<button
+    class="sos-btn"
+    onclick="abrirSOS()"
+    aria-label="Abrir SOS"
+>
     🚨
 </button>
+
+
 <script>
 
-function entrar(event){
+function entrar(event) {
 
-event.preventDefault();
+    event.preventDefault();
 
-let email = document.getElementById("email").value;
-let senha = document.getElementById("senha").value;
+    let email = document.getElementById("email").value;
+    let senha = document.getElementById("senha").value;
 
-fetch("http://localhost:8080/login", {
+    fetch("http://localhost:8080/login", {
 
-method:"POST",
+        method: "POST",
 
-headers:{
-"Content-Type":"application/json"
-},
+        headers: {
+            "Content-Type": "application/json"
+        },
 
-body:JSON.stringify({
-email:email,
-senha:senha
-})
+        body: JSON.stringify({
+            email: email,
+            senha: senha
+        })
 
-})
+    })
 
-.then(response=>response.json())
+    .then(response => response.json())
 
-.then(usuario=>{
+    .then(usuario => {
 
-if(usuario){
+        if (usuario) {
 
-localStorage.setItem("usuario", JSON.stringify(usuario));
+            localStorage.setItem(
+                "usuario",
+                JSON.stringify(usuario)
+            );
 
-alert("Login realizado 🌸");
+            alert("Login realizado 🌸");
 
-window.location.href="home.html";
+            window.location.href = "home.html";
 
-}else{
+        } else {
 
-alert("Email ou senha incorretos");
+            alert("Email ou senha incorretos");
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.log(error);
+
+        alert("Erro ao conectar com servidor");
+
+    });
 
 }
 
-})
 
-.catch(error=>{
+function abrirSOS() {
 
-console.log(error);
-
-alert("Erro ao conectar com servidor");
-
-});
-
-}
-function abrirSOS(){
     window.location.href = "sos.html";
+
 }
+
 </script>
 
 </body>
+
 </html>

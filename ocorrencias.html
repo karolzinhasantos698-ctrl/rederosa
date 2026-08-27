@@ -3,18 +3,796 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>Ocorrências - Rede Rosa</title>
+    <meta
+        name="theme-color"
+        content="#e83e8c"
+    >
+
+    <title>Ocorrências - Rede Rosa</title>
 
 
-<link rel="stylesheet" href="css/style.css">
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
+
+
+    <style>
+
+        /* =====================================================
+           CONFIGURAÇÕES GERAIS
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+
+        body {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+
+        button,
+        input,
+        textarea {
+            font-family: 'Poppins', sans-serif;
+        }
+
+
+
+        /* =====================================================
+           CABEÇALHO
+        ===================================================== */
+
+        .ocorrencia-header {
+            width: 100%;
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+
+        .ocorrencia-header h1 {
+            margin: 10px 0 5px;
+            font-size: clamp(24px, 6vw, 36px);
+        }
+
+
+        .ocorrencia-header p {
+            margin: 0;
+            font-size: 15px;
+        }
+
+
+        .voltar {
+            display: inline-block;
+            text-decoration: none;
+        }
+
+
+
+        /* =====================================================
+           CONTAINER PRINCIPAL
+        ===================================================== */
+
+        .ocorrencia-container {
+
+            width: 100%;
+
+            max-width: 850px;
+
+            margin: 0 auto;
+
+            padding:
+                0 20px 40px;
+
+        }
+
+
+
+        /* =====================================================
+           CARDS
+        ===================================================== */
+
+        .ocorrencia-card {
+
+            width: 100%;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            border-radius: 20px;
+
+            overflow: visible;
+
+        }
+
+
+        .ocorrencia-card h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 20px;
+
+            font-size:
+                clamp(20px, 5vw, 26px);
+
+        }
+
+
+
+        /* =====================================================
+           CAMPOS
+        ===================================================== */
+
+        .ocorrencia-card input,
+        .ocorrencia-card textarea {
+
+            width: 100%;
+
+            max-width: 100%;
+
+            padding: 14px 16px;
+
+            margin-bottom: 14px;
+
+            border-radius: 12px;
+
+            border: 1px solid #ddd;
+
+            outline: none;
+
+            font-size: 16px;
+
+            background: white;
+
+            color: #333;
+
+        }
+
+
+        .ocorrencia-card input:focus,
+        .ocorrencia-card textarea:focus {
+
+            border-color: #e83e8c;
+
+            box-shadow:
+                0 0 0 2px
+                rgba(232, 62, 140, 0.10);
+
+        }
+
+
+        .ocorrencia-card textarea {
+
+            min-height: 150px;
+
+            resize: vertical;
+
+            line-height: 1.5;
+
+        }
+
+
+
+        /* =====================================================
+           SELETOR DE EMOJIS
+        ===================================================== */
+
+        .emoji-container {
+
+            position: relative;
+
+            width: 100%;
+
+            margin:
+                0 0 16px;
+
+        }
+
+
+        /* Botão principal */
+
+        .emoji-toggle {
+
+            width: auto !important;
+
+            min-width: 105px !important;
+
+            min-height: 40px !important;
+
+            padding:
+                7px 14px !important;
+
+            margin: 0 !important;
+
+            background: white !important;
+
+            color: #e83e8c !important;
+
+            border:
+                1px solid #e83e8c !important;
+
+            border-radius: 20px !important;
+
+            font-size: 14px !important;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            display: inline-flex !important;
+
+            align-items: center;
+
+            justify-content: center;
+
+            box-shadow: none !important;
+
+        }
+
+
+        .emoji-toggle:hover {
+
+            background:
+                #fff0f6 !important;
+
+            transform: none !important;
+
+        }
+
+
+
+        /* =====================================================
+           PAINEL DE EMOJIS
+        ===================================================== */
+
+        .emoji-list {
+
+            display: none;
+
+            width: 100%;
+
+            max-width: 360px;
+
+            margin-top: 8px;
+
+            padding: 9px;
+
+            background: white;
+
+            border:
+                1px solid #eeeeee;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(0, 0, 0, 0.12);
+
+            grid-template-columns:
+                repeat(6, 1fr);
+
+            gap: 5px;
+
+            z-index: 20;
+
+        }
+
+
+        .emoji-list.aberto {
+
+            display: grid;
+
+        }
+
+
+        /* Botão individual */
+
+        .emoji-list button {
+
+            width: 100% !important;
+
+            min-width: 0 !important;
+
+            max-width: none !important;
+
+            height: 42px !important;
+
+            min-height: 42px !important;
+
+            padding: 0 !important;
+
+            margin: 0 !important;
+
+            background: white !important;
+
+            color: #333 !important;
+
+            border: none !important;
+
+            border-radius: 9px !important;
+
+            font-family:
+                sans-serif !important;
+
+            font-size: 21px !important;
+
+            cursor: pointer;
+
+            display: flex !important;
+
+            align-items: center;
+
+            justify-content: center;
+
+            box-shadow: none !important;
+
+            transition:
+                background 0.15s,
+                transform 0.15s;
+
+        }
+
+
+        .emoji-list button:hover {
+
+            background:
+                #fff0f6 !important;
+
+            transform:
+                scale(1.08) !important;
+
+        }
+
+
+        .emoji-list button:active {
+
+            transform:
+                scale(0.92) !important;
+
+        }
+
+
+
+        /* =====================================================
+           BOTÃO ENVIAR OCORRÊNCIA
+        ===================================================== */
+
+        #btnSalvar {
+
+            width: 100% !important;
+
+            min-height: 50px;
+
+            padding:
+                12px 18px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+        }
+
+
+        #btnSalvar:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+        }
+
+
+
+        /* =====================================================
+           HISTÓRICO
+        ===================================================== */
+
+        #lista {
+
+            width: 100%;
+
+            overflow: visible;
+
+        }
+
+
+        .registro {
+
+            width: 100%;
+
+            margin-bottom: 15px;
+
+            padding: 18px;
+
+            background:
+                #fff7fa;
+
+            border:
+                1px solid #f5d5e2;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+        }
+
+
+        .registro h3 {
+
+            margin:
+                0 0 8px;
+
+            font-size: 18px;
+
+            overflow-wrap:
+                anywhere;
+
+            word-break:
+                break-word;
+
+        }
+
+
+        .registro p {
+
+            margin:
+                7px 0;
+
+            line-height: 1.5;
+
+            overflow-wrap:
+                anywhere;
+
+            word-break:
+                break-word;
+
+            white-space:
+                pre-wrap;
+
+        }
+
+
+
+        /* =====================================================
+           BOTÕES DAS OCORRÊNCIAS
+        ===================================================== */
+
+        .registro button {
+
+            width: 100%;
+
+            min-height: 44px;
+
+            margin:
+                8px 0 0;
+
+            padding:
+                10px 12px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+        }
+
+
+
+        /* =====================================================
+           BOTÕES DE EMERGÊNCIA
+        ===================================================== */
+
+        .emergencia-link,
+        .ocorrencia-card .botao {
+
+            width: 100%;
+
+            min-height: 48px;
+
+            margin-top: 10px;
+
+            padding:
+                12px 15px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+        }
+
+
+
+        /* =====================================================
+           CONTATOS
+        ===================================================== */
+
+        .ocorrencia-card > p:last-child {
+
+            margin-top: 20px;
+
+            line-height: 1.8;
+
+            font-size: 14px;
+
+            overflow-wrap:
+                anywhere;
+
+        }
+
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (min-width: 601px) {
+
+            .ocorrencia-container {
+
+                padding:
+                    0 30px 50px;
+
+            }
+
+
+            .ocorrencia-card {
+
+                padding: 30px;
+
+            }
+
+
+            .registro button {
+
+                width: auto;
+
+                margin-right: 7px;
+
+            }
+
+
+            .emergencia-link,
+            .ocorrencia-card .botao {
+
+                width: auto;
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           CELULAR
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            .ocorrencia-header {
+
+                padding:
+                    18px 15px;
+
+            }
+
+
+            .ocorrencia-header h1 {
+
+                font-size: 25px;
+
+            }
+
+
+            .ocorrencia-header p {
+
+                font-size: 13px;
+
+            }
+
+
+            .ocorrencia-container {
+
+                padding:
+                    0 12px 30px;
+
+            }
+
+
+            .ocorrencia-card {
+
+                padding:
+                    18px 15px;
+
+                border-radius: 16px;
+
+            }
+
+
+            .ocorrencia-card h2 {
+
+                font-size: 20px;
+
+                margin-bottom: 16px;
+
+            }
+
+
+            .ocorrencia-card input,
+            .ocorrencia-card textarea {
+
+                font-size: 16px;
+
+            }
+
+
+            .ocorrencia-card textarea {
+
+                min-height: 130px;
+
+            }
+
+
+            .emoji-list {
+
+                max-width: 100%;
+
+                grid-template-columns:
+                    repeat(6, 1fr);
+
+                padding: 7px;
+
+            }
+
+
+            .emoji-list button {
+
+                height: 40px !important;
+
+                min-height: 40px !important;
+
+                font-size: 20px !important;
+
+            }
+
+
+            .registro {
+
+                padding:
+                    15px;
+
+            }
+
+
+            .registro button {
+
+                font-size: 13px;
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           CELULARES MUITO PEQUENOS
+        ===================================================== */
+
+        @media (max-width: 360px) {
+
+            .ocorrencia-container {
+
+                padding-left: 8px;
+
+                padding-right: 8px;
+
+            }
+
+
+            .ocorrencia-card {
+
+                padding:
+                    15px 12px;
+
+            }
+
+
+            .emoji-list {
+
+                grid-template-columns:
+                    repeat(5, 1fr);
+
+            }
+
+
+            .emoji-list button {
+
+                font-size: 19px !important;
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           ACESSIBILIDADE
+        ===================================================== */
+
+        button,
+        a {
+
+            -webkit-tap-highlight-color:
+                transparent;
+
+        }
+
+
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible {
+
+            outline:
+                3px solid
+                rgba(232, 62, 140, 0.30);
+
+            outline-offset: 2px;
+
+        }
+
+    </style>
 
 </head>
 
@@ -24,666 +802,1220 @@
 
 
 
+<!-- =====================================================
+     CABEÇALHO
+===================================================== -->
+
 <header class="ocorrencia-header">
 
 
-<a href="home.html" class="voltar">
-
-← Voltar
-
-</a>
-
-
-<h1>📋 Ocorrências</h1>
+    <a
+        href="home.html"
+        class="voltar"
+    >
+        ← Voltar
+    </a>
 
 
-<p>Registre e acompanhe seus alertas</p>
+    <h1>
+        📋 Ocorrências
+    </h1>
+
+
+    <p>
+        Registre e acompanhe seus alertas
+    </p>
 
 
 </header>
 
 
 
-
-
-
+<!-- =====================================================
+     CONTEÚDO
+===================================================== -->
 
 <main class="ocorrencia-container">
 
 
 
+    <!-- =================================================
+         NOVA OCORRÊNCIA
+    ================================================== -->
 
+    <section class="ocorrencia-card">
 
 
-<section class="ocorrencia-card">
+        <h2>
+            📝 Nova ocorrência
+        </h2>
 
 
-<h2>📝 Nova ocorrência</h2>
 
+        <input
+            id="titulo"
+            type="text"
+            placeholder="Título da ocorrência"
+            autocomplete="off"
+        >
 
 
 
-<input 
-id="titulo"
-placeholder="Título da ocorrência">
+        <textarea
+            id="descricao"
+            placeholder="Descreva o que aconteceu"
+        ></textarea>
 
 
 
+        <!-- =============================================
+             EMOJIS
+        ============================================== -->
 
+        <div class="emoji-container">
 
 
-<textarea
+            <button
+                type="button"
+                class="emoji-toggle"
+                id="emojiToggle"
+            >
+                😊 Emojis
+            </button>
 
-id="descricao"
 
-placeholder="Descreva o que aconteceu">
 
-</textarea>
+            <div
+                id="emoji-list"
+                class="emoji-list"
+            >
 
 
+                <button
+                    type="button"
+                    data-emoji="😊"
+                    aria-label="Feliz"
+                >
+                    😊
+                </button>
 
 
+                <button
+                    type="button"
+                    data-emoji="😢"
+                    aria-label="Triste"
+                >
+                    😢
+                </button>
 
 
+                <button
+                    type="button"
+                    data-emoji="😭"
+                    aria-label="Chorando"
+                >
+                    😭
+                </button>
 
-<button onclick="salvarOcorrencia()">
 
-Enviar ocorrência 🌸
+                <button
+                    type="button"
+                    data-emoji="😡"
+                    aria-label="Raiva"
+                >
+                    😡
+                </button>
 
-</button>
 
+                <button
+                    type="button"
+                    data-emoji="😨"
+                    aria-label="Medo"
+                >
+                    😨
+                </button>
 
 
-</section>
+                <button
+                    type="button"
+                    data-emoji="😰"
+                    aria-label="Preocupada"
+                >
+                    😰
+                </button>
+
+
+                <button
+                    type="button"
+                    data-emoji="😔"
+                    aria-label="Desanimada"
+                >
+                    😔
+                </button>
+
+
+                <button
+                    type="button"
+                    data-emoji="❤️"
+                    aria-label="Coração"
+                >
+                    ❤️
+                </button>
+
+
+                <button
+                    type="button"
+                    data-emoji="💔"
+                    aria-label="Coração partido"
+                >
+                    💔
+                </button>
+
 
+                <button
+                    type="button"
+                    data-emoji="🚨"
+                    aria-label="Emergência"
+                >
+                    🚨
+                </button>
 
 
+                <button
+                    type="button"
+                    data-emoji="🆘"
+                    aria-label="SOS"
+                >
+                    🆘
+                </button>
 
 
+                <button
+                    type="button"
+                    data-emoji="⚠️"
+                    aria-label="Atenção"
+                >
+                    ⚠️
+                </button>
 
 
+                <button
+                    type="button"
+                    data-emoji="👮‍♀️"
+                    aria-label="Polícia"
+                >
+                    👮‍♀️
+                </button>
 
 
-<section class="ocorrencia-card">
+                <button
+                    type="button"
+                    data-emoji="🌸"
+                    aria-label="Flor"
+                >
+                    🌸
+                </button>
 
 
-<h2>📚 Histórico</h2>
+                <button
+                    type="button"
+                    data-emoji="🙏"
+                    aria-label="Ajuda"
+                >
+                    🙏
+                </button>
 
 
+                <button
+                    type="button"
+                    data-emoji="💪"
+                    aria-label="Força"
+                >
+                    💪
+                </button>
 
 
-<div id="lista">
+                <button
+                    type="button"
+                    data-emoji="🏠"
+                    aria-label="Casa"
+                >
+                    🏠
+                </button>
 
 
-<p>Nenhuma ocorrência registrada.</p>
+                <button
+                    type="button"
+                    data-emoji="📞"
+                    aria-label="Telefone"
+                >
+                    📞
+                </button>
 
 
-</div>
+            </div>
 
+        </div>
 
 
 
+        <!-- =============================================
+             SALVAR
+        ============================================== -->
 
+        <button
+            type="button"
+            id="btnSalvar"
+        >
+            Enviar ocorrência 🌸
+        </button>
 
 
-<a href="tel:190" class="botao emergencia-link">
+    </section>
 
-🚨 Ligar 190 (Emergência)
 
-</a>
 
+    <!-- =================================================
+         HISTÓRICO
+    ================================================== -->
 
+    <section class="ocorrencia-card">
 
 
+        <h2>
+            📚 Histórico
+        </h2>
 
-<a href="tel:180" class="botao emergencia-link">
 
-🌸 Ligar 180 (Central da Mulher)
+        <div id="lista">
 
-</a>
+            <p>
+                Carregando ocorrências...
+            </p>
 
+        </div>
 
 
 
+        <!-- 190 -->
 
-<button onclick="enviarPolicia()" class="botao">
+        <a
+            href="tel:190"
+            class="botao emergencia-link"
+        >
+            🚨 Ligar 190 (Emergência)
+        </a>
 
-🚔 Enviar última ocorrência para Polícia Civil
 
-</button>
 
+        <!-- 180 -->
 
+        <a
+            href="tel:180"
+            class="botao emergencia-link"
+        >
+            🌸 Ligar 180 (Central da Mulher)
+        </a>
 
 
-<p>
 
-📞 Polícia Civil: 197  
-<br>
+        <!-- ÚLTIMA OCORRÊNCIA -->
 
-📱 WhatsApp: (61) 98626-1197
-<br>
+        <button
+            type="button"
+            onclick="enviarPolicia()"
+            class="botao"
+        >
+            🚔 Enviar última ocorrência para Polícia Civil
+        </button>
 
-📧 denuncia197@pcdf.df.gov.br
 
-</p>
 
+        <p>
 
+            📞 Polícia Civil: 197
 
+            <br>
 
+            📱 WhatsApp: (61) 98626-1197
 
+            <br>
 
-</section>
+            📧 denuncia197@pcdf.df.gov.br
 
+        </p>
 
 
-
+    </section>
 
 
 </main>
 
 
 
-
-
-
-
-
-
 <script>
 
 
+// =====================================================
+// CONFIGURAÇÕES
+// =====================================================
 
-let ocorrencias=[];
+const API_URL =
+    "http://localhost:8080/ocorrencias";
 
 
+const NUMERO_POLICIA =
+    "5561986261197";
 
 
+let ocorrencias = [];
 
 
-function carregar(){
 
+// =====================================================
+// ELEMENTOS DOS EMOJIS
+// =====================================================
 
+const emojiToggle =
+    document.getElementById(
+        "emojiToggle"
+    );
 
-fetch("http://localhost:8080/ocorrencias")
 
+const emojiList =
+    document.getElementById(
+        "emoji-list"
+    );
 
 
-.then(res=>res.json())
 
+// =====================================================
+// ABRIR / FECHAR EMOJIS
+// =====================================================
 
+emojiToggle.addEventListener(
+    "click",
+    function (event) {
 
-.then(data=>{
 
+        event.stopPropagation();
 
-ocorrencias=data;
 
+        emojiList.classList.toggle(
+            "aberto"
+        );
 
-mostrar();
-
-
-
-})
-
-
-
-.catch(()=>{
-
-
-document.getElementById("lista").innerHTML =
-
-"<p>Erro ao carregar ocorrências.</p>";
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function salvarOcorrencia(){
-
-
-
-let titulo =
-
-document.getElementById("titulo").value;
-
-
-
-let descricao =
-
-document.getElementById("descricao").value;
-
-
-
-
-
-
-
-if(titulo=="" || descricao==""){
-
-
-alert("Preencha todos os campos");
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-
-fetch("http://localhost:8080/ocorrencias",
-{
-
-
-method:"POST",
-
-
-headers:{
-
-
-"Content-Type":"application/json"
-
-
-},
-
-
-
-body:JSON.stringify({
-
-
-titulo:titulo,
-
-
-descricao:descricao,
-
-
-status:"Pendente"
-
-
-})
-
-
-
-})
-
-
-
-.then(res=>res.json())
-
-
-
-.then(()=>{
-
-
-
-alert("Ocorrência registrada 🌸");
-
-
-
-document.getElementById("titulo").value="";
-
-
-document.getElementById("descricao").value="";
-
-
-
-carregar();
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function mostrar(){
-
-
-
-let lista =
-
-document.getElementById("lista");
-
-
-
-
-lista.innerHTML="";
-
-
-
-
-
-
-if(ocorrencias.length==0){
-
-
-
-lista.innerHTML =
-
-"<p>Nenhuma ocorrência registrada.</p>";
-
-
-
-return;
-
-
-
-}
-
-
-
-
-
-
-
-
-ocorrencias.forEach(o=>{
-
-
-
-
-
-lista.innerHTML += `
-
-
-<div class="registro">
-
-
-
-<h3>${o.titulo}</h3>
-
-
-
-<p>${o.descricao}</p>
-
-
-
-<p>Status: ${o.status}</p>
-
-
-
-
-
-
-
-<button onclick="enviarPoliciaTexto('${o.titulo}','${o.descricao}')">
-
-🚔 Enviar para Polícia Civil
-
-</button>
-
-
-
-
-
-
-
-<button onclick="excluirOcorrencia(${o.id})">
-
-🗑️ Excluir
-
-</button>
-
-
-
-
-
-
-</div>
-
-
-`;
-
-
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function excluirOcorrencia(id){
-
-
-
-let confirmar = confirm(
-
-"Deseja excluir essa ocorrência?"
-
+    }
 );
 
 
 
+// =====================================================
+// SELECIONAR EMOJI
+// =====================================================
+
+const botoesEmoji =
+    document.querySelectorAll(
+        "#emoji-list button"
+    );
+
+
+botoesEmoji.forEach(
+    function (botao) {
+
+
+        botao.addEventListener(
+            "click",
+            function (event) {
+
+
+                event.stopPropagation();
+
+
+                const emoji =
+                    botao.dataset.emoji;
+
+
+                adicionarEmoji(
+                    emoji
+                );
+
+
+                emojiList.classList.remove(
+                    "aberto"
+                );
+
+            }
+        );
+
+    }
+);
 
 
 
-if(!confirmar){
+// =====================================================
+// ADICIONAR EMOJI NO TEXTO
+// =====================================================
 
-return;
+function adicionarEmoji(emoji) {
+
+
+    const campo =
+        document.getElementById(
+            "descricao"
+        );
+
+
+    const inicio =
+        campo.selectionStart;
+
+
+    const fim =
+        campo.selectionEnd;
+
+
+    const textoAtual =
+        campo.value;
+
+
+    campo.value =
+        textoAtual.substring(
+            0,
+            inicio
+        ) +
+
+        emoji +
+
+        textoAtual.substring(
+            fim
+        );
+
+
+    const novaPosicao =
+        inicio +
+        emoji.length;
+
+
+    campo.selectionStart =
+        novaPosicao;
+
+
+    campo.selectionEnd =
+        novaPosicao;
+
+
+    campo.focus();
 
 }
 
 
 
+// =====================================================
+// FECHAR EMOJIS AO CLICAR FORA
+// =====================================================
+
+document.addEventListener(
+    "click",
+    function (event) {
+
+
+        if (
+            !event.target.closest(
+                ".emoji-container"
+            )
+        ) {
+
+
+            emojiList.classList.remove(
+                "aberto"
+            );
+
+        }
+
+    }
+);
 
 
 
-fetch(
+// =====================================================
+// CARREGAR
+// =====================================================
 
-"http://localhost:8080/ocorrencias/"+id,
+function carregar() {
 
-{
 
-method:"DELETE"
+    fetch(API_URL)
+
+        .then(
+            function (response) {
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Erro HTTP: " +
+                        response.status
+                    );
+
+                }
+
+
+                return response.json();
+
+            }
+        )
+
+        .then(
+            function (data) {
+
+
+                ocorrencias =
+                    Array.isArray(data)
+                        ? data
+                        : [];
+
+
+                mostrar();
+
+            }
+        )
+
+        .catch(
+            function (error) {
+
+
+                console.error(
+                    "Erro ao carregar:",
+                    error
+                );
+
+
+                document
+                    .getElementById(
+                        "lista"
+                    )
+                    .innerHTML = `
+
+                        <p>
+                            ❌ Erro ao carregar ocorrências.
+                        </p>
+
+                    `;
+
+            }
+        );
 
 }
 
 
 
-)
+// =====================================================
+// SALVAR
+// =====================================================
 
-.then(res=>{
-
-
-if(res.ok){
-
-
-alert("Ocorrência excluída 🌸");
+function salvarOcorrencia() {
 
 
-carregar();
+    const tituloInput =
+        document.getElementById(
+            "titulo"
+        );
+
+
+    const descricaoInput =
+        document.getElementById(
+            "descricao"
+        );
+
+
+    const titulo =
+        tituloInput.value.trim();
+
+
+    const descricao =
+        descricaoInput.value.trim();
 
 
 
-}else{
+    if (
+        !titulo ||
+        !descricao
+    ) {
 
 
-alert("Erro ao excluir");
+        alert(
+            "Preencha todos os campos."
+        );
 
+
+        return;
+
+    }
+
+
+
+    const botao =
+        document.getElementById(
+            "btnSalvar"
+        );
+
+
+    botao.disabled = true;
+
+
+    botao.textContent =
+        "Enviando...";
+
+
+
+    fetch(
+        API_URL,
+        {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type":
+                    "application/json"
+
+            },
+
+            body: JSON.stringify({
+
+                titulo:
+                    titulo,
+
+                descricao:
+                    descricao,
+
+                status:
+                    "Pendente"
+
+            })
+
+        }
+    )
+
+    .then(
+        function (response) {
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Erro HTTP: " +
+                    response.status
+                );
+
+            }
+
+
+            return response.json();
+
+        }
+    )
+
+    .then(
+        function () {
+
+
+            alert(
+                "Ocorrência registrada 🌸"
+            );
+
+
+            tituloInput.value =
+                "";
+
+
+            descricaoInput.value =
+                "";
+
+
+            emojiList.classList.remove(
+                "aberto"
+            );
+
+
+            carregar();
+
+        }
+    )
+
+    .catch(
+        function (error) {
+
+
+            console.error(
+                "Erro ao salvar:",
+                error
+            );
+
+
+            alert(
+                "Não foi possível registrar a ocorrência.\n\n" +
+                "Verifique se o servidor está funcionando."
+            );
+
+        }
+    )
+
+    .finally(
+        function () {
+
+
+            botao.disabled =
+                false;
+
+
+            botao.textContent =
+                "Enviar ocorrência 🌸";
+
+        }
+    );
 
 }
 
 
-})
 
-.catch(()=>{
+// =====================================================
+// MOSTRAR
+// =====================================================
 
-
-alert("Erro de conexão");
-
-
-});
+function mostrar() {
 
 
+    const lista =
+        document.getElementById(
+            "lista"
+        );
 
 
+    lista.innerHTML =
+        "";
+
+
+
+    if (
+        ocorrencias.length === 0
+    ) {
+
+
+        lista.innerHTML = `
+
+            <p>
+                Nenhuma ocorrência registrada.
+            </p>
+
+        `;
+
+
+        return;
+
+    }
+
+
+
+    ocorrencias.forEach(
+        function (o) {
+
+
+            const registro =
+                document.createElement(
+                    "div"
+                );
+
+
+            registro.className =
+                "registro";
+
+
+
+            const titulo =
+                document.createElement(
+                    "h3"
+                );
+
+
+            titulo.textContent =
+                o.titulo ||
+                "Sem título";
+
+
+
+            const descricao =
+                document.createElement(
+                    "p"
+                );
+
+
+            descricao.textContent =
+                o.descricao ||
+                "Sem descrição";
+
+
+
+            const status =
+                document.createElement(
+                    "p"
+                );
+
+
+            status.textContent =
+                "Status: " +
+                (
+                    o.status ||
+                    "Pendente"
+                );
+
+
+
+            // =========================================
+            // BOTÃO POLÍCIA
+            // =========================================
+
+            const botaoPolicia =
+                document.createElement(
+                    "button"
+                );
+
+
+            botaoPolicia.type =
+                "button";
+
+
+            botaoPolicia.textContent =
+                "🚔 Enviar para Polícia Civil";
+
+
+            botaoPolicia.addEventListener(
+                "click",
+                function () {
+
+
+                    enviarPoliciaTexto(
+
+                        o.titulo,
+
+                        o.descricao
+
+                    );
+
+                }
+            );
+
+
+
+            // =========================================
+            // BOTÃO EXCLUIR
+            // =========================================
+
+            const botaoExcluir =
+                document.createElement(
+                    "button"
+                );
+
+
+            botaoExcluir.type =
+                "button";
+
+
+            botaoExcluir.textContent =
+                "🗑️ Excluir";
+
+
+            botaoExcluir.addEventListener(
+                "click",
+                function () {
+
+
+                    excluirOcorrencia(
+                        o.id
+                    );
+
+                }
+            );
+
+
+
+            // =========================================
+            // ADICIONAR AO REGISTRO
+            // =========================================
+
+            registro.appendChild(
+                titulo
+            );
+
+
+            registro.appendChild(
+                descricao
+            );
+
+
+            registro.appendChild(
+                status
+            );
+
+
+            registro.appendChild(
+                botaoPolicia
+            );
+
+
+            registro.appendChild(
+                botaoExcluir
+            );
+
+
+            lista.appendChild(
+                registro
+            );
+
+        }
+    );
 
 }
 
 
 
+// =====================================================
+// EXCLUIR
+// =====================================================
+
+function excluirOcorrencia(id) {
+
+
+    if (!id) {
+
+
+        alert(
+            "ID da ocorrência não encontrado."
+        );
+
+
+        return;
+
+    }
 
 
 
+    const confirmar =
+        confirm(
+            "Deseja excluir essa ocorrência?"
+        );
 
 
 
+    if (!confirmar) {
 
+        return;
 
-function enviarPoliciaTexto(titulo, descricao){
-
-
-
-let mensagem =
+    }
 
 
 
+    fetch(
+        API_URL + "/" + id,
+        {
+
+            method:
+                "DELETE"
+
+        }
+    )
+
+    .then(
+        function (response) {
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Erro HTTP: " +
+                    response.status
+                );
+
+            }
+
+
+            alert(
+                "Ocorrência excluída 🌸"
+            );
+
+
+            carregar();
+
+        }
+    )
+
+    .catch(
+        function (error) {
+
+
+            console.error(
+                "Erro ao excluir:",
+                error
+            );
+
+
+            alert(
+                "Erro ao excluir a ocorrência."
+            );
+
+        }
+    );
+
+}
+
+
+
+// =====================================================
+// ENVIAR PARA POLÍCIA
+// =====================================================
+
+function enviarPoliciaTexto(
+    titulo,
+    descricao
+) {
+
+
+    if (
+        !titulo ||
+        !descricao
+    ) {
+
+
+        alert(
+            "A ocorrência não possui título ou descrição."
+        );
+
+
+        return;
+
+    }
+
+
+
+    const mensagem =
 `🚨 DENÚNCIA - REDE ROSA
 
-
 Título:
-
 ${titulo}
 
-
 Descrição:
-
 ${descricao}
-
 
 Solicito atendimento da Polícia Civil.`;
 
 
 
+    const link =
+        "https://wa.me/" +
+        NUMERO_POLICIA +
+        "?text=" +
+        encodeURIComponent(
+            mensagem
+        );
 
 
 
-
-
-let numeroPolicia = "5561986261197";
-
-
-
-
-
-
-let link =
-
-
-`https://wa.me/${numeroPolicia}?text=${encodeURIComponent(mensagem)}`;
+    console.log(
+        "Link WhatsApp:",
+        link
+    );
 
 
 
+    const novaAba =
+        window.open(
+            link,
+            "_blank"
+        );
 
 
 
-window.open(link,"_blank");
+    if (!novaAba) {
 
 
+        window.location.href =
+            link;
 
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-function enviarPolicia(){
-
-
-
-if(ocorrencias.length==0){
-
-
-alert("Registre uma ocorrência primeiro.");
-
-
-return;
-
+    }
 
 }
 
 
 
+// =====================================================
+// ENVIAR ÚLTIMA OCORRÊNCIA
+// =====================================================
+
+function enviarPolicia() {
+
+
+    if (
+        !Array.isArray(
+            ocorrencias
+        ) ||
+
+        ocorrencias.length === 0
+    ) {
+
+
+        alert(
+            "Registre uma ocorrência primeiro."
+        );
+
+
+        return;
+
+    }
 
 
 
-let ultima = ocorrencias[ocorrencias.length - 1];
+    const ultima =
+        ocorrencias[
+            ocorrencias.length - 1
+        ];
 
 
 
+    enviarPoliciaTexto(
 
-enviarPoliciaTexto(
+        ultima.titulo,
 
-ultima.titulo,
+        ultima.descricao
 
-ultima.descricao
-
-);
-
-
+    );
 
 }
 
 
 
+// =====================================================
+// BOTÃO SALVAR
+// =====================================================
+
+document
+    .getElementById(
+        "btnSalvar"
+    )
+    .addEventListener(
+        "click",
+        salvarOcorrencia
+    );
 
 
 
-
-
+// =====================================================
+// INICIAR
+// =====================================================
 
 carregar();
 
 
-
-
 </script>
-
-
-
 
 
 </body>
