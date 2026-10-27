@@ -4357,3 +4357,372 @@ header p{
     }
 
     
+.boas-vindas {
+    background: linear-gradient(135deg, #fff0f4, #ffe0e9);
+    border-radius: 18px;
+    padding: 28px 22px;
+    margin: 25px auto;
+    max-width: 900px;
+    text-align: center;
+    box-shadow: 0 5px 18px rgba(214, 63, 112, 0.10);
+}
+
+.boas-vindas h2 {
+    color: #c7356b;
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+.boas-vindas p {
+    color: #75515f;
+    line-height: 1.8;
+}
+
+.boas-vindas .mensagem-carinho {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #b83265;
+}
+
+@media (max-width: 480px) {
+    .boas-vindas {
+        margin: 20px 15px;
+        padding: 22px 16px;
+    }
+
+    .boas-vindas h2 {
+        font-size: 21px;
+    }
+}
+
+
+/* ========================================
+   REDE ROSA — HOME RESPONSIVA
+======================================== */
+
+/* Evita que elementos ultrapassem a tela */
+.home-body {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Cabeçalho */
+.topo {
+    width: 100%;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.topo h1 {
+    font-size: clamp(25px, 4vw, 36px);
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.topo p {
+    margin-top: 8px;
+    font-size: clamp(13px, 1.8vw, 16px);
+    line-height: 1.6;
+}
+
+/* Mensagem de boas-vindas */
+.boas-vindas {
+    width: calc(100% - 40px);
+    max-width: 1000px;
+    box-sizing: border-box;
+    margin: 25px auto;
+    padding: clamp(20px, 4vw, 35px);
+    border-radius: 20px;
+    background: linear-gradient(135deg, #fff0f4, #ffe0e9);
+    box-shadow: 0 5px 18px rgba(214, 63, 112, 0.10);
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.boas-vindas h2 {
+    color: #c7356b;
+    font-size: clamp(21px, 3vw, 30px);
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+.boas-vindas p {
+    color: #75515f;
+    font-size: clamp(14px, 1.7vw, 16px);
+    line-height: 1.8;
+}
+
+.boas-vindas .mensagem-carinho {
+    margin-top: 12px;
+    color: #b83265;
+    font-weight: 500;
+}
+
+/* Grade dos cards */
+.cards {
+    width: calc(100% - 40px);
+    max-width: 1100px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    box-sizing: border-box;
+}
+
+/* Cada card */
+.card {
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 25px 18px;
+    border-radius: 16px;
+    text-align: center;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card i {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    font-size: 17px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.card p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Interação para mouse e teclado */
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(214, 63, 112, 0.12);
+}
+
+.card:focus-visible,
+.sos-btn:focus-visible {
+    outline: 3px solid #9e2451;
+    outline-offset: 4px;
+}
+
+/* Botão SOS sempre acessível */
+.sos-btn {
+    position: fixed;
+    right: max(20px, env(safe-area-inset-right));
+    bottom: max(20px, env(safe-area-inset-bottom));
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    font-size: 26px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+    transition: transform 0.2s ease;
+}
+
+.sos-btn:hover {
+    transform: scale(1.06);
+}
+
+/* ========================================
+   TABLETS
+======================================== */
+@media (max-width: 900px) {
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .boas-vindas {
+        margin-top: 20px;
+    }
+}
+
+/* ========================================
+   CELULARES
+======================================== */
+@media (max-width: 560px) {
+    .topo {
+        padding: 24px 16px;
+    }
+
+    .boas-vindas {
+        width: calc(100% - 30px);
+        margin: 15px auto 25px;
+        padding: 22px 17px;
+        border-radius: 16px;
+    }
+
+    .cards {
+        width: calc(100% - 30px);
+        margin: 20px auto;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .card {
+        padding: 22px 10px;
+        border-radius: 14px;
+    }
+
+    .card i {
+        font-size: 28px;
+    }
+
+    .card h3 {
+        font-size: 15px;
+    }
+
+    .card p {
+        font-size: 12px;
+    }
+
+    .sos-btn {
+        width: 54px;
+        height: 54px;
+        font-size: 23px;
+    }
+}
+
+/* ========================================
+   CELULARES MUITO ESTREITOS
+======================================== */
+@media (max-width: 360px) {
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .card {
+        padding: 20px 15px;
+    }
+
+    .card h3 {
+        font-size: 16px;
+    }
+
+    .card p {
+        font-size: 13px;
+    }
+
+    .boas-vindas h2 {
+        font-size: 20px;
+    }
+
+    .sos-btn {
+        right: 14px;
+        bottom: 14px;
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Respeita quem prefere menos animações */
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .sos-btn {
+        transition: none;
+    }
+}
+
+
+/* BOTÃO SAIR DA CONTA — CANTO SUPERIOR DIREITO */
+
+.topo {
+    position: relative;
+    padding: 25px 160px 25px 20px;
+    text-align: center;
+}
+
+.area-sair {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 10;
+}
+
+.btn-sair {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    padding: 8px 12px;
+    background: #fff;
+    color: #c7356b;
+
+    border: 1px solid #f2b8cb;
+    border-radius: 8px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-sair:hover {
+    background: #c7356b;
+    color: #fff;
+}
+
+/* CELULAR */
+@media (max-width: 560px) {
+    .topo {
+        padding: 65px 15px 22px;
+    }
+
+    .area-sair {
+        top: 10px;
+        right: 10px;
+    }
+
+    .btn-sair {
+        padding: 7px 10px;
+        font-size: 11px;
+        gap: 5px;
+    }
+}
+
+
+/* CENTRALIZAR O TÍTULO NA VERSÃO WEB */
+@media (min-width: 561px) {
+    .topo {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 35px 20px;
+    }
+
+    .topo h1,
+    .topo p {
+        width: 100%;
+        text-align: center;
+    }
+
+    .area-sair {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: auto;
+        margin: 0;
+    }
+}

@@ -1,162 +1,257 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Rede Rosa - Início</title>
+    <title>Rede Rosa - Início</title>
 
-<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="home-body">
 
-<header class="topo">
-    <h1>🌸 Rede Rosa</h1>
-    <p>Segurança, acolhimento e confiança</p>
-</header>
+    <!-- CABEÇALHO -->
+    <header class="topo">
+        <h1>🌸 Rede Rosa</h1>
+        <p>Segurança, acolhimento e confiança</p>
+        
+<!-- BOTÃO SAIR DA CONTA -->
+<div class="area-sair">
+    <button
+        type="button"
+        class="btn-sair"
+        onclick="sairDaConta()">
 
-<section class="boas-vindas">
-    <h2>Olá, seja bem-vinda!</h2>
-    <p>Como podemos ajudar você hoje?</p>
-</section>
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Sair da conta
 
-<main class="cards">
+    </button>
+</div>
 
-    <!-- CHECK-IN -->
-    <a href="checkin.html" class="card">
-        <i class="fa-solid fa-shield-heart"></i>
-        <h3>Check-in Seguro</h3>
-        <p>Confirme que você está bem</p>
-    </a>
+    </header>
 
-    <!-- MAPA -->
-    <a href="mapa.html" class="card">
-        <i class="fa-solid fa-location-dot"></i>
-        <h3>Mapa Seguro</h3>
-        <p>Locais de apoio</p>
-    </a>
+    <!-- MENSAGEM DE BOAS-VINDAS PERSONALIZADA -->
+    <section class="boas-vindas">
 
-    <!-- BIBLIOTECA -->
-    <a href="biblioteca.html" class="card">
-        <i class="fa-solid fa-book"></i>
-        <h3>Biblioteca</h3>
-        <p>Direitos e orientações</p>
-    </a>
+        <h2 id="mensagemBoasVindas">
+            Olá, seja bem-vinda! 🌸
+        </h2>
 
-    <!-- COMUNIDADE -->
-    <a href="chat.html" class="card">
-        <i class="fa-solid fa-comments"></i>
-        <h3>Comunidade</h3>
-        <p>Rede de apoio</p>
-    </a>
+        <p id="mensagemAcolhimento">
+            Como podemos ajudar você hoje?
+        </p>
 
-    <!-- PERFIL -->
-    <a href="perfil.html" class="card">
-        <i class="fa-solid fa-user"></i>
-        <h3>Perfil</h3>
-        <p>Dados pessoais</p>
-    </a>
+        <p class="mensagem-carinho">
+            💗 Este é o seu espaço de acolhimento, cuidado e segurança.
+            Você não está sozinha!
+        </p>
 
-    <!-- OCORRÊNCIAS -->
-    <a href="ocorrencias.html" class="card">
-        <i class="fa-solid fa-file-lines"></i>
-        <h3>Ocorrências</h3>
-        <p>Registros pessoais</p>
-    </a>
+    </section>
 
-</main>
+    <!-- MENU PRINCIPAL -->
+    <main class="cards">
 
-<!-- BOTÃO SOS -->
-<button class="sos-btn" onclick="abrirSOS()">
-    🚨
-</button>
+        <!-- CHECK-IN -->
+        <a href="checkin.html" class="card">
+            <i class="fa-solid fa-shield-heart"></i>
+            <h3>Check-in Seguro</h3>
+            <p>Confirme que você está bem</p>
+        </a>
 
-<script>
-    let checkins = JSON.parse(localStorage.getItem("checkins")) || [];
-    
-    // TEMPO LIMITE (ex: 6 horas)
-    const LIMITE_HORAS = 6;
-    
-    function registrarCheckin(){
-        let agora = new Date();
-        let dataHora = agora.toLocaleString("pt-BR");
-    
-        checkins.unshift(agora.toISOString());
-    
-        localStorage.setItem("checkins", JSON.stringify(checkins));
-    
-        mostrarHistorico();
-    
-        alert("Check-in registrado! 🌸 Você está segura 💗");
-    }
-    
-    function excluirCheckin(index){
-        if(!confirm("Deseja excluir este check-in?")) return;
-    
-        checkins.splice(index,1);
-    
-        localStorage.setItem("checkins", JSON.stringify(checkins));
-    
-        mostrarHistorico();
-    }
-    
-    function mostrarHistorico(){
-        let historico = document.getElementById("historico");
-        let ultimo = document.getElementById("ultimoCheckin");
-    
-        historico.innerHTML = "";
-    
-        if(checkins.length == 0){
-            historico.innerHTML = "<p>Nenhum check-in registrado.</p>";
-            ultimo.innerHTML = "Nenhum check-in realizado.";
-            return;
+        <!-- MAPA -->
+        <a href="mapa.html" class="card">
+            <i class="fa-solid fa-location-dot"></i>
+            <h3>Mapa Seguro</h3>
+            <p>Locais de apoio</p>
+        </a>
+
+        <!-- BIBLIOTECA -->
+        <a href="biblioteca.html" class="card">
+            <i class="fa-solid fa-book"></i>
+            <h3>Biblioteca</h3>
+            <p>Direitos e orientações</p>
+        </a>
+
+        <!-- COMUNIDADE -->
+        <a href="chat.html" class="card">
+            <i class="fa-solid fa-comments"></i>
+            <h3>Comunidade</h3>
+            <p>Rede de apoio</p>
+        </a>
+
+        <!-- PERFIL -->
+        <a href="perfil.html" class="card">
+            <i class="fa-solid fa-user"></i>
+            <h3>Perfil</h3>
+            <p>Dados pessoais</p>
+        </a>
+
+        <!-- OCORRÊNCIAS -->
+        <a href="ocorrencias.html" class="card">
+            <i class="fa-solid fa-file-lines"></i>
+            <h3>Ocorrências</h3>
+            <p>Registros pessoais</p>
+        </a>
+
+    </main>
+
+    <!-- BOTÃO SOS -->
+    <button
+        type="button"
+        class="sos-btn"
+        onclick="abrirSOS()"
+        aria-label="Abrir SOS">
+
+        🚨
+
+    </button>
+
+    <script>
+        // ========================================
+        // BOAS-VINDAS PERSONALIZADAS
+        // ========================================
+
+        function personalizarBoasVindas() {
+
+            const dadosSalvos = localStorage.getItem("usuario");
+
+            const titulo = document.getElementById("mensagemBoasVindas");
+            const mensagem = document.getElementById("mensagemAcolhimento");
+
+            if (!dadosSalvos) {
+                return;
+            }
+
+            try {
+
+                const usuario = JSON.parse(dadosSalvos);
+
+                // Tenta obter o nome salvo no login.
+                const nomeCompleto = (
+                    usuario.nome ||
+                    usuario.name ||
+                    usuario.usuaria?.nome ||
+                    usuario.usuario?.nome ||
+                    ""
+                ).trim();
+
+                if (nomeCompleto) {
+
+                    // Mostra apenas o primeiro nome.
+                    const primeiroNome = nomeCompleto.split(/\s+/)[0];
+
+                    titulo.textContent =
+                        `Olá, seja bem-vinda, ${primeiroNome}! 🌸`;
+
+                    mensagem.textContent =
+                        "Que bom ter você aqui! Este espaço também é seu. 💗";
+
+                }
+
+            } catch (erro) {
+
+                console.error(
+                    "Não foi possível carregar os dados da usuária:",
+                    erro
+                );
+
+            }
+
         }
-    
-        let ultimoCheck = new Date(checkins[0]);
-        ultimo.innerHTML = ultimoCheck.toLocaleString("pt-BR");
-    
-        checkins.forEach((item, index) => {
-            let data = new Date(item);
-    
-            historico.innerHTML += `
-            <div class="registro">
-                <p>✅ ${data.toLocaleString("pt-BR")}</p>
-                <button onclick="excluirCheckin(${index})">🗑️</button>
-            </div>
-            `;
-        });
-    
+
+
+        // ========================================
+        // CHECK-IN SEGURO
+        // ========================================
+
+        const LIMITE_HORAS = 6;
+
+        function verificarAlerta() {
+
+            const checkins = JSON.parse(
+                localStorage.getItem("checkins") || "[]"
+            );
+
+            if (checkins.length === 0) {
+                return;
+            }
+
+            const ultimoCheck = new Date(checkins[0]);
+
+            // Evita verificar datas inválidas.
+            if (Number.isNaN(ultimoCheck.getTime())) {
+                return;
+            }
+
+            const agora = new Date();
+
+            const diferencaHoras =
+                (agora - ultimoCheck) / (1000 * 60 * 60);
+
+            if (diferencaHoras >= LIMITE_HORAS) {
+
+                // Evita repetir o mesmo alerta em cada atualização
+                // da página durante a mesma sessão.
+                const chaveAlerta =
+                    "alertaCheckin_" + checkins[0];
+
+                if (!sessionStorage.getItem(chaveAlerta)) {
+
+                    sessionStorage.setItem(chaveAlerta, "exibido");
+
+                    alert(
+                        "🌸 Faz um tempinho desde seu último check-in.\n\n" +
+                        "Se puder, confirme que está tudo bem com você. 💗"
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        // ========================================
+        // BOTÃO SOS
+        // ========================================
+
+        function abrirSOS() {
+            window.location.href = "sos.html";
+        }
+
+
+        // ========================================
+        // INICIALIZAÇÃO DA PÁGINA
+        // ========================================
+
+        personalizarBoasVindas();
         verificarAlerta();
-    }
-    
-    // 🚨 ALERTA AUTOMÁTICO
-    function verificarAlerta(){
-        if(checkins.length == 0) return;
-    
-        let ultimoCheck = new Date(checkins[0]);
-        let agora = new Date();
-    
-        let diffHoras = (agora - ultimoCheck) / (1000 * 60 * 60);
-    
-        if(diffHoras >= LIMITE_HORAS){
-            alert("⚠️ Você está há muito tempo sem fazer check-in!\nConfirme se está segura.");
-        }
-    }
-    
-    mostrarHistorico();
-    mostrarHistorico();
 
-function abrirSOS(){
-    window.location.href = "sos.html";
+        function sairDaConta() {
+    const confirmarSaida = confirm(
+        "Deseja realmente sair da sua conta? 💗"
+    );
+
+    if (!confirmarSaida) {
+        return;
+    }
+
+    // Remove os dados de login da usuária.
+    localStorage.removeItem("usuario");
+
+    // Retorna à tela de login.
+    window.location.href = "index.html";
 }
+
     </script>
 
 </body>
