@@ -1,454 +1,797 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>Rede Rosa - Perfil</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
 
-<title>Rede Rosa - Perfil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
+        .perfil-body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff7fa, #ffe6ef);
+            color: #30233c;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+        .perfil-header {
+            min-height: 75px;
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            background: #e86699;
+            color: white;
+        }
 
+        .perfil-header h1 {
+            margin: 0;
+            font-size: clamp(20px, 3vw, 30px);
+        }
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        .voltar {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
 
+        .perfil-container {
+            width: min(100% - 32px, 1050px);
+            margin: 35px auto;
+        }
 
+        .perfil-card {
+            background: rgba(255, 255, 255, .94);
+            padding: clamp(20px, 4vw, 40px);
+            border: 1px solid #f7d5e2;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(190, 80, 125, .10);
+        }
+
+        .perfil-topo {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .foto-perfil {
+            width: 132px;
+            height: 132px;
+            margin: 0 auto 15px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .foto-perfil img,
+        .inicial-perfil {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid white;
+            outline: 2px solid #f6b6d0;
+        }
+
+        .foto-perfil img {
+            display: none;
+            object-fit: cover;
+        }
+
+        .inicial-perfil {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background: #e86699;
+            font-size: 56px;
+            font-weight: 600;
+        }
+
+        .camera-perfil {
+            position: absolute;
+            right: -3px;
+            bottom: 2px;
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            color: #e86699;
+            background: white;
+            border: 2px solid #f6b6d0;
+        }
+
+        .perfil-topo h2 {
+            margin: 10px 0 4px;
+            overflow-wrap: anywhere;
+        }
+
+        .perfil-topo p {
+            color: #75677f;
+            margin: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .info {
+            background: #fff1f6;
+            padding: 10px 20px;
+            border-radius: 14px;
+            margin-bottom: 22px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f7d5e2;
+            overflow-wrap: anywhere;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-item span {
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        .editar-btn,
+        .salvar-contato,
+        .opcao-foto,
+        .avatar-opcao {
+            font: inherit;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .editar-btn,
+        .salvar-contato {
+            width: 100%;
+            padding: 13px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .editar-btn {
+            background: #e86699;
+            color: white;
+            border: 1px solid #e86699;
+            margin-top: 10px;
+        }
+
+        .editar-btn:hover,
+        .salvar-contato:hover {
+            background: #d94c83;
+        }
+
+        .sair-btn {
+            background: white;
+            color: #d94c83;
+        }
+
+        .sair-btn:hover {
+            background: #fff1f6;
+            color: #d94c83;
+        }
+
+        .editar-area,
+        .personalizar-area {
+            margin-top: 22px;
+            padding: 20px;
+            background: #fff8fb;
+            border: 1px solid #f7d5e2;
+            border-radius: 15px;
+        }
+
+        .editar-area h3,
+        .personalizar-area h3 {
+            margin-top: 0;
+        }
+
+        .campo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            background: white;
+            border: 1px solid #e8d8e1;
+            border-radius: 10px;
+        }
+
+        .campo i {
+            color: #e86699;
+        }
+
+        .campo input {
+            width: 100%;
+            min-width: 0;
+            border: none;
+            outline: none;
+            font: inherit;
+            background: transparent;
+        }
+
+        .salvar-contato {
+            color: white;
+            background: #e86699;
+            border: none;
+        }
+
+        .opcoes-foto {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 15px;
+        }
+
+        .opcao-foto {
+            padding: 22px 12px;
+            color: #45354f;
+            background: white;
+            border: 1px solid #f3d3e0;
+            border-radius: 14px;
+        }
+
+        .opcao-foto:hover {
+            border-color: #e86699;
+            background: #fff1f6;
+        }
+
+        .icone-opcao {
+            width: 54px;
+            height: 54px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 10px;
+            color: white;
+            background: #e86699;
+            border-radius: 50%;
+            font-size: 23px;
+        }
+
+        .opcao-foto strong,
+        .opcao-foto small {
+            display: block;
+        }
+
+        .opcao-foto small {
+            margin-top: 6px;
+            color: #75677f;
+            line-height: 1.5;
+        }
+
+        .grade-avatares {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .avatar-opcao {
+            width: 65px;
+            height: 65px;
+            max-width: 100%;
+            justify-self: center;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            color: white;
+            font-size: 30px;
+        }
+
+        .avatar-opcao.selecionado {
+            border-color: #30233c;
+            outline: 2px solid #e86699;
+        }
+
+        .avatar-opcao:hover {
+            transform: scale(1.06);
+        }
+
+        .acao-secundaria {
+            width: 100%;
+            margin-top: 8px;
+            padding: 11px;
+            border: 1px solid #f0cbd9;
+            border-radius: 10px;
+            background: white;
+            color: #d94c83;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 480px) {
+            .perfil-header {
+                padding: 14px 16px;
+            }
+
+            .perfil-container {
+                width: calc(100% - 22px);
+                margin: 18px auto;
+            }
+
+            .perfil-card {
+                padding: 20px 15px;
+            }
+
+            .foto-perfil {
+                width: 112px;
+                height: 112px;
+            }
+
+            .inicial-perfil {
+                font-size: 46px;
+            }
+
+            .info {
+                padding: 8px 12px;
+            }
+
+            .info-item {
+                align-items: flex-start;
+                font-size: 13px;
+            }
+
+            .opcoes-foto {
+                gap: 8px;
+            }
+
+            .opcao-foto {
+                padding: 16px 8px;
+                font-size: 13px;
+            }
+
+            .grade-avatares {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .avatar-opcao {
+                width: 54px;
+                height: 54px;
+                font-size: 25px;
+            }
+        }
+    </style>
 </head>
-
 
 <body class="perfil-body">
 
-
-
 <header class="perfil-header">
-
-
-<a href="home.html" class="voltar">
-
-← Voltar
-
-</a>
-
-
-<h1>Meu Perfil 🌸</h1>
-
-
+    <a href="home.html" class="voltar">← Voltar</a>
+    <h1>Meu Perfil 🌸</h1>
+    <span aria-hidden="true"></span>
 </header>
 
-
-
-
-
-
-<div class="perfil-container">
-
-
-<div class="perfil-card">
-
-
-
-
-
-<div class="foto-perfil" onclick="escolherFoto()">
-
-
-
-<img id="fotoPerfil" src="img/perfil.png">
-
-
-
-</div>
-
-
-
-
-<input 
-type="file"
-id="arquivoFoto"
-accept="image/*"
-style="display:none"
-onchange="salvarFoto(event)">
-
-
-
-
-
-
-
-<h2 id="nomePerfil">
-
-Usuária
-
-</h2>
-
-
-
-<p id="emailPerfil">
-
-email@email.com
-
-</p>
-
-
-
-
-
-
-
-
-<div class="info">
-
-
-
-<div class="info-item">
-
-👤 Nome:
-
-<span id="nomeInfo"></span>
-
-</div>
-
-
-
-
-<div class="info-item">
-
-📧 Email:
-
-<span id="emailInfo"></span>
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<button 
-class="editar-btn"
-onclick="editar()">
-
-
-✏️ Editar perfil
-
-
-</button>
-
-
-
-
-
-
-
-
-
-
-<div id="editarArea" class="editar-area" style="display:none;">
-
-
-
-
-
-<h3>✏️ Editar informações</h3>
-
-
-
-
-
-
-<div class="campo">
-
-
-<i class="fa-solid fa-user"></i>
-
-
-
-<input 
-id="novoNome"
-placeholder="Novo nome">
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="campo">
-
-
-<i class="fa-solid fa-envelope"></i>
-
-
-
-<input 
-id="novoEmail"
-placeholder="Novo email">
-
-
-
-</div>
-
-
-
-
-
-
-
-<button 
-class="salvar-contato"
-onclick="salvar()">
-
-
-
-💗 Salvar alterações
-
-
-
-</button>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<button 
-class="editar-btn"
-onclick="sair()">
-
-
-
-🚪 Sair da conta
-
-
-</button>
-
-
-
-
-
-
-
-</div>
-
-
-</div>
-
-
+<main class="perfil-container">
+    <section class="perfil-card">
+
+        <div class="perfil-topo">
+            <div
+                class="foto-perfil"
+                onclick="escolherFoto()"
+                role="button"
+                tabindex="0"
+                aria-label="Alterar foto de perfil"
+                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();escolherFoto()}">
+
+                <div id="inicialPerfil" class="inicial-perfil">U</div>
+
+                <img id="fotoPerfil" alt="Foto de perfil" />
+
+                <span class="camera-perfil">
+                    <i class="fa-solid fa-camera"></i>
+                </span>
+            </div>
+
+            <h2 id="nomePerfil">Usuária</h2>
+            <p id="emailPerfil">email@email.com</p>
+        </div>
+
+        <div class="info">
+            <div class="info-item">
+                <strong>👤 Nome:</strong>
+                <span id="nomeInfo"></span>
+            </div>
+
+            <div class="info-item">
+                <strong>📧 Email:</strong>
+                <span id="emailInfo"></span>
+            </div>
+        </div>
+
+        <button class="editar-btn" onclick="editar()">
+            <i class="fa-solid fa-pen"></i>
+            Editar perfil
+        </button>
+
+        <div id="editarArea" class="editar-area" hidden>
+            <h3>✏️ Editar informações</h3>
+
+            <div class="campo">
+                <i class="fa-solid fa-user"></i>
+                <input id="novoNome" placeholder="Novo nome"
+                    autocomplete="name">
+            </div>
+
+            <div class="campo">
+                <i class="fa-solid fa-envelope"></i>
+                <input id="novoEmail" type="email"
+                    placeholder="Novo email" autocomplete="email">
+            </div>
+
+            <button class="salvar-contato" onclick="salvar()">
+                💗 Salvar alterações
+            </button>
+        </div>
+
+        <section class="personalizar-area">
+            <h3>🖼️ Personalizar foto de perfil</h3>
+            <p>Escolha um avatar ou coloque sua própria foto.</p>
+
+            <div class="opcoes-foto">
+                <button class="opcao-foto" onclick="mostrarAvatares()">
+                    <span class="icone-opcao">
+                        <i class="fa-solid fa-user-astronaut"></i>
+                    </span>
+                    <strong>Escolher avatar</strong>
+                    <small>Opções prontas para você</small>
+                </button>
+
+                <button class="opcao-foto" onclick="escolherFoto()">
+                    <span class="icone-opcao">
+                        <i class="fa-solid fa-camera"></i>
+                    </span>
+                    <strong>Minha foto</strong>
+                    <small>Usar uma imagem do dispositivo</small>
+                </button>
+            </div>
+
+            <input
+                type="file"
+                id="arquivoFoto"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                hidden>
+
+            <div id="areaAvatares" hidden>
+                <h3>Escolha seu avatar</h3>
+                <div id="gradeAvatares" class="grade-avatares"></div>
+
+                <button class="acao-secundaria"
+                    onclick="usarInicial()">
+                    Usar inicial do meu nome
+                </button>
+
+                <button class="acao-secundaria"
+                    onclick="fecharAvatares()">
+                    Fechar
+                </button>
+            </div>
+
+            <button class="acao-secundaria"
+                onclick="removerPersonalizacao()">
+                Restaurar inicial do nome
+            </button>
+        </section>
+
+        <button class="editar-btn sair-btn" onclick="sair()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Sair da conta
+        </button>
+
+    </section>
+</main>
 
 <script>
-
     let usuario = {};
-    
-    // carregar usuário salvo
-    function carregarUsuario(){
-    
-        usuario = JSON.parse(localStorage.getItem("usuario")) || {};
-    
-        console.log("Usuário carregado:", usuario);
-    
-        document.getElementById("nomePerfil").innerHTML =
-        usuario.nome || "Usuária";
-    
-        document.getElementById("emailPerfil").innerHTML =
-        usuario.email || "email@email.com";
-    
-        document.getElementById("nomeInfo").innerHTML =
-        usuario.nome || "";
-    
-        document.getElementById("emailInfo").innerHTML =
-        usuario.email || "";
-    
+    let chavePerfil = "";
+    let fotoTemporaria = null;
+
+    const avatares = [
+        { simbolo: "🌸", cor: "#e86699" },
+        { simbolo: "🦋", cor: "#8b7cf6" },
+        { simbolo: "🐱", cor: "#65a6f7" },
+        { simbolo: "🐼", cor: "#69be91" },
+        { simbolo: "🦄", cor: "#f4a54f" },
+        { simbolo: "🐰", cor: "#55b8bd" },
+        { simbolo: "🌷", cor: "#bd85ed" },
+        { simbolo: "🐻", cor: "#f080aa" },
+        { simbolo: "⭐", cor: "#edbd45" },
+        { simbolo: "💗", cor: "#df6da8" }
+    ];
+
+    function obterChavePerfil(usuarioAtual) {
+        // Cada conta recebe sua própria configuração.
+        // O ID deve ser único para cada usuária.
+        const identificador = usuarioAtual.id != null
+            ? "id_" + usuarioAtual.id
+            : usuarioAtual.email
+                ? "email_" + usuarioAtual.email.trim().toLowerCase()
+                : null;
+
+        if (!identificador) {
+            return null;
+        }
+
+        return "perfilPersonalizado:" + identificador;
     }
-    
-    carregarUsuario();
-    
-    
-    // abrir editar
-    function editar(){
-    
-        document.getElementById("editarArea")
-        .style.display = "block";
-    
-        document.getElementById("novoNome").value =
-        usuario.nome || "";
-    
-        document.getElementById("novoEmail").value =
-        usuario.email || "";
-    
+
+    function lerPersonalizacao() {
+        if (!chavePerfil) return {};
+
+        try {
+            return JSON.parse(localStorage.getItem(chavePerfil)) || {};
+        } catch (erro) {
+            return {};
+        }
     }
-    
-    
-    // salvar edição
-    function salvar(){
-    
-        let novoNome =
-        document.getElementById("novoNome").value.trim();
-    
-        let novoEmail =
-        document.getElementById("novoEmail").value.trim();
-    
-        if(!novoNome || !novoEmail){
+
+    function salvarPersonalizacao(dados) {
+        if (!chavePerfil) {
+            alert("Não foi possível identificar sua conta. Entre novamente.");
+            return false;
+        }
+
+        try {
+            localStorage.setItem(chavePerfil, JSON.stringify(dados));
+            return true;
+        } catch (erro) {
+            alert("Não foi possível salvar. A imagem pode ser muito grande.");
+            return false;
+        }
+    }
+
+    function carregarUsuario() {
+        try {
+            usuario = JSON.parse(localStorage.getItem("usuario")) || {};
+        } catch (erro) {
+            usuario = {};
+        }
+
+        chavePerfil = obterChavePerfil(usuario);
+
+        const nome = usuario.nome || "Usuária";
+        const email = usuario.email || "email@email.com";
+
+        document.getElementById("nomePerfil").textContent = nome;
+        document.getElementById("emailPerfil").textContent = email;
+        document.getElementById("nomeInfo").textContent = nome;
+        document.getElementById("emailInfo").textContent = email;
+
+        atualizarAvatar();
+    }
+
+    function atualizarAvatar() {
+        const dados = lerPersonalizacao();
+        const inicial = (usuario.nome || "U").trim().charAt(0).toUpperCase() || "U";
+
+        const elementoInicial = document.getElementById("inicialPerfil");
+        const imagem = document.getElementById("fotoPerfil");
+
+        elementoInicial.textContent = inicial;
+        elementoInicial.style.background = "#e86699";
+
+        imagem.style.display = "none";
+        imagem.removeAttribute("src");
+
+        if (dados.tipo === "foto" && dados.valor) {
+            imagem.src = dados.valor;
+            imagem.style.display = "block";
+            elementoInicial.style.display = "none";
+        } else if (dados.tipo === "avatar") {
+            elementoInicial.textContent = dados.valor;
+            elementoInicial.style.background = dados.cor || "#e86699";
+            elementoInicial.style.display = "flex";
+        } else {
+            elementoInicial.style.display = "flex";
+        }
+
+        desenharAvatares();
+    }
+
+    function editar() {
+        const area = document.getElementById("editarArea");
+        area.hidden = !area.hidden;
+
+        if (!area.hidden) {
+            document.getElementById("novoNome").value = usuario.nome || "";
+            document.getElementById("novoEmail").value = usuario.email || "";
+        }
+    }
+
+    async function salvar() {
+        const novoNome = document.getElementById("novoNome").value.trim();
+        const novoEmail = document.getElementById("novoEmail").value.trim();
+
+        if (!novoNome || !novoEmail) {
             alert("Preencha todos os campos.");
             return;
         }
-    
-        if(!usuario){
-            alert("Usuária não encontrada.");
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(novoEmail)) {
+            alert("Digite um email válido.");
             return;
         }
-    
-        console.log("Usuário antes do PUT:", usuario);
-    
-        if(!usuario.id){
-            alert("ID da usuária não encontrado.");
-            console.log("Objeto salvo no localStorage:", usuario);
+
+        if (usuario.id == null) {
+            alert("ID da usuária não encontrado. Não foi possível atualizar.");
             return;
         }
-    
-        fetch(
-            "http://localhost:8080/usuarias/" + usuario.id,
-            {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    nome: novoNome,
-                    email: novoEmail
-                })
-            }
-        )
-        .then(res => {
-    
-            if(!res.ok){
-                throw new Error("Erro HTTP: " + res.status);
-            }
-    
-            return res.json();
-    
-        })
-        .then(data => {
-    
-            console.log("Resposta do servidor:", data);
-    
-            usuario = data;
-    
-            localStorage.setItem(
-                "usuario",
-                JSON.stringify(usuario)
+
+        try {
+            const resposta = await fetch(
+                "http://localhost:8080/usuarias/" +
+                encodeURIComponent(usuario.id),
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        nome: novoNome,
+                        email: novoEmail
+                    })
+                }
             );
-    
+
+            if (!resposta.ok) {
+                throw new Error("Erro HTTP: " + resposta.status);
+            }
+
+            const data = await resposta.json();
+
+            // Preserva o ID e outros campos caso a API não os retorne.
+            usuario = { ...usuario, ...data };
+
+            localStorage.setItem("usuario", JSON.stringify(usuario));
+
             carregarUsuario();
-    
-            document.getElementById("editarArea").style.display = "none";
-    
+
+            document.getElementById("editarArea").hidden = true;
+
             alert("Perfil atualizado 🌸");
-    
-        })
-        .catch(error => {
-    
-            console.error("Erro:", error);
-    
-            alert("Erro ao atualizar perfil: " + error.message);
-    
-        });
-    
+        } catch (erro) {
+            console.error("Erro ao atualizar perfil:", erro);
+            alert("Erro ao atualizar perfil: " + erro.message);
+        }
     }
-    
-    
-    // sair da conta
-    function sair(){
-    
-        localStorage.removeItem("usuario");
-    
-        alert("Você saiu da conta");
-    
-        window.location.href = "index.html";
-    
-    }
-    
-    
-    // FOTO
-    
-    let fotoSalva =
-    localStorage.getItem("fotoPerfil");
-    
-    if(fotoSalva){
-    
-        document.getElementById("fotoPerfil").src =
-        fotoSalva;
-    
-    }
-    
-    function escolherFoto(){
-    
+
+    function escolherFoto() {
         document.getElementById("arquivoFoto").click();
-    
     }
-    
-    function salvarFoto(event){
-    
-        let arquivo =
-        event.target.files[0];
-    
-        if(!arquivo){
+
+    document.getElementById("arquivoFoto").addEventListener("change", function(event) {
+        const arquivo = event.target.files[0];
+
+        if (!arquivo) return;
+
+        if (!arquivo.type.startsWith("image/")) {
+            alert("Selecione um arquivo de imagem válido.");
+            event.target.value = "";
             return;
         }
-    
-        let leitor = new FileReader();
-    
-        leitor.onload = function(e){
-    
-            localStorage.setItem(
-                "fotoPerfil",
-                e.target.result
-            );
-    
-            document.getElementById("fotoPerfil").src =
-            e.target.result;
-    
-            alert("Foto atualizada 🌸");
-    
+
+        if (arquivo.size > 5 * 1024 * 1024) {
+            alert("Escolha uma imagem de até 5 MB.");
+            event.target.value = "";
+            return;
+        }
+
+        const leitor = new FileReader();
+
+        leitor.onload = function(e) {
+            fotoTemporaria = e.target.result;
+
+            if (salvarPersonalizacao({
+                tipo: "foto",
+                valor: fotoTemporaria
+            })) {
+                atualizarAvatar();
+                alert("Foto atualizada 🌸");
+            }
+
+            event.target.value = "";
         };
-    
+
+        leitor.onerror = function() {
+            alert("Não foi possível ler essa imagem.");
+        };
+
         leitor.readAsDataURL(arquivo);
-    
+    });
+
+    function mostrarAvatares() {
+        document.getElementById("areaAvatares").hidden = false;
+        desenharAvatares();
     }
-    
-    </script>
 
+    function fecharAvatares() {
+        document.getElementById("areaAvatares").hidden = true;
+    }
 
+    function desenharAvatares() {
+        const grade = document.getElementById("gradeAvatares");
+        if (!grade) return;
 
+        const dados = lerPersonalizacao();
+        grade.replaceChildren();
+
+        avatares.forEach(function(avatar) {
+            const botao = document.createElement("button");
+
+            botao.type = "button";
+            botao.className = "avatar-opcao";
+            botao.textContent = avatar.simbolo;
+            botao.style.backgroundColor = avatar.cor;
+            botao.setAttribute("aria-label", "Avatar " + avatar.simbolo);
+
+            if (dados.tipo === "avatar" &&
+                dados.valor === avatar.simbolo &&
+                dados.cor === avatar.cor) {
+                botao.classList.add("selecionado");
+            }
+
+            botao.addEventListener("click", function() {
+                if (salvarPersonalizacao({
+                    tipo: "avatar",
+                    valor: avatar.simbolo,
+                    cor: avatar.cor
+                })) {
+                    atualizarAvatar();
+                    fecharAvatares();
+                }
+            });
+
+            grade.appendChild(botao);
+        });
+    }
+
+    function usarInicial() {
+        if (salvarPersonalizacao({ tipo: "inicial" })) {
+            atualizarAvatar();
+            fecharAvatares();
+        }
+    }
+
+    function removerPersonalizacao() {
+        if (!chavePerfil) {
+            alert("Entre em uma conta para alterar o perfil.");
+            return;
+        }
+
+        if (confirm("Deseja voltar a usar a inicial do seu nome?")) {
+            usarInicial();
+        }
+    }
+
+    function sair() {
+        localStorage.removeItem("usuario");
+        window.location.href = "index.html";
+    }
+
+    carregarUsuario();
+</script>
 
 </body>
-
-
 </html>
