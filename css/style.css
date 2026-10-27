@@ -5109,3 +5109,155 @@ header p{
     grid-column: 3;
     grid-row: 1;
 }
+
+
+
+/* Correção da estrutura do Check-in */
+.checkin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: calc(100% - 32px);
+    max-width: 980px;
+    margin: 28px auto 48px;
+}
+
+.checkin-card,
+.historico-card {
+    display: block;
+    width: 100%;
+    min-width: 0;
+}
+
+.checkin-card h2 {
+    display: block;
+    width: 100%;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+.historico-descricao {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.historico-lista {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    gap: 16px;
+}
+
+.registro {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+}
+
+.registro-data,
+.registro-local {
+    width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+@media (max-width: 600px) {
+    .checkin-container {
+        width: calc(100% - 22px);
+        margin: 16px auto 32px;
+    }
+
+    .checkin-card,
+    .historico-card {
+        width: 100%;
+        padding: 19px;
+    }
+}
+
+
+.perfil-header {
+    position: relative;
+    min-height: 90px;
+    padding: 20px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e86699;
+    color: white;
+}
+
+.perfil-header h1 {
+    margin: 0;
+    text-align: center;
+    font-size: clamp(20px, 5vw, 30px);
+    line-height: 1.2;
+}
+
+.perfil-header .voltar {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 2;
+}
+
+
+/* Correção definitiva do cabeçalho do perfil */
+body.perfil-body header.perfil-header {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-height: 90px;
+    padding: 20px 16px !important;
+    gap: 0 !important;
+}
+
+body.perfil-body header.perfil-header h1 {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: max-content;
+    max-width: calc(100% - 125px);
+    margin: 0 !important;
+    text-align: center !important;
+    white-space: nowrap;
+    font-size: clamp(17px, 5vw, 30px) !important;
+    line-height: 1.2;
+}
+
+body.perfil-body header.perfil-header .voltar {
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 2;
+    white-space: nowrap;
+}
+
+body.perfil-body header.perfil-header > span {
+    display: none !important;
+}
+
+@media (max-width: 380px) {
+    body.perfil-body header.perfil-header h1 {
+        font-size: 17px !important;
+        max-width: calc(100% - 110px);
+    }
+
+    body.perfil-body header.perfil-header .voltar {
+        left: 10px !important;
+        font-size: 12px;
+    }
+}
+
