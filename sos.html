@@ -1,496 +1,960 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>Rede Rosa - Meus Contatos</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<title>Rede Rosa - SOS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --rosa: #ff4d83;
+            --rosa-escuro: #e93670;
+            --rosa-claro: #fff0f5;
+            --rosa-borda: #ffc2d6;
+            --texto: #35313a;
+            --cinza: #77727b;
+            --branco: #ffffff;
+        }
 
-<link rel="stylesheet" href="css/style.css">
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fff5f8;
+            color: var(--texto);
+            min-height: 100vh;
+        }
 
+        button, input {
+            font: inherit;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        button {
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
 
+        /* CABEÇALHO */
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        header {
+            background: var(--branco);
+            padding: 22px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            border-bottom: 1px solid #f6e5ec;
+        }
 
+        .voltar-btn {
+            background: var(--rosa-claro);
+            border: none;
+            border-radius: 12px;
+            padding: 11px 17px;
+            color: var(--rosa-escuro);
+            font-weight: 600;
+            transition: .2s;
+        }
 
+        .voltar-btn:hover {
+            background: #ffe0eb;
+            transform: translateY(-2px);
+        }
+
+        .marca {
+            text-align: center;
+        }
+
+        .marca h1 {
+            color: var(--rosa);
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .marca p {
+            color: var(--cinza);
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .espaco-header {
+            width: 100px;
+        }
+
+        /* BANNER */
+
+        .banner {
+            background: white;
+            padding: 34px 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px #4920360b;
+        }
+
+        .banner h2 {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .banner h2 span {
+            color: var(--rosa);
+        }
+
+        .banner p {
+            color: var(--cinza);
+            font-size: 14px;
+            margin-bottom: 23px;
+        }
+
+        .botao-principal {
+            background: var(--rosa);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 15px 25px;
+            font-weight: 600;
+            box-shadow: 0 7px 18px #ff4d8333;
+            transition: .25s;
+        }
+
+        .botao-principal:hover {
+            background: var(--rosa-escuro);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px #ff4d8340;
+        }
+
+        /* CONTEÚDO */
+
+        .container {
+            width: min(900px, 92%);
+            margin: 35px auto 100px;
+        }
+
+        /* FORMULÁRIO */
+
+        .form-contato {
+            background: white;
+            width: min(660px, 100%);
+            margin: 0 auto 35px;
+            padding: 32px;
+            border-radius: 24px;
+            box-shadow: 0 8px 30px #49203610;
+            border: 1px solid #fbe4ed;
+            animation: aparecer .25s ease;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-titulo {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 27px;
+            color: var(--rosa);
+            font-weight: 800;
+        }
+
+        .form-descricao {
+            text-align: center;
+            font-size: 13px;
+            color: var(--cinza);
+            margin-bottom: 27px;
+        }
+
+        .campo {
+            margin-bottom: 20px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #faf8f9;
+            border: 1.5px solid var(--rosa-borda);
+            border-radius: 15px;
+            padding: 0 17px;
+            transition: .2s;
+        }
+
+        .input-wrapper:focus-within {
+            background: white;
+            border-color: var(--rosa);
+            box-shadow: 0 0 0 4px #ff4d8315;
+        }
+
+        .input-wrapper i {
+            color: var(--rosa);
+            font-size: 19px;
+            width: 22px;
+            text-align: center;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            min-width: 0;
+            padding: 17px 0;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: var(--texto);
+            font-size: 15px;
+        }
+
+        .input-wrapper input::placeholder {
+            color: #a5a0a7;
+            opacity: 1;
+        }
+
+        .dica {
+            font-size: 11px;
+            color: #89818a;
+            margin-top: 7px;
+            line-height: 1.6;
+        }
+
+        .acoes-formulario {
+            display: flex;
+            gap: 12px;
+            margin-top: 26px;
+        }
+
+        .salvar-contato, .cancelar-contato {
+            flex: 1;
+            padding: 15px 12px;
+            border-radius: 13px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .salvar-contato {
+            border: none;
+            color: white;
+            background: var(--rosa);
+        }
+
+        .salvar-contato:hover {
+            background: var(--rosa-escuro);
+        }
+
+        .cancelar-contato {
+            border: 1px solid #f0dce4;
+            background: white;
+            color: var(--cinza);
+        }
+
+        .cancelar-contato:hover {
+            background: #fff5f8;
+        }
+
+        /* LISTA DE CONTATOS */
+
+        .lista-cabecalho {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .lista-cabecalho h2 {
+            font-size: 21px;
+        }
+
+        .contador {
+            background: #ffe1eb;
+            color: var(--rosa-escuro);
+            border-radius: 30px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            background: white;
+            padding: 23px;
+            border-radius: 20px;
+            border: 1px solid #f5e3eb;
+            box-shadow: 0 5px 20px #49203609;
+            transition: .2s;
+            min-width: 0;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 25px #49203612;
+        }
+
+        .contato-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+            margin-bottom: 22px;
+        }
+
+        .avatar {
+            width: 49px;
+            height: 49px;
+            flex-shrink: 0;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--rosa);
+            background: var(--rosa-claro);
+            font-size: 21px;
+        }
+
+        .contato-texto {
+            min-width: 0;
+        }
+
+        .contato-texto h3 {
+            font-size: 16px;
+            overflow-wrap: anywhere;
+        }
+
+        .contato-texto p {
+            color: var(--cinza);
+            font-size: 13px;
+            margin-top: 4px;
+            overflow-wrap: anywhere;
+        }
+
+        .acoes-card {
+            display: flex;
+            gap: 9px;
+        }
+
+        .acao-card {
+            flex: 1;
+            padding: 10px 7px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            border: none;
+            transition: .2s;
+        }
+
+        .editar {
+            background: #fff0f5;
+            color: var(--rosa-escuro);
+        }
+
+        .editar:hover {
+            background: #ffe0eb;
+        }
+
+        .excluir {
+            background: #f5f3f5;
+            color: #77717a;
+        }
+
+        .excluir:hover {
+            background: #eee8ed;
+            color: #c52f52;
+        }
+
+        /* ESTADO VAZIO */
+
+        .vazio {
+            text-align: center;
+            background: white;
+            border: 1px dashed var(--rosa-borda);
+            border-radius: 22px;
+            padding: 45px 20px;
+        }
+
+        .vazio i {
+            font-size: 42px;
+            color: #ff9dbb;
+            margin-bottom: 17px;
+        }
+
+        .vazio h3 {
+            font-size: 19px;
+            margin-bottom: 8px;
+        }
+
+        .vazio p {
+            color: var(--cinza);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .erro {
+            color: #bd3154;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        /* BOTÃO SOS */
+
+        .sos-btn {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            border: 4px solid white;
+            background: #f12658;
+            color: white;
+            font-size: 29px;
+            box-shadow: 0 6px 24px #d61d4d55;
+            z-index: 10;
+            transition: .2s;
+        }
+
+        .sos-btn:hover {
+            transform: scale(1.07);
+            background: #d91848;
+        }
+
+        .sos-legenda {
+            position: fixed;
+            right: 15px;
+            bottom: 100px;
+            background: white;
+            padding: 7px 12px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #d91848;
+            box-shadow: 0 3px 12px #49203615;
+            z-index: 10;
+        }
+
+        /* CELULAR */
+
+        @media (max-width: 600px) {
+            header {
+                padding: 17px 4%;
+                gap: 8px;
+            }
+
+            .voltar-btn {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .marca h1 {
+                font-size: 18px;
+            }
+
+            .marca p {
+                font-size: 10px;
+            }
+
+            .espaco-header {
+                width: 55px;
+            }
+
+            .banner {
+                padding: 30px 15px;
+            }
+
+            .banner h2 {
+                font-size: 25px;
+            }
+
+            .container {
+                margin-top: 25px;
+            }
+
+            .form-contato {
+                padding: 23px 18px;
+                border-radius: 20px;
+            }
+
+            .form-titulo {
+                font-size: 24px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .lista-cabecalho h2 {
+                font-size: 18px;
+            }
+
+            .sos-btn {
+                right: 17px;
+                bottom: 17px;
+                width: 61px;
+                height: 61px;
+            }
+
+            .sos-legenda {
+                right: 10px;
+                bottom: 85px;
+            }
+        }
+    </style>
 </head>
 
+<body>
 
-<body class="seguranca-body">
+<header>
+    <button class="voltar-btn" onclick="voltarInicio()">
+        <i class="fa-solid fa-arrow-left"></i> Voltar
+    </button>
 
-
-    <header>
-
-        <button class="voltar-btn" onclick="voltarInicio()">
-            ← Voltar
-        </button>
-        
-        
+    <div class="marca">
         <h1>🌸 Rede Rosa 🌸</h1>
-        
         <p>Segurança, acolhimento e confiança</p>
-        
-        
-        </header>
+    </div>
 
-
-
-
+    <div class="espaco-header"></div>
+</header>
 
 <section class="banner">
+    <h2>Meus contatos <span>🌸</span></h2>
+    <p>Cadastre pessoas em quem você confia.</p>
 
-
-<h2>Meus contatos 🌸</h2>
-
-
-
-<button class="botao" onclick="abrirFormulario()">
-
-➕ Adicionar contato
-
-</button>
-
-
+    <button class="botao-principal" onclick="abrirFormulario()">
+        <i class="fa-solid fa-plus"></i>
+        Adicionar contato
+    </button>
 </section>
-
-
-
-<div id="formulario" class="form-contato" style="display:none;">
-
-
-
-<h2>Novo contato</h2>
-
-
-<div class="campo">
-
-
-<i class="fa-solid fa-user"></i>
-
-
-<input id="nome"
-placeholder="Nome">
-
-
-
-</div>
-
-
-<div class="campo">
-
-
-<i class="fa-solid fa-phone"></i>
-
-
-
-<input
-id="telefone"
-type="tel"
-inputmode="numeric"
-placeholder="Telefone">
-
-
-
-</div>
-
-
-<button class="salvar-contato" onclick="salvarContato()">
-
-
-Salvar 💗
-
-
-</button>
-
-
-
-
-</div>
 
 <main class="container">
 
+    <section id="formulario" class="form-contato" hidden>
+        <h2 class="form-titulo" id="tituloFormulario">Novo contato 💗</h2>
 
+        <p class="form-descricao">
+            Preencha os dados de alguém em quem você confia.
+        </p>
 
-<div class="cards" id="listaContatos">
+        <form id="formContato">
 
+            <div class="campo">
+                <label for="nome">Nome do contato</label>
 
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-user"></i>
 
-</div>
+                    <input
+                        id="nome"
+                        type="text"
+                        placeholder="Ex.: Maria da Silva"
+                        autocomplete="name"
+                        maxlength="100"
+                        required
+                    >
+                </div>
 
+                <p class="dica">
+                    Exemplo: Maria da Silva. O exemplo desaparece quando você digitar.
+                </p>
+            </div>
 
+            <div class="campo">
+                <label for="telefone">Telefone com DDD</label>
+
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-phone"></i>
+
+                    <input
+                        id="telefone"
+                        type="tel"
+                        inputmode="tel"
+                        placeholder="Ex.: (11) 98765-4321"
+                        autocomplete="tel"
+                        maxlength="20"
+                        required
+                    >
+                </div>
+
+                <p class="dica">
+                    Informe o DDD e o número do WhatsApp. Ex.: (11) 98765-4321.
+                </p>
+            </div>
+
+            <div class="acoes-formulario">
+                <button type="submit" class="salvar-contato" id="botaoSalvar">
+                    <i class="fa-solid fa-heart"></i> Salvar contato
+                </button>
+
+                <button
+                    type="button"
+                    class="cancelar-contato"
+                    onclick="fecharFormulario()"
+                >
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <section>
+        <div class="lista-cabecalho">
+            <h2><i class="fa-solid fa-address-book"></i> Contatos cadastrados</h2>
+            <span class="contador" id="contador">0 contatos</span>
+        </div>
+
+        <div id="listaContatos" class="cards"></div>
+    </section>
 
 </main>
 
+<div class="sos-legenda">Botão de emergência</div>
 
-
-<button class="sos-btn" onclick="enviarSOS()">
-
-
-🚨
-
-
+<button
+    class="sos-btn"
+    onclick="enviarSOS()"
+    aria-label="Acionar emergência"
+    title="Acionar emergência"
+>
+    <i class="fa-solid fa-triangle-exclamation"></i>
 </button>
-
-
 
 <script>
+    const API = "http://localhost:8080/contatos";
+
+    let contatos = [];
+    let contatoEditando = null;
+    let enviandoFormulario = false;
+
+    const formulario = document.getElementById("formulario");
+    const formContato = document.getElementById("formContato");
+    const campoNome = document.getElementById("nome");
+    const campoTelefone = document.getElementById("telefone");
+    const lista = document.getElementById("listaContatos");
+    const contador = document.getElementById("contador");
+    const botaoSalvar = document.getElementById("botaoSalvar");
+
+    function voltarInicio() {
+        window.location.href = "home.html";
+    }
+
+    function abrirFormulario() {
+        formulario.hidden = false;
+        formulario.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+        setTimeout(() => campoNome.focus(), 250);
+    }
+
+    function fecharFormulario() {
+        formulario.hidden = true;
+        formContato.reset();
+        contatoEditando = null;
+
+        document.getElementById("tituloFormulario").textContent =
+            "Novo contato 💗";
+
+        botaoSalvar.innerHTML =
+            '<i class="fa-solid fa-heart"></i> Salvar contato';
+    }
+
+    async function carregarContatos() {
+        lista.innerHTML = `
+            <p class="erro">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Carregando contatos...
+            </p>
+        `;
+
+        try {
+            const resposta = await fetch(API);
+
+            if (!resposta.ok) {
+                throw new Error("Não foi possível carregar os contatos.");
+            }
+
+            contatos = await resposta.json();
+            mostrarContatos();
+
+        } catch (erro) {
+            lista.innerHTML = `
+                <p class="erro">
+                    Não foi possível carregar os contatos.
+                    Verifique se o backend está funcionando.
+                </p>
+            `;
+
+            console.error(erro);
+        }
+    }
+
+    function mostrarContatos() {
+        lista.innerHTML = "";
+
+        contador.textContent =
+            contatos.length + (contatos.length === 1
+                ? " contato"
+                : " contatos");
+
+        if (contatos.length === 0) {
+            lista.innerHTML = `
+                <div class="vazio" style="grid-column: 1 / -1;">
+                    <i class="fa-solid fa-heart"></i>
+                    <h3>Seus contatos aparecerão aqui</h3>
+                    <p>
+                        Você ainda não cadastrou ninguém.<br>
+                        Clique em "Adicionar contato" para começar.
+                    </p>
+                </div>
+            `;
+            return;
+        }
+
+        contatos.forEach(contato => {
+            const card = document.createElement("article");
+            card.className = "card";
+
+            const info = document.createElement("div");
+            info.className = "contato-info";
+
+            const avatar = document.createElement("div");
+            avatar.className = "avatar";
+            avatar.innerHTML = '<i class="fa-solid fa-user"></i>';
+
+            const texto = document.createElement("div");
+            texto.className = "contato-texto";
+
+            const nome = document.createElement("h3");
+            nome.textContent = contato.nome;
+
+            const telefone = document.createElement("p");
+            telefone.innerHTML = '<i class="fa-solid fa-phone"></i> ';
+            telefone.append(
+                document.createTextNode(contato.telefone)
+            );
+
+            texto.append(nome, telefone);
+            info.append(avatar, texto);
+
+            const acoes = document.createElement("div");
+            acoes.className = "acoes-card";
+
+            const editar = document.createElement("button");
+            editar.className = "acao-card editar";
+            editar.innerHTML = '<i class="fa-solid fa-pen"></i> Editar';
+            editar.addEventListener("click", () => {
+                editarContato(contato.id);
+            });
+
+            const excluir = document.createElement("button");
+            excluir.className = "acao-card excluir";
+            excluir.innerHTML = '<i class="fa-solid fa-trash"></i> Excluir';
+            excluir.addEventListener("click", () => {
+                excluirContato(contato.id);
+            });
+
+            acoes.append(editar, excluir);
+            card.append(info, acoes);
+            lista.append(card);
+        });
+    }
 
+    formContato.addEventListener("submit", async function(evento) {
+        evento.preventDefault();
+
+        if (enviandoFormulario) return;
+
+        const nome = campoNome.value.trim();
+        const telefone = campoTelefone.value.trim();
+        const digitos = telefone.replace(/\D/g, "");
+
+        if (!nome || !telefone) {
+            alert("Preencha o nome e o telefone.");
+            return;
+        }
+
+        if (digitos.length < 10 || digitos.length > 13) {
+            alert("Digite um telefone válido com DDD.");
+            campoTelefone.focus();
+            return;
+        }
+
+        enviandoFormulario = true;
+        botaoSalvar.disabled = true;
+        botaoSalvar.textContent = "Salvando...";
+
+        const dados = { nome, telefone };
+
+        try {
+            const editando = contatoEditando !== null;
+
+            const resposta = await fetch(
+                editando ? `${API}/${contatoEditando}` : API,
+                {
+                    method: editando ? "PUT" : "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(dados)
+                }
+            );
 
+            if (!resposta.ok) {
+                throw new Error("Não foi possível salvar o contato.");
+            }
 
-let contatos=[];
-
-
-
-function voltarInicio(){
-
-
-window.location.href="home.html";
-
-
-}
-
-
-function abrirFormulario(){
-
-
-document.getElementById("formulario").style.display="block";
-
-
-}
-
-
-function carregarContatos(){
-
-
-
-fetch("http://localhost:8080/contatos")
-
-.then(res=>res.json())
-
-
-.then(data=>{
-
-
-contatos=data;
-
-
-mostrarContatos();
-
-
-
-});
-
-
-}
-
-
-function mostrarContatos(){
-
-
-
-let lista=document.getElementById("listaContatos");
-
-
-
-lista.innerHTML="";
-
-
-contatos.forEach((c,index)=>{
-
-
-lista.innerHTML += `
-
-
-
-
-<div class="card">
-
-
-
-<i class="fa-solid fa-user"></i>
-
-
-
-<h3>${c.nome}</h3>
-
-
-
-<p>${c.telefone}</p>
-
-<button class="botao emergencia"
-onclick="enviarSOS(${index})">
-🚨 Emergência
-</button>
-
-<button class="botao"
-onclick="editarContato(${c.id})">
-✏️ Editar
-</button>
-
-
-<button class="botao excluir"
-onclick="excluirContato(${c.id})">
-
-
-🗑️ Excluir
-
-
-</button>
-
-
-</div>
-
-
-
-
-`;
-
-
-
-});
-
-
-
-}
-
-
-function salvarContato(){
-
-
-let nome =
-document.getElementById("nome").value;
-
-
-
-let telefone =
-document.getElementById("telefone").value;
-
-
-if(nome=="" || telefone==""){
-
-
-alert("Preencha tudo");
-
-
-return;
-
-
-}
-
-
-
-fetch("http://localhost:8080/contatos",
-{
-
-
-method:"POST",
-
-
-headers:{
-
-
-"Content-Type":"application/json"
-
-},
-
-
-body:JSON.stringify({
-
-nome:nome,
-
-telefone:telefone
-
-
-})
-
-})
-
-
-.then(res=>res.json())
-
-
-.then(()=>{
-
-
-alert("Contato salvo 🌸");
-
-carregarContatos();
-
-document.getElementById("nome").value="";
-
-document.getElementById("telefone").value="";
-
-
-
-});
-
-
-}
-
-function excluirContato(id){
-
-
-
-let confirmar=confirm(
-"Deseja excluir esse contato?"
-);
-
-
-if(!confirmar){
-
-return;
-
-}
-
-
-fetch(
-"http://localhost:8080/contatos/"+id,
-
-{
-
-method:"DELETE"
-
-}
-
-)
-
-.then(res=>{
-
-
-if(res.ok){
-
-alert("Contato excluído 🌸");
-
-carregarContatos();
-
-
-}else{
-
-alert("Erro ao excluir");
-
-}
-
-
-});
-
-
-}
-
-
-function editarContato(id){
-
-let contato=contatos.find(
-c=>c.id==id
-);
-
-
-let novoNome=prompt(
-"Novo nome:",
-contato.nome
-);
-
-
-let novoTelefone=prompt(
-"Novo telefone:",
-contato.telefone
-);
-
-
-if(novoNome==null || novoTelefone==null){
-
-return;
-
-}
-
-
-fetch(
-"http://localhost:8080/contatos/"+id,
-
-{
-
-method:"PUT",
-
-headers:{
-
-"Content-Type":"application/json"
-
-},
-
-
-body:JSON.stringify({
-
-    nome:novoNome,
-
-telefone:novoTelefone
-
-})
-
-
-}
-
-)
-
-.then(res=>res.json())
-
-.then(()=>{
-
-alert("Contato atualizado 🌸");
-
-carregarContatos();
-
-
-});
-
-
-}
-
-
-
-function enviarSOS(index){
-
-let contato = contatos[index];
-
-let usuario =
-JSON.parse(localStorage.getItem("usuario")) || {};
-
-let nomeUsuario =
-usuario.nome || "Usuária";
-
-let mensagem =
-`🚨 ALERTA REDE ROSA 🌸
-
-Olá ${contato.nome}.
-
-${nomeUsuario} precisa de ajuda.
-
-Ela acionou o botão de emergência.
-
-Por favor, entre em contato imediatamente. 💗`;
-
-let telefone = contato.telefone.replace(/\D/g,'');
-
-let link =
-`https://wa.me/55${telefone}?text=${encodeURIComponent(mensagem)}`;
-
-window.open(link,"_blank");
-}
-
-
-carregarContatos();
-
-
+            alert(editando
+                ? "Contato atualizado com sucesso! 🌸"
+                : "Contato cadastrado com sucesso! 🌸");
+
+            fecharFormulario();
+            await carregarContatos();
+
+        } catch (erro) {
+            alert("Erro ao salvar. Verifique se o servidor está funcionando.");
+            console.error(erro);
+
+        } finally {
+            enviandoFormulario = false;
+            botaoSalvar.disabled = false;
+
+            if (contatoEditando !== null) {
+                botaoSalvar.innerHTML =
+                    '<i class="fa-solid fa-heart"></i> Salvar alterações';
+            } else {
+                botaoSalvar.innerHTML =
+                    '<i class="fa-solid fa-heart"></i> Salvar contato';
+            }
+        }
+    });
+
+    async function editarContato(id) {
+        const contato = contatos.find(c => c.id == id);
+
+        if (!contato) return;
+
+        contatoEditando = id;
+
+        campoNome.value = contato.nome;
+        campoTelefone.value = contato.telefone;
+
+        document.getElementById("tituloFormulario").textContent =
+            "Editar contato ✏️";
+
+        botaoSalvar.innerHTML =
+            '<i class="fa-solid fa-heart"></i> Salvar alterações';
+
+        abrirFormulario();
+    }
+
+    async function excluirContato(id) {
+        const contato = contatos.find(c => c.id == id);
+
+        if (!contato) return;
+
+        const confirmar = confirm(
+            `Deseja excluir o contato ${contato.nome}?`
+        );
+
+        if (!confirmar) return;
+
+        try {
+            const resposta = await fetch(`${API}/${id}`, {
+                method: "DELETE"
+            });
+
+            if (!resposta.ok) {
+                throw new Error("Falha ao excluir contato.");
+            }
+
+            alert("Contato excluído com sucesso! 🌸");
+            await carregarContatos();
+
+        } catch (erro) {
+            alert("Não foi possível excluir o contato.");
+            console.error(erro);
+        }
+    }
+
+    function enviarSOS() {
+        if (contatos.length === 0) {
+            alert("Cadastre pelo menos um contato antes de acionar o SOS.");
+            return;
+        }
+
+        const usuario =
+            JSON.parse(localStorage.getItem("usuario") || "{}");
+
+        const nomeUsuario = usuario.nome || "Usuária";
+
+        const confirmar = confirm(
+            "Deseja preparar o alerta de emergência para todos os seus contatos?"
+        );
+
+        if (!confirmar) return;
+
+        contatos.forEach((contato, index) => {
+            let telefone = String(contato.telefone).replace(/\D/g, "");
+
+            if (!telefone.startsWith("55")) {
+                telefone = "55" + telefone;
+            }
+
+            const mensagem =
+                `🚨 ALERTA REDE ROSA 🌸\n\n` +
+                `Olá ${contato.nome}.\n\n` +
+                `${nomeUsuario} precisa de ajuda.\n\n` +
+                `Ela acionou o botão de emergência.\n` +
+                `Por favor, entre em contato imediatamente. 💗`;
+
+            const link =
+                `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+
+            // Abre as conversas com a mensagem preparada.
+            // O WhatsApp ainda exige o envio da mensagem pela usuária.
+            const janela = window.open(link, "_blank");
+
+            if (!janela) {
+                console.warn(
+                    "O navegador bloqueou a abertura para:",
+                    contato.nome
+                );
+            }
+        });
+    }
+
+    carregarContatos();
 </script>
 
-
-
-
 </body>
-
 </html>
