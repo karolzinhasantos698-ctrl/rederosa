@@ -374,17 +374,20 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="css/refresh.css?v=perfil-20261027-2">
 </head>
 
-<body class="perfil-body">
+<body class="perfil-body rr-app">
+    <a class="rr-skip" href="#conteudo">Pular para o conteúdo</a>
 
 <header class="perfil-header">
+<a class="rr-page-brand" href="home.html" aria-label="Rede Rosa — voltar ao início"><img class="rr-logo" src="assets/logo-rede-rosa-transparente.png" width="1238" height="1271" alt=""><span>Rede Rosa</span></a>
     <a href="home.html" class="voltar">← Voltar</a>
     <h1>Meu Perfil 🌸</h1>
     <span aria-hidden="true"></span>
 </header>
 
-<main class="perfil-container">
+<main id="conteudo" class="perfil-container">
     <section class="perfil-card">
 
         <div class="perfil-topo">
@@ -421,30 +424,34 @@
             </div>
         </div>
 
-        <button class="editar-btn" onclick="editar()">
+        <button class="editar-btn" id="botaoEditarPerfil" type="button" aria-controls="editarArea" aria-expanded="false" onclick="editar()">
             <i class="fa-solid fa-pen"></i>
             Editar perfil
         </button>
 
-        <div id="editarArea" class="editar-area" hidden>
+        <form id="editarArea" class="editar-area" onsubmit="salvar(event)" hidden>
             <h3>✏️ Editar informações</h3>
+            <label for="novoNome">Nome completo</label>
 
             <div class="campo">
                 <i class="fa-solid fa-user"></i>
-                <input id="novoNome" placeholder="Novo nome"
-                    autocomplete="name">
+                <input id="novoNome" aria-label="Novo nome" placeholder="Novo nome"
+                    autocomplete="name" maxlength="255" required>
             </div>
 
+            <label for="novoEmail">E-mail</label>
             <div class="campo">
                 <i class="fa-solid fa-envelope"></i>
                 <input id="novoEmail" type="email"
-                    placeholder="Novo email" autocomplete="email">
+                    aria-label="Novo email" placeholder="Novo email" autocomplete="email" maxlength="255" required>
             </div>
 
-            <button class="salvar-contato" onclick="salvar()">
+            <button class="salvar-contato" id="botaoSalvarPerfil" type="submit">
                 💗 Salvar alterações
             </button>
-        </div>
+            <button class="acao-secundaria" id="botaoCancelarPerfil" type="button" onclick="editar()">Cancelar edição</button>
+        </form>
+        <p id="statusPerfil" class="status-localizacao" role="status" aria-live="polite"></p>
 
         <section class="personalizar-area">
             <h3>🖼️ Personalizar foto de perfil</h3>
@@ -503,8 +510,10 @@
     </section>
 </main>
 
+<script src="js/usuario.js"></script>
 <script>
     let usuario = {};
+    let salvandoPerfil = false;
     let chavePerfil = "";
     let fotoTemporaria = null;
 
@@ -563,11 +572,7 @@
     }
 
     function carregarUsuario() {
-        try {
-            usuario = JSON.parse(localStorage.getItem("usuario")) || {};
-        } catch (erro) {
-            usuario = {};
-        }
+        usuario = RedeRosaUsuario.ler() || {};
 
         chavePerfil = obterChavePerfil(usuario);
 
@@ -610,70 +615,100 @@
         desenharAvatares();
     }
 
+    function mostrarStatusPerfil(mensagem, tipo) {
+        const status = document.getElementById("statusPerfil");
+        status.textContent = mensagem;
+        status.className = "status-localizacao status-" + tipo;
+    }
+
     function editar() {
+        if (salvandoPerfil) return;
         const area = document.getElementById("editarArea");
         area.hidden = !area.hidden;
-
+        document.getElementById("botaoEditarPerfil").setAttribute("aria-expanded", String(!area.hidden));
         if (!area.hidden) {
             document.getElementById("novoNome").value = usuario.nome || "";
             document.getElementById("novoEmail").value = usuario.email || "";
+            mostrarStatusPerfil("", "info");
+            document.getElementById("novoNome").focus();
         }
     }
 
-    async function salvar() {
+    async function salvar(event) {
+        if (event) event.preventDefault();
+        if (salvandoPerfil) return;
         const novoNome = document.getElementById("novoNome").value.trim();
         const novoEmail = document.getElementById("novoEmail").value.trim();
-
-        if (!novoNome || !novoEmail) {
-            alert("Preencha todos os campos.");
+        if (!novoNome || !novoEmail || novoNome.length > 255 || novoEmail.length > 255) {
+            mostrarStatusPerfil("Preencha nome e e-mail com até 255 caracteres cada.", "erro");
             return;
         }
-
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(novoEmail)) {
-            alert("Digite um email válido.");
+            mostrarStatusPerfil("Digite um e-mail válido.", "erro");
             return;
         }
-
         if (usuario.id == null) {
-            alert("ID da usuária não encontrado. Não foi possível atualizar.");
+            mostrarStatusPerfil("Não foi possível identificar sua conta. Entre novamente para editar o perfil.", "erro");
             return;
         }
-
+        const botao = document.getElementById("botaoSalvarPerfil");
+        const textoBotao = botao.textContent;
+        const controle = new AbortController();
+        const timeout = setTimeout(() => controle.abort(), 15000);
+        salvandoPerfil = true;
+        botao.disabled = true;
+        document.getElementById("botaoEditarPerfil").disabled = true;
+        document.getElementById("botaoCancelarPerfil").disabled = true;
+        botao.textContent = "Salvando…";
+        mostrarStatusPerfil("Salvando suas informações…", "info");
         try {
-            const resposta = await fetch(
-                "http://localhost:8080/usuarias/" +
-                encodeURIComponent(usuario.id),
-                {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        nome: novoNome,
-                        email: novoEmail
-                    })
-                }
-            );
-
-            if (!resposta.ok) {
-                throw new Error("Erro HTTP: " + resposta.status);
+            const resposta = await fetch("http://localhost:8080/usuarias/" + encodeURIComponent(usuario.id), {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                signal: controle.signal,
+                body: JSON.stringify({ nome: novoNome, email: novoEmail })
+            });
+            const texto = await resposta.text();
+            let dados = null;
+            if (texto.trim()) {
+                try { dados = JSON.parse(texto); } catch { /* Erros do servidor podem não ser JSON. */ }
             }
-
-            const data = await resposta.json();
-
-            // Preserva o ID e outros campos caso a API não os retorne.
-            usuario = { ...usuario, ...data };
-
-            localStorage.setItem("usuario", JSON.stringify(usuario));
-
+            if (!resposta.ok) {
+                const mensagens = {
+                    400: "Confira seu nome e e-mail e tente novamente.",
+                    404: "Sua conta não foi encontrada. Entre novamente antes de editar.",
+                    409: "Este e-mail já está sendo usado por outra conta."
+                };
+                throw new Error(dados?.mensagem || mensagens[resposta.status] || "O servidor não conseguiu salvar seu perfil. Tente novamente.");
+            }
+            const atualizado = RedeRosaUsuario.normalizar(dados);
+            if (!atualizado || !atualizado.nome || typeof atualizado.email !== "string") {
+                throw new Error("O servidor não confirmou a atualização. Entre novamente e tente salvar outra vez.");
+            }
+            usuario = { ...usuario, ...atualizado };
+            try {
+                localStorage.setItem("usuario", JSON.stringify(usuario));
+            } catch {
+                mostrarStatusPerfil("As alterações foram salvas no servidor, mas o navegador não conseguiu atualizar sua sessão. Entre novamente.", "erro");
+                return;
+            }
             carregarUsuario();
-
             document.getElementById("editarArea").hidden = true;
-
-            alert("Perfil atualizado 🌸");
+            document.getElementById("botaoEditarPerfil").setAttribute("aria-expanded", "false");
+            mostrarStatusPerfil("Perfil atualizado com sucesso!", "sucesso");
         } catch (erro) {
-            console.error("Erro ao atualizar perfil:", erro);
-            alert("Erro ao atualizar perfil: " + erro.message);
+            mostrarStatusPerfil(erro.name === "AbortError"
+                ? "O servidor demorou para responder. Tente novamente."
+                : erro instanceof TypeError
+                    ? "Não foi possível conectar ao servidor. Confira se o backend está rodando e tente novamente."
+                    : erro.message, "erro");
+        } finally {
+            clearTimeout(timeout);
+            salvandoPerfil = false;
+            botao.disabled = false;
+            botao.textContent = textoBotao;
+            document.getElementById("botaoEditarPerfil").disabled = false;
+            document.getElementById("botaoCancelarPerfil").disabled = false;
         }
     }
 

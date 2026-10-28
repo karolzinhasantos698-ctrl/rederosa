@@ -794,11 +794,13 @@
 
     </style>
 
+    <link rel="stylesheet" href="css/refresh.css">
 </head>
 
 
 
-<body class="ocorrencia-body">
+<body class="ocorrencia-body rr-app">
+    <a class="rr-skip" href="#conteudo">Pular para o conteúdo</a>
 
 
 
@@ -807,6 +809,7 @@
 ===================================================== -->
 
 <header class="ocorrencia-header">
+<a class="rr-page-brand" href="home.html" aria-label="Rede Rosa — voltar ao início"><img class="rr-logo" src="assets/logo-rede-rosa-transparente.png" width="1238" height="1271" alt=""><span>Rede Rosa</span></a>
 
 
     <a
@@ -835,7 +838,7 @@
      CONTEÚDO
 ===================================================== -->
 
-<main class="ocorrencia-container">
+<main id="conteudo" class="ocorrencia-container">
 
 
 
@@ -855,7 +858,7 @@
         <input
             id="titulo"
             type="text"
-            placeholder="Título da ocorrência"
+            aria-label="Título da ocorrência" placeholder="Título da ocorrência"
             autocomplete="off"
         >
 
@@ -863,7 +866,7 @@
 
         <textarea
             id="descricao"
-            placeholder="Descreva o que aconteceu"
+            aria-label="Descreva o que aconteceu" placeholder="Descreva o que aconteceu"
         ></textarea>
 
 

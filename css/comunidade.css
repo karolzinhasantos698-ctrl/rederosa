@@ -1,0 +1,543 @@
+.rr-app.rr-comunidade .comunidade-container {
+    width:min(1120px,calc(100% - 48px));
+    max-width:1120px;
+    display:grid;
+    gap:24px;
+    margin:32px auto 80px
+}
+.comunidade-eyebrow {
+    font-size:10px;
+    letter-spacing:.12em;
+    font-weight:700;
+    color:#873753;
+    margin:0 0 7px
+}
+.titulo-salas {
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:24px;
+    margin-bottom:18px
+}
+.titulo-salas h2 {
+    font-size:23px;
+    color:#702e49
+}
+.titulo-salas>p {
+    font-size:12px;
+    max-width:300px;
+    color:#805469
+}
+.lista-salas {
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:16px
+}
+.rr-app .botao-sala {
+    position:relative;
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    padding:22px;
+    text-align:left;
+    background:#fce8f0;
+    border:1px solid #e5b5c9;
+    border-radius:18px;
+    color:#563344;
+    box-shadow:0 6px 24px #7026460a;
+    min-width:0;
+    transition:border-color .15s,background .15s
+}
+.rr-app .botao-sala:hover {
+    background:#f8dfeb;
+    border-color:#ce7ea1
+}
+.rr-app .botao-sala[aria-pressed=true] {
+    background:#f3c3d7;
+    border:2px solid #bd3469;
+    padding:21px
+}
+.icone-sala {
+    flex:0 0 38px;
+    height:38px;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:#f5cfdf;
+    font-size:21px;
+    color:#a73561
+}
+.botao-sala strong {
+    display:block;
+    font-size:15px;
+    line-height:1.45;
+    margin-bottom:5px
+}
+.botao-sala small {
+    display:block;
+    font-size:11px;
+    color:#805469;
+    line-height:1.6
+}
+.botao-sala .sala-selecionada {
+    font-size:10px;
+    color:#9b315b;
+    margin-top:9px;
+    font-weight:600
+}
+.rr-app .conversa-comunidade {
+    padding:28px;
+    min-width:0
+}
+.cabecalho-conversa {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    margin-bottom:18px
+}
+.rr-app .cabecalho-conversa h2 {
+    margin:0 0 7px;
+    font-size:24px
+}
+.cabecalho-conversa #descricaoSala {
+    font-size:13px;
+    color:#805469
+}
+.selo-pessoas {
+    font-size:11px;
+    background:#efd3e0;
+    color:#803451;
+    border-radius:9px;
+    padding:7px 12px;
+    white-space:nowrap
+}
+.linha-atualizacao {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin:12px 0
+}
+.conexao-sala {
+    font-size:11px;
+    color:#805469
+}
+.conexao-sala.conectada {
+    color:#286240
+}
+.conexao-sala.falha {
+    color:#8b4b17
+}
+.rr-app #atualizarSala,.rr-app .historico-anterior,.rr-app .acao-denunciar {
+    padding:7px 10px;
+    border:1px solid #e5b5c9;
+    border-radius:9px;
+    background:#fbe0eb;
+    color:#853453;
+    font-size:11px;
+    min-height:34px
+}
+.rr-app .historico-anterior {
+    width:100%;
+    margin:0 0 10px
+}
+.rr-app.rr-comunidade .mensagens {
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    height:440px;
+    min-height:250px;
+    max-height:none;
+    padding:20px;
+    margin:0;
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior:contain;
+    background:#fae0eb;
+    border:1px solid #e5b5c9;
+    border-radius:16px;
+    scroll-behavior:auto;
+    gap:14px
+}
+.rr-app.rr-comunidade .mensagem {
+    display:block;
+    flex-shrink:0;
+    min-height:0;
+    height:auto;
+    width:fit-content;
+    max-width:min(82%,700px);
+    padding:14px 17px;
+    margin:0;
+    border-radius:15px;
+    white-space:normal;
+    box-shadow:none;
+    text-align:left
+}
+.rr-app.rr-comunidade .mensagem.minha {
+    align-self:flex-end;
+    background:#b13a68;
+    color:#fff;
+    border:1px solid #b13a68;
+    border-bottom-right-radius:4px
+}
+.rr-app.rr-comunidade .mensagem.outra {
+    align-self:flex-start;
+    background:#fceef4;
+    color:#563344;
+    border:1px solid #e5b5c9;
+    border-bottom-left-radius:4px
+}
+.cabecalho-mensagem {
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:7px
+}
+.cabecalho-mensagem strong {
+    font-size:12px;
+    font-weight:600
+}
+.cabecalho-mensagem time {
+    font-size:10px;
+    opacity:.85;
+    white-space:nowrap
+}
+.rr-app.rr-comunidade .mensagem p {
+    margin:0;
+    font-size:14px;
+    line-height:1.7;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    word-break:normal
+}
+.rodape-mensagem {
+    margin-top:9px;
+    text-align:right
+}
+.rr-app .acao-denunciar {
+    min-height:30px;
+    padding:3px 7px;
+    font-size:10px;
+    border-color:transparent;
+    background:transparent;
+    color:#916176
+}
+.rr-app .acao-denunciar:hover {
+    border-color:#e5b5c9;
+    background:#f8dfeb
+}
+.conversa-vazia {
+    margin:auto!important;
+    font-size:13px;
+    text-align:center;
+    color:#805469;
+    padding:22px
+}
+.rr-app .form-mensagem {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:10px;
+    margin-top:16px;
+    align-items:stretch
+}
+.rr-app .form-mensagem textarea {
+    width:100%;
+    resize:vertical;
+    min-height:60px;
+    max-height:180px;
+    border:1px solid #dfa9c0;
+    background:#fff1f6;
+    color:#563344;
+    border-radius:12px;
+    padding:14px;
+    font:inherit;
+    font-size:14px;
+    line-height:1.5
+}
+.rr-app .form-mensagem button[type=submit],.rr-app #enviarDenuncia {
+    border:0;
+    background:#bd3469;
+    color:#fff;
+    border-radius:12px;
+    padding:13px 22px;
+    font-size:14px;
+    font-weight:600;
+    min-height:48px
+}
+.rr-app .form-mensagem button[type=submit]:hover,.rr-app #enviarDenuncia:hover {
+    background:#9e2856
+}
+.rodape-editor {
+    grid-column:1/-1;
+    display:flex;
+    justify-content:space-between;
+    gap:14px;
+    font-size:10px;
+    color:#805469
+}
+.novas-mensagens {
+    display:block;
+    width:fit-content;
+    margin:12px auto 0;
+    padding:8px 16px;
+    border-radius:20px;
+    border:1px solid #d28aa9;
+    background:#f6cbdc;
+    color:#803451;
+    font:inherit;
+    font-size:12px;
+    font-weight:600
+}
+.aviso-conversa:empty {
+    display:none
+}
+.aviso-conversa {
+    font-size:13px;
+    line-height:1.6;
+    padding:12px 14px;
+    margin-top:14px;
+    background:#f5d1e1;
+    border-radius:12px;
+    color:#704253
+}
+.aviso-conversa.erro {
+    color:#8b2546;
+    background:#fbd6df
+}
+.aviso-conversa.sucesso {
+    color:#245d3a;
+    background:#dcefe1
+}
+.combinado-sala {
+    font-size:11px;
+    color:#805469;
+    line-height:1.7;
+    margin-top:18px
+}
+.acesso-comunidade {
+    padding:24px;
+    background:#f7d5e4;
+    border:1px solid #dfa9c0;
+    border-radius:16px;
+    text-align:center
+}
+.acesso-comunidade h3 {
+    color:#803451;
+    font-size:20px
+}
+.acesso-comunidade p {
+    font-size:13px;
+    max-width:550px;
+    margin:12px auto 20px;
+    color:#805469
+}
+.entrar-comunidade {
+    display:inline-flex;
+    justify-content:center;
+    padding:13px 22px;
+    border-radius:12px;
+    background:#bd3469;
+    color:#fff;
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px
+}
+.rr-app .rosa-area>summary {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:18px;
+    cursor:pointer;
+    font-weight:600;
+    color:#803451
+}
+.rosa-area summary small {
+    font-size:11px;
+    font-weight:400;
+    color:#805469
+}
+.rosa-area>p {
+    font-size:12px;
+    margin:18px 0;
+    color:#805469
+}
+.rr-app .mensagens-rosa {
+    height:300px
+}
+.rr-app .mensagens-rosa strong {
+    display:block;
+    font-size:12px;
+    margin-bottom:7px
+}
+.dialog-denuncia {
+    width:min(520px,calc(100% - 28px));
+    max-height:calc(100dvh - 40px);
+    margin:auto;
+    padding:28px;
+    border:1px solid #e5b5c9;
+    border-radius:22px;
+    background:#fce8f0;
+    color:#563344;
+    box-shadow:0 24px 70px #28132040
+}
+.dialog-denuncia::backdrop {
+    background:#35263185;
+    backdrop-filter:blur(3px)
+}
+.dialog-denuncia h2 {
+    font-size:22px;
+    color:#803451;
+    margin-bottom:14px
+}
+.dialog-denuncia #resumoDenuncia {
+    font-size:12px;
+    color:#805469;
+    margin-bottom:18px;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere
+}
+.dialog-denuncia label {
+    display:block;
+    margin-bottom:8px
+}
+.dialog-denuncia textarea {
+    display:block;
+    width:100%;
+    padding:12px;
+    resize:vertical;
+    border:1px solid #dfa9c0;
+    border-radius:12px;
+    background:#fff1f6;
+    color:#563344;
+    font:inherit;
+    font-size:14px
+}
+.acoes-denuncia {
+    display:flex;
+    justify-content:flex-end;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px
+}
+.rr-comunidade .sr-only {
+    position:absolute;
+    width:1px;
+    height:1px;
+    padding:0;
+    margin:-1px;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+    border:0
+}
+@media(max-width:900px) {
+    .lista-salas {
+        gap:10px
+    }
+    .rr-app .botao-sala {
+        padding:17px;
+        flex-direction:column;
+        gap:10px
+    }
+    .rr-app .botao-sala[aria-pressed=true] {
+        padding:16px
+    }
+    .titulo-salas {
+        align-items:start;
+        flex-direction:column;
+        gap:8px
+    }
+    .titulo-salas>p {
+        max-width:none
+    }
+}
+@media(max-width:600px) {
+    .rr-app.rr-comunidade .comunidade-container {
+        width:calc(100% - 28px);
+        margin:20px auto 70px;
+        gap:18px
+    }
+    .lista-salas {
+        grid-template-columns:1fr
+    }
+    .rr-app .botao-sala {
+        padding:17px;
+        flex-direction:row;
+        gap:12px
+    }
+    .rr-app .botao-sala[aria-pressed=true] {
+        padding:16px
+    }
+    .botao-sala .sala-selecionada {
+        margin-top:5px
+    }
+    .rr-app .conversa-comunidade {
+        padding:19px
+    }
+    .cabecalho-conversa {
+        align-items:start;
+        gap:12px
+    }
+    .rr-app .cabecalho-conversa h2 {
+        font-size:21px
+    }
+    .selo-pessoas {
+        padding:5px 8px;
+        font-size:9px
+    }
+    .rr-app.rr-comunidade .mensagens {
+        height:400px;
+        padding:13px;
+        gap:12px
+    }
+    .rr-app.rr-comunidade .mensagem {
+        max-width:94%;
+        padding:12px 14px
+    }
+    .cabecalho-mensagem {
+        gap:12px
+    }
+    .rr-app.rr-comunidade .mensagem p {
+        font-size:13px
+    }
+    .rr-app .form-mensagem {
+        gap:8px
+    }
+    .rr-app .form-mensagem button[type=submit] {
+        padding:12px;
+        font-size:12px
+    }
+    .rr-app .form-mensagem textarea {
+        padding:12px;
+        font-size:13px
+    }
+    .rodape-editor {
+        font-size:9px
+    }
+    .rr-app .rosa-area>summary {
+        align-items:start;
+        flex-direction:column;
+        gap:5px
+    }
+    .dialog-denuncia {
+        padding:23px
+    }
+    .acesso-comunidade {
+        padding:22px 16px
+    }
+}
+
+/* A conversa com a Rosa vem primeiro; salas abrem somente por escolha explícita. */
+.rr-app .cabecalho-rosa { display:flex; justify-content:space-between; align-items:center; gap:16px; }
+.rr-app .cabecalho-rosa h2 { margin:0; font-size:23px; color:#702e49; }
+.rr-app .acoes-cabecalho-sala { display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-end; gap:10px; }
+.rr-app #fecharConversa { font-size:11px; min-height:36px; padding:8px 12px; }
+.rr-app #painelComunidade { scroll-margin-top:18px; }
+@media(max-width:600px) {
+    .rr-app .cabecalho-rosa { align-items:flex-start; flex-direction:column; gap:10px; }
+    .rr-app .cabecalho-rosa h2 { font-size:21px; }
+    .rr-app .acoes-cabecalho-sala { flex-direction:column; align-items:flex-end; }
+}
+.rr-app.rr-comunidade .mensagens-rosa { height: 320px; }

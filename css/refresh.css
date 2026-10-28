@@ -1,0 +1,413 @@
+﻿/* Rede Rosa — identidade visual compartilhada. Carregar após os estilos das páginas. */
+:root {
+    --rr-bg: #f6d5e2;
+    --rr-surface: #fce8f0;
+    --rr-ink: #352631;
+    --rr-muted: #766570;
+    --rr-primary: #bd3469;
+    --rr-primary-hover: #9e2856;
+    --rr-soft: #f9e0eb;
+    --rr-border: #e5b5c9;
+    --rr-shadow: 0 6px 24px rgba(112, 38, 70, .065);
+    --rr-radius: 22px;
+}
+html { scroll-behavior: smooth; }
+body.rr-app {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    color: var(--rr-ink);
+    background: var(--rr-bg);
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+}
+.rr-app *, .rr-app *::before, .rr-app *::after { box-sizing: border-box; }
+/* Mantém os estados dos formulários, mapas e painéis mesmo com regras antigas de display. */
+.rr-app [hidden] { display: none !important; }
+.rr-app :is(button, input, select, textarea) { font: inherit; }
+.rr-app :is(input, textarea, select) { min-width: 0; max-width: 100%; }
+.rr-app :is(button, a, input, textarea, select):focus-visible {
+    outline: 3px solid #9d3e70;
+    outline-offset: 4px;
+}
+.rr-app :is(button, a) { -webkit-tap-highlight-color: transparent; }
+.rr-app button { cursor: pointer; }
+.rr-app button:disabled { cursor: wait; opacity: .65; }
+.rr-app :is(h1,h2,h3) { line-height: 1.3; letter-spacing: -.025em; }
+.rr-app :is(p, h1, h2, h3, li) { overflow-wrap: anywhere; }
+.rr-app :is(img,svg,iframe) { max-width: 100%; }
+.rr-app a { text-underline-offset: 4px; }
+.rr-app .rr-skip {
+    position: fixed; top: -100px; left: 16px; z-index: 3000;
+    padding: 12px 18px; border-radius: 12px; color: #fff; background: var(--rr-primary);
+}
+.rr-app .rr-skip:focus { top: 12px; }
+/* Cabeçalhos e navegação */
+.rr-app :is(.mapa-header,.checkin-header,.biblioteca-header,.comunidade-header,.ocorrencia-header,.perfil-header) {
+    position: relative; display: block; min-height: 0;
+    padding: 46px max(24px, calc((100% - 1120px) / 2)) 38px;
+    background: #eca7c2; border-bottom: 1px solid var(--rr-border);
+    color: var(--rr-ink); text-align: center;
+}
+.rr-app :is(.mapa-header,.checkin-header,.biblioteca-header,.comunidade-header,.ocorrencia-header,.perfil-header) h1 {
+    margin: 0 0 10px; font-size: clamp(25px, 3vw, 36px); color: #652941; white-space: normal;
+}
+.rr-app :is(.mapa-header,.checkin-header,.biblioteca-header,.comunidade-header,.ocorrencia-header) p {
+    margin: 0; color: #653046; font-size: 14px;
+}
+.rr-app :is(.mapa-header,.checkin-header,.biblioteca-header,.comunidade-header,.ocorrencia-header,.perfil-header) .voltar {
+    position: absolute; top: 24px; left: max(24px, calc((100% - 1120px) / 2));
+    transform: none; margin: 0; display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 15px; border: 1px solid #e8cbd8; border-radius: 12px;
+    color: #863354; background: #fce8f0d9; font-size: 13px; font-weight: 600; text-decoration: none;
+}
+.rr-app :is(.mapa-container,.checkin-container,.biblioteca-container,.comunidade-container,.ocorrencia-container,.perfil-container) {
+    width: min(1120px, calc(100% - 48px)); max-width: none; padding: 0;
+    margin: 32px auto 88px; min-width: 0;
+}
+.rr-app :is(.mapa-card,.checkin-card,.biblioteca-card,.chat-card,.sala,.ocorrencia-card,.perfil-card,.form-contato) {
+    min-width: 0; background: var(--rr-surface); border: 1px solid var(--rr-border);
+    border-radius: var(--rr-radius); box-shadow: var(--rr-shadow); padding: 28px;
+}
+.rr-app :is(.mapa-card,.checkin-card,.ocorrencia-card,.biblioteca-card,.chat-card) h2 {
+    margin: 0 0 14px; color: #702e49; font-size: clamp(19px, 2vw, 23px);
+}
+.rr-app :is(.mapa-card,.checkin-card,.biblioteca-card,.ocorrencia-card) > p { color: var(--rr-muted); }
+.rr-app :is(.btn-login,.cadastro-btn,.mapa-btn,.botao-checkin,.editar-btn,.salvar-contato,.botao-principal,.campo-chat button,#btnSalvar) {
+    min-height: 48px; padding: 13px 20px; border: 1px solid transparent; border-radius: 12px;
+    background: var(--rr-primary); color: #fff; font-size: 14px; font-weight: 600;
+    box-shadow: 0 4px 10px #bd346910; transition: background .18s, transform .18s;
+}
+.rr-app :is(.btn-login,.cadastro-btn,.mapa-btn,.botao-checkin,.editar-btn,.salvar-contato,.botao-principal,.campo-chat button,#btnSalvar):hover {
+    background: var(--rr-primary-hover); transform: translateY(-1px);
+}
+.rr-app :is(.botao-secundario,.acao-secundaria,.btn-sair,.voltar-btn,.cancelar-contato) {
+    min-height: 44px; border: 1px solid var(--rr-border); border-radius: 12px;
+    padding: 10px 16px; background: var(--rr-soft); color: #893453; font-weight: 600;
+}
+.rr-app :is(.login-input,.cadastro-input,.ocorrencia-card input,.ocorrencia-card textarea,#destinoRota,#transporteRota,.campo-chat input) {
+    border: 1px solid #e4d5dc; background: #fff1f6; color: var(--rr-ink);
+    border-radius: 12px; padding: 13px 15px; min-height: 48px;
+}
+.rr-app :is(input,textarea)::placeholder { color: #8b7a84; opacity: 1; }
+.rr-app label { color: #59434f; font-size: 13px; font-weight: 600; }
+/* Início: as mesmas seis funcionalidades em uma grade mais legível. */
+.rr-app.home-body { display: block; padding: 0 0 70px; }
+.rr-app.home-body .topo {
+    display: block; position: relative; width: 100%;
+    padding: 23px max(24px, calc((100% - 1120px) / 2));
+    background: var(--rr-surface); border-bottom: 1px solid var(--rr-border); text-align: left;
+}
+.rr-app.home-body .topo h1 { width: auto; margin: 0; color: #7f2e50; font-size: 25px; text-align: left; }
+.rr-app.home-body .topo p { width: auto; margin-top: 3px; color: var(--rr-muted); font-size: 12px; text-align: left; }
+.rr-app .area-sair { top: 28px; right: max(24px, calc((100% - 1120px) / 2)); }
+.rr-app .btn-sair { font-size: 12px; box-shadow: none; }
+.rr-app .btn-sair:hover { background: #f4dbe5; color: #702e49; }
+.rr-app .boas-vindas {
+    position: relative; width: min(1120px, calc(100% - 48px)); max-width: none;
+    margin: 36px auto 28px; padding: 38px 40px; overflow: hidden;
+    border: 1px solid #df94b2; border-radius: 26px; text-align: left;
+    background: linear-gradient(110deg, #eca5c1, #f4c2d6 80%); box-shadow: none;
+}
+.rr-app .boas-vindas::before {
+    content: 'BEM-VINDA À SUA REDE'; display: block; margin-bottom: 12px;
+    color: #7f284d; font-size: 10px; font-weight: 700; letter-spacing: .16em;
+}
+.rr-app .boas-vindas h2 { position: relative; max-width: 820px; margin: 0 0 10px; color: #702e49; font-size: clamp(23px, 3vw, 32px); }
+.rr-app .boas-vindas p { color: #663348; font-size: 14px; }
+.rr-app .boas-vindas .mensagem-carinho { margin-top: 16px; font-size: 12px; font-weight: 400; }
+.rr-app.home-body .cards {
+    width: min(1120px, calc(100% - 48px)); max-width: none; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px;
+}
+.rr-app.home-body .card {
+    position: relative; display: block; min-height: 186px; padding: 26px; border: 1px solid var(--rr-border);
+    border-radius: 20px; background: var(--rr-surface); text-align: left; text-decoration: none; box-shadow: var(--rr-shadow);
+}
+.rr-app.home-body .card::after { content: '↗'; position: absolute; top: 26px; right: 24px; color: #b4778e; font-size: 20px; }
+.rr-app.home-body .card i {
+    display: inline-grid; place-items: center; width: 46px; height: 46px;
+    margin: 0 0 20px; border-radius: 14px; background: #fbeaf0; color: #b83f6c; font-size: 21px;
+}
+.rr-app.home-body .card:nth-child(2) i { background: #eaf3ef; color: #487965; }
+.rr-app.home-body .card:nth-child(3) i { background: #f2edfa; color: #8667a8; }
+.rr-app.home-body .card:nth-child(4) i { background: #fcf0e5; color: #b47d43; }
+.rr-app.home-body .card h3 { margin: 0 0 6px; color: #533442; font-size: 17px; }
+.rr-app.home-body .card p { color: var(--rr-muted); font-size: 13px; }
+.rr-app.home-body .card:hover { border-color: #dca4bc; box-shadow: 0 10px 26px #67213f0c; transform: translateY(-3px); }
+.rr-app .sos-btn { width: 58px; height: 58px; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); border: 3px solid white; background: #cf3259; color: white; font-size: 25px; box-shadow: 0 5px 20px #b52c4c36; }
+/* Mapa, destinos e modais */
+.rr-app .mapa-card { text-align: left; margin: 0 0 24px; }
+.rr-app .mapa-btn { width: 100%; margin: 18px 0; }
+.rr-app #botaoLocalizacao { width: auto; min-width: 220px; }
+.rr-app #mapa { margin: 0; width: 100%; overflow: hidden; border-radius: 16px; }
+.rr-app #mapa iframe { width: 100%; height: clamp(280px, 37vw, 430px); border: 0; }
+.rr-app :is(#statusMapa,#coordenadasAtuais) { margin: 14px 0 0; padding: 12px 14px; border-radius: 10px; background: #faf5f7; color: #7c606d; font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; }
+.rr-app .locais { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; margin-top: 0; }
+.rr-app .local-card { min-width: 0; padding: 24px; text-align: left; background: var(--rr-surface); border: 1px solid var(--rr-border); border-radius: 18px; box-shadow: var(--rr-shadow); }
+.rr-app .local-card i { display: inline-grid; place-items: center; width: 42px; height: 42px; margin-bottom: 16px; border-radius: 12px; background: var(--rr-soft); color: #b3436c; font-size: 20px; }
+.rr-app .local-card h3 { color: #653449; font-size: 15px; margin-bottom: 7px; }
+.rr-app .local-card p { color: var(--rr-muted); font-size: 12px; }
+.rr-app .local-card:hover { border-color: #dca4bc; transform: translateY(-2px); }
+.rr-app #painelRota { border-top: 3px solid #c04a78; scroll-margin: 24px; }
+.rr-app #destinoRota, .rr-app #transporteRota { width: 100%; }
+.rr-app .modal { position: fixed; inset: 0; z-index: 2000; padding: 24px; overflow: auto; background: #35263185; backdrop-filter: blur(4px); }
+.rr-app .modal-conteudo { position: relative; width: min(620px,100%); max-height: calc(100dvh - 48px); overflow: auto; padding: 32px; border: 1px solid var(--rr-border); border-radius: 24px; background: var(--rr-surface); color: var(--rr-ink); box-shadow: 0 24px 70px #28132040; }
+.rr-app .modal-conteudo h2 { margin-bottom: 20px; color: #702e49; }
+.rr-app .modal-conteudo h3 { margin: 16px 0 10px; font-size: 16px; }
+.rr-app .modal-conteudo ul { padding-left: 20px; }
+.rr-app .modal-conteudo hr { border: 0; border-top: 1px solid var(--rr-border); margin: 22px 0; }
+.rr-app .fechar { border: 0; background: transparent; line-height: 1; position: absolute; top: 10px; right: 16px; padding: 4px 8px; font-size: 28px; cursor: pointer; color: #8a526a; }
+/* Check-in : corrige a grade de histórico herdada de outras telas. */
+.rr-app .checkin-container { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); grid-template-rows: min-content 1fr; align-items: start; gap: 24px; }
+.rr-app .checkin-card:first-child { grid-column: 1; grid-row: 1 / span 2; }
+.rr-app .checkin-card:nth-child(2) { grid-column: 2; grid-row: 1; }
+.rr-app .checkin-card.historico-card { display: block; grid-column: 2; grid-row: 2; width: 100%; margin: 0; }
+.rr-app .checkin-card h3 { margin: 22px 0 14px; color: #704253; font-size: 16px; }
+.rr-app .aviso-privacidade { margin: 20px 0; padding: 14px 16px; border: 1px solid #f0dce5; background: #fcf4f7; color: #80566a; font-size: 12px; border-radius: 12px; }
+.rr-app #coordenadasAtuais { margin-bottom: 16px; }
+.rr-app .historico-descricao { margin-bottom: 20px; font-size: 13px; }
+.rr-app .historico-lista { display: flex; flex-direction: column; gap: 14px; }
+.rr-app .registro { border: 1px solid var(--rr-border); border-radius: 14px; background: #fdf8fa; padding: 18px; box-shadow: none; }
+.rr-app .registro-data { color: #81425d; font-size: 13px; }
+.rr-app .registro-local { color: var(--rr-muted); font-size: 12px; }
+.rr-app .registro-acoes { display: flex; flex-wrap: wrap; gap: 9px; }
+.rr-app.checkin-body .registro .registro-acoes button { flex: 1 1 120px; min-height: 42px; padding: 10px; font-size: 12px; }
+.rr-app.checkin-body .botao-ver-mapa { background: var(--rr-primary); color: white; }
+.rr-app.checkin-body .botao-excluir { background: #f5e5ec; color: #963659; }
+.rr-app :is(.ultimo-checkin,.historico-vazio) { border: 1px solid var(--rr-border); background: #fcf4f7; color: var(--rr-muted); font-size: 13px; line-height: 1.7; }
+/* Biblioteca, ocorrências, perfil e conversa */
+.rr-app .biblioteca-container { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; }
+.rr-app .biblioteca-card { padding: 25px; }
+.rr-app .biblioteca-card > i { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 13px; background: var(--rr-soft); color: #b3436c; font-size: 22px; margin-bottom: 18px; }
+.rr-app .biblioteca-card h2 { font-size: 18px; }
+.rr-app .biblioteca-card :is(p,li) { font-size: 13px; color: var(--rr-muted); }
+.rr-app .biblioteca-card ul { margin-top: 18px; padding-left: 18px; }
+.rr-app .biblioteca-card li { margin-bottom: 12px; }
+.rr-app .biblioteca-emergencia { grid-column: 1 / -1; border-radius: 18px; padding: 24px; }
+.rr-app .ocorrencia-container { max-width: 850px; }
+.rr-app .ocorrencia-card { margin: 0 0 24px; }
+.rr-app .ocorrencia-card textarea { min-height: 160px; resize: vertical; }
+.rr-app .perfil-container { max-width: 820px; }
+.rr-app .perfil-card { padding: 32px; }
+.rr-app .info { background: #faf3f6; border-radius: 14px; }
+.rr-app .info-item { border-color: var(--rr-border); font-size: 14px; }
+.rr-app :is(.personalizar-area,.editar-area) { background: #fcf8fa; border-color: var(--rr-border); }
+.rr-app .sair-btn { background: var(--rr-surface); color: var(--rr-primary); border-color: var(--rr-border); }
+.rr-app .sair-btn:hover { background: var(--rr-soft); color: var(--rr-primary); }
+.rr-app .comunidade-container { max-width: 1000px; }
+.rr-app .mensagens { height: 390px; padding: 18px; margin-top: 20px; background: #faf6f8; border: 1px solid var(--rr-border); border-radius: 16px; }
+.rr-app .mensagem { width: fit-content; max-width: 85%; padding: 13px 17px; margin: 0 0 14px; font-size: 14px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.rr-app .mensagem.minha { margin-left: auto; background: #b13a68; color: white; border-radius: 16px 16px 4px 16px; }
+.rr-app .mensagem.outra { background: var(--rr-surface); color: #5e4150; border: 1px solid var(--rr-border); border-radius: 16px 16px 16px 4px; }
+.rr-app .campo-chat { display: flex; align-items: stretch; gap: 10px; margin-top: 16px; }
+.rr-app .campo-chat input { width: 0; flex: 1; }
+.rr-app .campo-chat button { width: auto; }
+.rr-app .salas { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin-top: 28px; }
+.rr-app .salas > h2 { grid-column: 1 / -1; color: #704253; font-size: 20px; }
+.rr-app .sala { padding: 22px; text-align: left; }
+.rr-app .sala i { font-size: 24px; color: #b3436c; margin-bottom: 14px; }
+.rr-app .sala h3 { font-size: 15px; color: #704253; margin-bottom: 8px; }
+.rr-app .sala p { font-size: 12px; color: var(--rr-muted); }
+.rr-app .denuncia { margin-top: 24px; min-height: 44px; padding: 12px 20px; border: 1px solid var(--rr-border); border-radius: 12px; background: #f8eaf0; color: #983e60; font-size: 13px; }
+/* Entrada e recuperação */
+.rr-app:is(.login-body,.cadastro-body,.rr-auth) { background: radial-gradient(ellipse at 20% 15%, #eaa0bf, transparent 60%), radial-gradient(ellipse at 90% 85%, #eab2d0, transparent 55%), #f6d5e2; }
+.rr-app:is(.login-body,.cadastro-body) { display: flex; align-items: center; justify-content: center; padding: 40px 20px 90px; }
+.rr-app :is(.login-container,.cadastro-container) { width: min(100%,420px); max-width: 420px; }
+.rr-app :is(.login-box,.cadastro-box,.login-card) { width: 100%; max-width: 440px; padding: 34px; border: 1px solid var(--rr-border); border-radius: 24px; background: var(--rr-surface); box-shadow: 0 15px 60px #6d25460c; }
+.rr-app :is(.login-box,.cadastro-box,.login-card) h2 { color: #7f2e50; font-size: 26px; margin-bottom: 8px; }
+.rr-app :is(.login-box,.cadastro-box,.login-card) > p { color: var(--rr-muted); font-size: 13px; line-height: 1.7; }
+.rr-app :is(.login-input,.cadastro-input) { width: 100%; margin-top: 16px; height: auto; }
+.rr-app :is(.login-links,.cadastro-links,.links) { margin-top: 20px; font-size: 12px; line-height: 1.8; }
+.rr-app :is(.login-links,.cadastro-links,.links) a { color: #a33762; }
+.rr-app :is(.login-footer,.cadastro-footer,.rodape) { color: #856876; font-size: 11px; margin-top: 24px; text-align: center; }
+.rr-app :is(.cadastro-logo,.logo-area) h1 { color: #9e3a63; font-size: 36px; }
+.rr-app .overlay { min-height: 100dvh; width: 100%; padding: 32px 20px; }
+.rr-app .input-box { padding: 12px 14px; border: 1px solid var(--rr-border); border-radius: 12px; }
+.rr-app .input-box input { background: transparent; color: var(--rr-ink); }
+/* Contatos de confiança / SOS mantém sua composição própria. */
+.rr-app.rr-sos > header { padding: 22px max(20px, calc((100% - 1120px) / 2)); border-bottom: 1px solid var(--rr-border); }
+.rr-app.rr-sos .marca h1 { color: #9e3a63; }
+.rr-app.rr-sos .banner { padding: 40px 24px; background: #f8eaf0; box-shadow: none; border-bottom: 1px solid var(--rr-border); }
+.rr-app.rr-sos .banner h2 { color: #652941; font-size: clamp(24px,3vw,32px); }
+.rr-app.rr-sos .banner h2 span { color: #ae3764; }
+.rr-app.rr-sos .container { width: min(1000px,calc(100% - 48px)); margin: 32px auto 120px; }
+.rr-app.rr-sos .form-contato { width: min(660px,100%); }
+.rr-app.rr-sos .cards { width: 100%; margin: 24px 0; }
+.rr-app.rr-sos .card { border: 1px solid var(--rr-border); border-radius: 18px; box-shadow: var(--rr-shadow); }
+/* Grade e medidas para celular e tablet */
+@media (max-width: 960px) {
+    .rr-app :is(.mapa-header,.checkin-header,.biblioteca-header,.comunidade-header,.ocorrencia-header,.perfil-header) { padding: 78px 24px 28px; }
+    .rr-app :is(.mapa-header,.checkin-header,.biblioteca-header,.comunidade-header,.ocorrencia-header,.perfil-header) .voltar { top: 18px; left: 24px; }
+    .rr-app .biblioteca-container { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .rr-app .checkin-container { display: flex; flex-direction: column; }
+    .rr-app .checkin-card { width: 100%; }
+    .rr-app .locais { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 600px) {
+    .rr-app { font-size: 14px; }
+    .rr-app :is(.mapa-container,.checkin-container,.biblioteca-container,.comunidade-container,.ocorrencia-container,.perfil-container) { width: calc(100% - 28px); margin: 20px auto 90px; }
+    .rr-app :is(.mapa-card,.checkin-card,.biblioteca-card,.chat-card,.ocorrencia-card,.perfil-card,.form-contato) { padding: 20px; border-radius: 18px; }
+    .rr-app.home-body .topo { padding: 20px 16px; }
+    .rr-app.home-body .topo h1 { font-size: 21px; }
+    .rr-app.home-body .topo p { max-width: 185px; font-size: 10px; }
+    .rr-app .area-sair { top: 24px; right: 16px; }
+    .rr-app .btn-sair { padding: 8px 10px; font-size: 10px; }
+    .rr-app .boas-vindas { width: calc(100% - 28px); margin: 20px auto; padding: 26px 22px; border-radius: 20px; }
+    .rr-app .boas-vindas h2 { font-size: 24px; }
+    .rr-app .boas-vindas .mensagem-carinho { font-size: 11px; }
+    .rr-app.home-body .cards { width: calc(100% - 28px); grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+    .rr-app.home-body .card { min-height: 172px; padding: 19px 16px; border-radius: 16px; }
+    .rr-app.home-body .card::after { top: 18px; right: 14px; font-size: 17px; }
+    .rr-app.home-body .card i { width: 40px; height: 40px; font-size: 18px; margin-bottom: 16px; }
+    .rr-app.home-body .card h3 { font-size: 14px; }
+    .rr-app.home-body .card p { font-size: 11px; }
+    .rr-app :is(.locais,.biblioteca-container,.salas) { grid-template-columns: 1fr; }
+    .rr-app .local-card { display: grid; grid-template-columns: 44px minmax(0,1fr); gap: 4px 14px; padding: 20px; }
+    .rr-app .local-card i { grid-row: 1 / span 2; margin: 0; }
+    .rr-app .local-card h3 { align-self: end; margin: 0; }
+    .rr-app .local-card p { grid-column: 2; }
+    .rr-app #botaoLocalizacao { width: 100%; min-width: 0; }
+    .rr-app #mapa iframe { height: 300px; }
+    .rr-app .mensagens { height: 360px; padding: 12px; }
+    .rr-app .campo-chat { gap: 8px; }
+    .rr-app .campo-chat button { padding: 12px; font-size: 12px; }
+    .rr-app .mensagem { max-width: 95%; font-size: 13px; }
+    .rr-app .sala { padding: 20px; }
+    .rr-app .info-item { align-items: start; flex-direction: column; gap: 5px; }
+    .rr-app .info-item span { text-align: left; }
+    .rr-app .modal { padding: 14px; }
+    .rr-app .modal-conteudo { padding: 26px 20px; max-height: calc(100dvh - 28px); }
+    .rr-app .modal-conteudo h2 { padding-right: 16px; font-size: 21px; }
+    .rr-app :is(.login-box,.cadastro-box,.login-card) { padding: 28px 23px; }
+    .rr-app.rr-sos > header { padding: 18px 14px; gap: 10px; }
+    .rr-app.rr-sos .marca h1 { font-size: 19px; }
+    .rr-app.rr-sos .espaco-header { display: none; }
+    .rr-app.rr-sos .container { width: calc(100% - 28px); }
+}
+@media (max-width: 350px) {
+    .rr-app.home-body .topo { padding-top: 70px; }
+    .rr-app.home-body .cards { grid-template-columns: 1fr; }
+    .rr-app.home-body .card { min-height: 150px; }
+    .rr-app .opcoes-foto { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .rr-app *, .rr-app *::before, .rr-app *::after { transition: none !important; animation: none !important; }
+}
+
+/* Logo oficial com fundo transparente e superfícies em rosa suave. */
+.rr-app .rr-logo {
+    display: block; width: 100%; height: auto; object-fit: contain;
+    aspect-ratio: 1238 / 1271; background: transparent;
+}
+.rr-app .rr-header-brand {
+    display: inline-flex; align-items: center; gap: 14px; color: #7f2e50; text-decoration: none;
+}
+.rr-app .rr-header-brand .rr-logo { width: 70px; height: auto; flex: 0 0 70px; }
+.rr-app.home-body .topo { padding-top: 14px; padding-bottom: 14px; }
+.rr-app.home-body .topo > p { margin-top: 0; padding-left: 84px; }
+.rr-app .area-sair { top: 35px; }
+.rr-app .boas-vindas { display: grid; grid-template-columns: minmax(0,1fr) 220px; align-items: center; gap: 32px; padding-top: 26px; padding-bottom: 26px; }
+.rr-app .boas-vindas::before { display: none; }
+.rr-app .rr-welcome-copy { min-width: 0; }
+.rr-app .rr-welcome-copy::before {
+    content: 'BEM-VINDA À SUA REDE'; display: block; margin-bottom: 12px;
+    color: #7f284d; font-size: 10px; font-weight: 700; letter-spacing: .16em;
+}
+.rr-app .rr-welcome-logo { width: 220px; justify-self: end; }
+.rr-app .rr-auth-brand { display: flex; justify-content: center; margin: 0 auto 20px; }
+.rr-app .rr-auth-brand .rr-logo { width: 180px; max-width: 100%; }
+.rr-app .rr-auth-brand-inside .rr-logo { width: 150px; }
+.rr-app .rr-page-brand {
+    display: inline-flex; justify-content: center; align-items: center; gap: 10px;
+    margin: -18px auto 18px; color: #7f2e50; font-size: 12px; font-weight: 600; text-decoration: none;
+}
+.rr-app .rr-page-brand .rr-logo { width: 48px; }
+.rr-app.rr-sos > header { background: var(--rr-surface); }
+.rr-app.rr-sos :is(.card,.vazio,.form-contato,.input-wrapper,.cancelar-contato,.sos-legenda) { background: var(--rr-surface); }
+.rr-app :is(.opcao-foto,.campo,.info,.editar-area,.personalizar-area) { background: #fbe4ee; }
+.rr-app :is(.input-box,.input-wrapper) { background: #fff1f6; }
+.rr-app .modal-conteudo { background: var(--rr-surface); }
+@media (max-width: 960px) {
+    .rr-app .rr-page-brand { margin-top: -8px; }
+    .rr-app .boas-vindas { grid-template-columns: minmax(0,1fr) 170px; gap: 20px; }
+    .rr-app .rr-welcome-logo { width: 170px; }
+}
+@media (max-width: 600px) {
+    .rr-app .rr-header-brand { gap: 10px; }
+    .rr-app .rr-header-brand .rr-logo { width: 52px; flex-basis: 52px; }
+    .rr-app.home-body .topo { padding: 14px 16px; }
+    .rr-app.home-body .topo h1 { font-size: 19px; }
+    .rr-app.home-body .topo > p { padding-left: 62px; max-width: 235px; font-size: 10px; }
+    .rr-app .area-sair { top: 32px; }
+    .rr-app .btn-sair { max-width: 95px; font-size: 10px; }
+    .rr-app .boas-vindas { display: flex; flex-direction: column-reverse; align-items: stretch; padding: 22px; gap: 18px; }
+    .rr-app .rr-welcome-logo { width: 155px; align-self: center; }
+    .rr-app .rr-auth-brand .rr-logo { width: 155px; }
+    .rr-app .rr-page-brand { margin: -8px auto 16px; }
+    .rr-app.rr-sos .rr-header-brand .rr-logo { width: 46px; flex-basis: 46px; }
+    .rr-app.rr-sos .marca p { font-size: 9px; }
+}
+@media (max-width: 350px) {
+    .rr-app.home-body .topo { padding-top: 64px; }
+    .rr-app .area-sair { top: 14px; }
+}
+
+/* Título e assinatura juntos, alinhados ao centro da logo. */
+.rr-app.home-body .rr-home-brand { display: flex; align-items: center; gap: 14px; }
+.rr-app.home-body .rr-home-logo { display: block; flex: 0 0 70px; width: 70px; }
+.rr-app.home-body .rr-brand-copy { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.rr-app.home-body .rr-brand-copy h1 { margin: 0; line-height: 1.2; }
+.rr-app.home-body .rr-brand-copy p { margin: 0; padding: 0; line-height: 1.45; }
+@media (max-width: 600px) {
+    .rr-app.home-body .rr-home-brand { gap: 10px; max-width: calc(100% - 100px); }
+    .rr-app.home-body .rr-home-logo { width: 52px; flex-basis: 52px; }
+    .rr-app.home-body .rr-brand-copy p { font-size: 10px; }
+}
+@media (max-width: 350px) {
+    .rr-app.home-body .rr-home-brand { max-width: 100%; }
+}
+/* Retorno de edição do perfil, visível mesmo após fechar o formulário. */
+.rr-app #statusPerfil:empty { display: none; }
+.rr-app #statusPerfil:not(:empty) { margin: 16px 0 0; padding: 13px 16px; border-radius: 12px; line-height: 1.6; font-size: 13px; }
+.rr-app #statusPerfil.status-info { background: #f6d5e2; color: #702e49; }
+.rr-app #statusPerfil.status-sucesso { background: #e4f3e9; color: #245d3a; }
+.rr-app #statusPerfil.status-erro { background: #fbe0e7; color: #8b2546; }
+.rr-app #botaoCancelarPerfil { margin-top: 12px; }
+
+/* Perfil: dados centralizados e formulário controlado somente por hidden. */
+.rr-app.perfil-body .perfil-container { max-width: 680px; }
+.rr-app.perfil-body .perfil-card { width: 100%; max-width: 680px; margin: 0 auto; }
+.rr-app.perfil-body .perfil-topo { text-align: center; margin-bottom: 24px; }
+.rr-app.perfil-body .perfil-topo h2 { margin: 16px 0 5px; color: #853453; }
+.rr-app.perfil-body .perfil-topo p { margin: 0; color: #765465; }
+.rr-app.perfil-body .info {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;
+    margin: 0 0 22px; padding: 0; background: transparent; box-shadow: none;
+}
+.rr-app.perfil-body .info-item {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 7px; min-width: 0; min-height: 96px; margin: 0; padding: 18px 14px;
+    border: 1px solid var(--rr-border); border-radius: 14px;
+    background: #fbe0eb; text-align: center;
+}
+.rr-app.perfil-body .info-item strong { font-size: 12px; font-weight: 600; color: #805469; }
+.rr-app.perfil-body .info-item span { width: 100%; text-align: center; color: #563344; overflow-wrap: anywhere; }
+.rr-app.perfil-body #editarArea:not([hidden]) { display: grid; gap: 14px; }
+.rr-app.perfil-body #editarArea {
+    margin-top: 22px; padding: 24px; border-radius: 16px; border: 1px solid var(--rr-border);
+    background: #f9e0eb; box-shadow: none;
+}
+.rr-app.perfil-body #editarArea h3 { margin: 0 0 4px; text-align: center; color: #853453; font-size: 19px; }
+.rr-app.perfil-body #editarArea label { display: block; margin: 0 0 -8px; color: #704253; text-align: left; }
+.rr-app.perfil-body #editarArea .campo { margin: 0; padding: 12px 14px; background: #fff1f6; }
+.rr-app.perfil-body #editarArea input { min-height: 28px; color: #563344; text-align: left; }
+.rr-app.perfil-body #botaoCancelarPerfil { width: 100%; margin-top: 0; }
+@media (max-width: 600px) {
+    .rr-app.perfil-body .info { grid-template-columns: 1fr; gap: 10px; }
+    .rr-app.perfil-body .info-item { min-height: 80px; padding: 14px; }
+    .rr-app.perfil-body #editarArea { padding: 18px; }
+}

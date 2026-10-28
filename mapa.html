@@ -16,11 +16,14 @@
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <link rel="stylesheet" href="css/refresh.css">
 </head>
 
-<body class="mapa-body">
+<body class="mapa-body rr-app">
+    <a class="rr-skip" href="#conteudo">Pular para o conteúdo</a>
 
 <header class="mapa-header">
+<a class="rr-page-brand" href="home.html" aria-label="Rede Rosa — voltar ao início"><img class="rr-logo" src="assets/logo-rede-rosa-transparente.png" width="1238" height="1271" alt=""><span>Rede Rosa</span></a>
 
 <a href="home.html" class="voltar">
 ← Voltar
@@ -34,18 +37,20 @@ Encontre locais de apoio próximos
 
 </header>
 
-<main class="mapa-container">
+<main id="conteudo" class="mapa-container">
 
 <div class="mapa-card">
 
 <h2>📍 Minha localização</h2>
 
 <p>
-Clique abaixo para encontrar sua posição.
+Permita o acesso à localização para ver sua posição no mapa.
 </p>
 
 <button
 class="mapa-btn"
+id="botaoLocalizacao"
+type="button"
 onclick="minhaLocalizacao()">
 
 Encontrar localização
@@ -53,17 +58,32 @@ Encontrar localização
 </button>
 
 <div id="mapa">
-
-<p>
-O mapa aparecerá aqui</p>
-
+<iframe id="mapaLocalizacao" title="Mapa Seguro: localização atual" width="100%" height="350"
+    style="display:block;border:0;border-radius:14px" loading="lazy" referrerpolicy="no-referrer"
+    src="https://www.openstreetmap.org/export/embed.html?bbox=-74,-34,-34,6&amp;layer=mapnik"></iframe>
+<p id="statusMapa" role="status" aria-live="polite">Visão geral do Brasil. Permita a localização para mostrar sua posição.</p>
 </div>
 
 </div>
+
+<section id="painelRota" class="mapa-card" hidden aria-labelledby="tituloRota">
+<h2 id="tituloRota">Traçar rota</h2>
+<p>O ponto de partida será sua localização no Google Maps. Permita o acesso quando solicitado e confirme a unidade de destino antes de sair.</p>
+<form id="formularioRota">
+<label for="destinoRota">Nome do local ou endereço de destino</label>
+<input id="destinoRota" name="destino" required maxlength="300" aria-label="Ex.: Delegacia da Mulher, sua cidade ou endereço" placeholder="Ex.: Delegacia da Mulher, sua cidade ou endereço"
+ style="display:block;box-sizing:border-box;width:100%;padding:14px;margin:10px 0 16px;border:1px solid #f5a5c5;border-radius:12px;font:inherit">
+<label for="transporteRota">Como você vai?</label>
+<select id="transporteRota" style="display:block;width:100%;padding:12px;margin:10px 0 16px;border-radius:12px;font:inherit">
+<option value="driving">De carro</option><option value="walking">A pé</option><option value="transit">Transporte público</option><option value="bicycling">De bicicleta</option>
+</select>
+<button class="mapa-btn" type="submit">Abrir rota no Google Maps</button>
+</form>
+</section>
 
 <section class="locais">
 
-<div class="local-card" onclick="abrirLocal('Delegacia da Mulher Brasília DF')">
+<div class="local-card" onclick="abrirLocal('Delegacia da Mulher')">
 
 <i class="fa-solid fa-building-shield"></i>
 
@@ -75,7 +95,7 @@ Delegacias especializadas próximas
 
 </div>
 
-<div class="local-card" onclick="abrirLocal('Hospital Brasília DF')">
+<div class="local-card" onclick="abrirLocal('Hospital')">
 
 <i class="fa-solid fa-hospital"></i>
 
@@ -87,7 +107,7 @@ Atendimento médico
 
 </div>
 
-<div class="local-card" onclick="abrirLocal('Posto Policial Brasília DF')">
+<div class="local-card" onclick="abrirLocal('Posto Policial')">
 
 <i class="fa-solid fa-shield-halved"></i>
 
@@ -99,7 +119,7 @@ Segurança e proteção
 
 </div>
 
-<div class="local-card" onclick="abrirLocal('Centro de Apoio à Mulher Brasília DF')">
+<div class="local-card" onclick="abrirLocal('Centro de Apoio à Mulher')">
 
 <i class="fa-solid fa-heart"></i>
 
@@ -140,57 +160,83 @@ Acolhimento e orientação
 
 <script>
 
-function minhaLocalizacao(){
-
-    if(!navigator.geolocation){
-
-        alert("Seu navegador não suporta localização");
-
+function minhaLocalizacao() {
+    const status = document.getElementById("statusMapa");
+    const botao = document.getElementById("botaoLocalizacao");
+    if (!window.isSecureContext) {
+        status.textContent = "Abra pelo Live Server (localhost) ou por HTTPS para acessar sua localização.";
         return;
-
     }
+    if (!navigator.geolocation) {
+        status.textContent = "Seu navegador não oferece acesso à localização.";
+        return;
+    }
+    botao.disabled = true;
+    botao.textContent = "Buscando localização…";
+    status.textContent = "Aguardando sua localização. Permita o acesso quando o navegador solicitar.";
+    function finalizar() {
+        botao.disabled = false;
+        botao.textContent = "Atualizar localização";
+    }
+    navigator.geolocation.getCurrentPosition(pos => {
+        const { latitude, longitude, accuracy } = pos.coords;
+        const margem = 0.005;
+        const limites = [longitude - margem, latitude - margem, longitude + margem, latitude + margem].join(",");
+        document.getElementById("mapaLocalizacao").src =
+            'https://www.openstreetmap.org/export/embed.html?bbox=' + encodeURIComponent(limites) +
+            '&layer=mapnik&marker=' + latitude + ',' + longitude;
+        status.textContent = 'Sua posição: ' + latitude.toFixed(6) + ', ' + longitude.toFixed(6) +
+            '. Precisão aproximada: ' + Math.round(accuracy) + ' m.';
+        finalizar();
+    }, erro => {
+        const mensagens = {
+            1: "Localização bloqueada. Permita o acesso nas configurações do site e clique em Atualizar localização.",
+            2: "Localização indisponível. Ative a localização do dispositivo e tente novamente.",
+            3: "A busca demorou para responder. Tente atualizar a localização."
+        };
+        status.textContent = mensagens[erro.code] || "Não foi possível acessar sua localização.";
+        finalizar();
+    }, { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 });
+}
 
-    navigator.geolocation.getCurrentPosition(
+minhaLocalizacao();
 
-        function(pos){
-
-            let latitude = pos.coords.latitude;
-            let longitude = pos.coords.longitude;
-
-            document.getElementById("mapa").innerHTML = `
-
-            <iframe
-            width="100%"
-            height="350"
-            style="border:0"
-            loading="lazy"
-            allowfullscreen
-            src="https://www.google.com/maps?q=${latitude},${longitude}&output=embed">
-            </iframe>
-
-            `;
-
-        },
-
-        function(){
-
-            alert("Não foi possível acessar sua localização");
-
+document.querySelectorAll('.local-card[onclick]').forEach(card => {
+    card.setAttribute("role", "button");
+    card.tabIndex = 0;
+    card.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            card.click();
         }
+    });
+});
 
-    );
-
+function abrirLocal(tipo) {
+    const painel = document.getElementById("painelRota");
+    const destino = document.getElementById("destinoRota");
+    painel.hidden = false;
+    destino.value = tipo;
+    painel.scrollIntoView({ behavior: "smooth", block: "center" });
+    destino.focus({ preventScroll: true });
 }
 
-function abrirLocal(tipo){
-
-    let link =
-    "https://www.google.com/maps/search/" +
-    encodeURIComponent(tipo);
-
-    window.open(link,"_blank");
-
-}
+document.getElementById("formularioRota").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const destino = document.getElementById("destinoRota");
+    if (!destino.value.trim()) {
+        destino.value = "";
+        destino.reportValidity();
+        return;
+    }
+    const parametros = new URLSearchParams({
+        api: "1",
+        destination: destino.value.trim(),
+        travelmode: document.getElementById("transporteRota").value
+    });
+    // Sem origin, o Google Maps usa a localização atual quando disponível.
+    window.open("https://www.google.com/maps/dir/?" + parametros.toString(), "_blank", "noopener,noreferrer");
+});
 
 function abrirSalaLilas(){
 
@@ -213,6 +259,13 @@ function fecharSalaLilas(){
 document.getElementById("modalSalaLilas").style.display="none";
 
 }
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        fecharSalaLilas();
+        fecharLeiMariaPenha();
+    }
+});
 
 window.onclick = function(event){
 
@@ -239,7 +292,7 @@ function fecharLeiMariaPenha(){
 
     <div class="modal-conteudo">
 
-        <span class="fechar" onclick="fecharSalaLilas()">&times;</span>
+        <button type="button" class="fechar" aria-label="Fechar janela" onclick="fecharSalaLilas()">&times;</button>
 
         <h2>🌸 Sala Lilás - Distrito Federal</h2>
 
@@ -294,18 +347,7 @@ function fecharLeiMariaPenha(){
 
     </div>
 </div>
-<!-- Modal Sala Lilás -->
 
-<div id="modalSalaLilas" class="modal">
-
-    <div class="modal-conteudo">
-
-        ...
-        <!-- conteúdo da Sala Lilás -->
-
-    </div>
-
-</div>
 
 <!-- Modal Lei Maria da Penha -->
 
@@ -313,7 +355,7 @@ function fecharLeiMariaPenha(){
 
     <div class="modal-conteudo">
 
-        <span class="fechar" onclick="fecharLeiMariaPenha()">&times;</span>
+        <button type="button" class="fechar" aria-label="Fechar janela" onclick="fecharLeiMariaPenha()">&times;</button>
 
         <h2>⚖️ Lei Maria da Penha</h2>
 
@@ -355,7 +397,5 @@ function fecharLeiMariaPenha(){
 
 </div>
 
-</body>
-</html>
 </body>
 </html>

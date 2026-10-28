@@ -15,14 +15,21 @@
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/refresh.css">
 </head>
 
-<body class="home-body">
+<body class="home-body rr-app">
+    <a class="rr-skip" href="#conteudo">Pular para o conteúdo</a>
 
     <!-- CABEÇALHO -->
     <header class="topo">
-        <h1>🌸 Rede Rosa</h1>
-        <p>Segurança, acolhimento e confiança</p>
+        <div class="rr-home-brand">
+            <a class="rr-home-logo" href="home.html" aria-label="Rede Rosa — início"><img class="rr-logo" src="assets/logo-rede-rosa-transparente.png" width="1238" height="1271" alt=""></a>
+            <div class="rr-brand-copy">
+                <h1>Rede Rosa</h1>
+                <p>Apoio • Proteção • Empoderamento</p>
+            </div>
+        </div>
         
 <!-- BOTÃO SAIR DA CONTA -->
 <div class="area-sair">
@@ -41,6 +48,7 @@
 
     <!-- MENSAGEM DE BOAS-VINDAS PERSONALIZADA -->
     <section class="boas-vindas">
+<div class="rr-welcome-copy">
 
         <h2 id="mensagemBoasVindas">
             Olá, seja bem-vinda! 🌸
@@ -55,16 +63,18 @@
             Você não está sozinha!
         </p>
 
-    </section>
+    </div>
+<img class="rr-logo rr-welcome-logo" src="assets/logo-rede-rosa-transparente.png" width="1238" height="1271" alt="Rede Rosa — apoio, proteção e empoderamento">
+</section>
 
     <!-- MENU PRINCIPAL -->
-    <main class="cards">
+    <main id="conteudo" class="cards">
 
         <!-- CHECK-IN -->
         <a href="checkin.html" class="card">
             <i class="fa-solid fa-shield-heart"></i>
             <h3>Check-in Seguro</h3>
-            <p>Confirme que você está bem</p>
+            <p>Combine um horário com alguém</p>
         </a>
 
         <!-- MAPA -->
@@ -85,7 +95,7 @@
         <a href="chat.html" class="card">
             <i class="fa-solid fa-comments"></i>
             <h3>Comunidade</h3>
-            <p>Rede de apoio</p>
+            <p>Converse com outras usuárias</p>
         </a>
 
         <!-- PERFIL -->
@@ -115,110 +125,34 @@
 
     </button>
 
+    <script src="js/usuario.js"></script>
     <script>
         // ========================================
         // BOAS-VINDAS PERSONALIZADAS
         // ========================================
 
         function personalizarBoasVindas() {
-
-            const dadosSalvos = localStorage.getItem("usuario");
-
+            const usuario = RedeRosaUsuario.ler();
             const titulo = document.getElementById("mensagemBoasVindas");
             const mensagem = document.getElementById("mensagemAcolhimento");
-
-            if (!dadosSalvos) {
-                return;
-            }
-
-            try {
-
-                const usuario = JSON.parse(dadosSalvos);
-
-                // Tenta obter o nome salvo no login.
-                const nomeCompleto = (
-                    usuario.nome ||
-                    usuario.name ||
-                    usuario.usuaria?.nome ||
-                    usuario.usuario?.nome ||
-                    ""
-                ).trim();
-
-                if (nomeCompleto) {
-
-                    // Mostra apenas o primeiro nome.
-                    const primeiroNome = nomeCompleto.split(/\s+/)[0];
-
-                    titulo.textContent =
-                        `Olá, seja bem-vinda, ${primeiroNome}! 🌸`;
-
-                    mensagem.textContent =
-                        "Que bom ter você aqui! Este espaço também é seu. 💗";
-
-                }
-
-            } catch (erro) {
-
-                console.error(
-                    "Não foi possível carregar os dados da usuária:",
-                    erro
-                );
-
-            }
-
+            titulo.textContent = usuario?.nome
+                ? `Olá, ${usuario.nome}! 🌸`
+                : "Olá, seja bem-vinda! 🌸";
+            mensagem.textContent = usuario?.nome
+                ? "Seja bem-vinda à sua rede de cuidado e proteção. Como podemos ajudar hoje?"
+                : usuario
+                    ? "Adicione seu nome no Perfil para personalizar suas boas-vindas."
+                    : "Entre na sua conta para ter suas boas-vindas personalizadas.";
         }
 
+        window.addEventListener("pageshow", personalizarBoasVindas);
+        window.addEventListener("storage", event => {
+            if (event.key === "usuario" || event.key === null) personalizarBoasVindas();
+        });
 
         // ========================================
         // CHECK-IN SEGURO
         // ========================================
-
-        const LIMITE_HORAS = 6;
-
-        function verificarAlerta() {
-
-            const checkins = JSON.parse(
-                localStorage.getItem("checkins") || "[]"
-            );
-
-            if (checkins.length === 0) {
-                return;
-            }
-
-            const ultimoCheck = new Date(checkins[0]);
-
-            // Evita verificar datas inválidas.
-            if (Number.isNaN(ultimoCheck.getTime())) {
-                return;
-            }
-
-            const agora = new Date();
-
-            const diferencaHoras =
-                (agora - ultimoCheck) / (1000 * 60 * 60);
-
-            if (diferencaHoras >= LIMITE_HORAS) {
-
-                // Evita repetir o mesmo alerta em cada atualização
-                // da página durante a mesma sessão.
-                const chaveAlerta =
-                    "alertaCheckin_" + checkins[0];
-
-                if (!sessionStorage.getItem(chaveAlerta)) {
-
-                    sessionStorage.setItem(chaveAlerta, "exibido");
-
-                    alert(
-                        "🌸 Faz um tempinho desde seu último check-in.\n\n" +
-                        "Se puder, confirme que está tudo bem com você. 💗"
-                    );
-
-                }
-
-            }
-
-        }
-
 
         // ========================================
         // BOTÃO SOS
@@ -234,7 +168,7 @@
         // ========================================
 
         personalizarBoasVindas();
-        verificarAlerta();
+
 
         function sairDaConta() {
     const confirmarSaida = confirm(

@@ -1,0 +1,407 @@
+.rr-app.rr-acompanhamento .acompanhamento-layout {
+    display:grid;
+    grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);
+    gap:24px;
+    align-items:start;
+    width:min(1120px,calc(100% - 48px));
+    margin:32px auto 80px
+}
+.rr-app.rr-acompanhamento .checkin-card {
+    grid-column:auto;
+    grid-row:auto;
+    width:100%
+}
+.acompanhamento-lateral {
+    display:grid;
+    gap:20px;
+    min-width:0
+}
+.acompanhamento-eyebrow {
+    font-size:10px;
+    letter-spacing:.12em;
+    font-weight:700;
+    color:#873753;
+    margin:0 0 12px
+}
+.acompanhamento-principal>div>p,.acompanhamento-principal form>p {
+    margin-bottom:20px
+}
+.escolha-prazo {
+    margin:24px 0;
+    border:0;
+    padding:0;
+    min-width:0
+}
+.escolha-prazo legend {
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:12px
+}
+.opcoes-prazo {
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:10px
+}
+.opcoes-prazo label {
+    position:relative;
+    cursor:pointer
+}
+.opcoes-prazo input {
+    position:absolute;
+    opacity:0;
+    width:1px;
+    height:1px
+}
+.opcoes-prazo span {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:17px 10px;
+    border:1px solid #dfa9c0;
+    border-radius:14px;
+    background:#fbe0eb;
+    color:#835268;
+    font-size:12px
+}
+.opcoes-prazo strong {
+    font-size:27px;
+    color:#803451
+}
+.opcoes-prazo input:checked+span {
+    background:#bd3469;
+    color:#fff;
+    border-color:#bd3469;
+    box-shadow:0 4px 14px #bd346928
+}
+.opcoes-prazo input:checked+span strong {
+    color:#fff
+}
+.opcoes-prazo input:focus-visible+span {
+    outline:3px solid #873753;
+    outline-offset:3px
+}
+.rr-app.rr-acompanhamento summary {
+    font-weight:600;
+    font-size:13px;
+    cursor:pointer;
+    color:#803451
+}
+.telefone-opcional {
+    margin:0 0 24px
+}
+.telefone-opcional label {
+    display:block;
+    margin:16px 0 8px
+}
+.telefone-opcional input {
+    width:100%;
+    padding:12px;
+    border:1px solid #dfa9c0;
+    border-radius:12px;
+    background:#fff1f6
+}
+.telefone-opcional p,.acompanhamento-ajuda {
+    font-size:12px;
+    color:#805469;
+    line-height:1.7
+}
+.acompanhamento-ajuda {
+    text-align:center;
+    margin:14px 0 0!important
+}
+.passos-acompanhamento {
+    list-style:none;
+    padding:0;
+    margin:20px 0;
+    display:grid;
+    gap:18px
+}
+.passos-acompanhamento li {
+    display:flex;
+    gap:12px;
+    align-items:start
+}
+.passos-acompanhamento li>span {
+    display:grid;
+    place-items:center;
+    flex:0 0 30px;
+    height:30px;
+    border-radius:10px;
+    background:#f4c6d8;
+    color:#853453;
+    font-weight:700;
+    font-size:13px
+}
+.passos-acompanhamento strong {
+    font-size:13px
+}
+.passos-acompanhamento p {
+    font-size:12px;
+    color:#805469;
+    margin:3px 0 0
+}
+.nota-acompanhamento {
+    padding:14px 16px;
+    border:1px solid #e5b5c9;
+    border-radius:12px;
+    background:#f9dce8;
+    font-size:12px;
+    line-height:1.7;
+    color:#704253
+}
+.acompanhamento-estado {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:16px;
+    border-radius:14px;
+    margin:22px 0 20px
+}
+.acompanhamento-estado span {
+    display:grid;
+    place-items:center;
+    font-size:26px;
+    flex:0 0 32px
+}
+.acompanhamento-estado p {
+    font-weight:600;
+    font-size:14px;
+    margin:0
+}
+.aguardando {
+    background:#ffefce;
+    color:#704c17
+}
+.atrasado {
+    background:#fbd6df;
+    color:#862b44
+}
+.confirmado {
+    background:#dcefe1;
+    color:#245d3a
+}
+.cancelado {
+    background:#eadce5;
+    color:#62485b
+}
+.acompanhamento-label {
+    font-size:10px;
+    letter-spacing:.13em;
+    font-weight:600;
+    color:#805469;
+    text-align:center
+}
+.acompanhamento-hora {
+    font-size:28px;
+    font-weight:700;
+    text-align:center;
+    margin:4px 0;
+    color:#702e49
+}
+.acompanhamento-contagem {
+    font-variant-numeric:tabular-nums;
+    text-align:center;
+    color:#805469;
+    margin-bottom:24px
+}
+.acoes-acompanhamento {
+    display:grid;
+    gap:10px
+}
+.compartilhar-card {
+    border-top:1px solid #e5b5c9;
+    padding-top:22px;
+    margin-top:26px
+}
+.rr-app .compartilhar-card h3 {
+    margin:0 0 10px;
+    font-size:16px
+}
+.compartilhar-card>p {
+    font-size:12px;
+    color:#805469;
+    margin-bottom:16px
+}
+.botao-whatsapp {
+    display:block;
+    border-radius:12px;
+    padding:14px 18px;
+    background:#27694b;
+    color:#fff;
+    text-align:center;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    min-height:48px
+}
+.botao-whatsapp:hover {
+    background:#1f553d
+}
+.botao-whatsapp[aria-disabled=true] {
+    opacity:.6;
+    pointer-events:none
+}
+.acoes-link {
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:center;
+    margin-top:12px
+}
+.acoes-link a {
+    font-size:12px;
+    color:#853453
+}
+.encerrar-opcoes {
+    margin-top:24px
+}
+.encerrar-opcoes button {
+    margin-top:14px
+}
+.encerrar-opcoes p {
+    font-size:12px;
+    color:#805469;
+    margin-top:10px
+}
+.aviso-rede {
+    border:1px solid #dfa9c0;
+    border-radius:10px;
+    padding:12px;
+    background:#f8d5e4;
+    font-size:12px;
+    margin:14px 0 0!important
+}
+#linkManual {
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    background:#fff1f6;
+    border:1px solid #dfa9c0;
+    border-radius:10px
+}
+.acompanhamento-mensagem:empty {
+    display:none
+}
+.acompanhamento-mensagem {
+    padding:13px 16px;
+    margin:18px 0 0;
+    border-radius:12px;
+    font-size:13px;
+    background:#f6d5e2;
+    color:#702e49
+}
+.acompanhamento-mensagem.erro {
+    background:#fbd6df;
+    color:#862b44
+}
+.acompanhamento-mensagem.sucesso {
+    background:#dcefe1;
+    color:#245d3a
+}
+#tentarNovamente {
+    margin-top:12px
+}
+.registro-acompanhamento {
+    border:1px solid #e5b5c9;
+    border-radius:12px;
+    padding:14px;
+    margin-top:12px
+}
+.registro-acompanhamento strong {
+    font-size:13px
+}
+.registro-acompanhamento p {
+    font-size:12px;
+    color:#805469;
+    margin:5px 0 0
+}
+.registro-acompanhamento a {
+    font-size:12px;
+    color:#853453;
+    display:inline-block;
+    margin-top:8px
+}
+.registro-acompanhamento .marcador {
+    display:inline-block;
+    border-radius:8px;
+    padding:3px 8px;
+    font-size:11px;
+    margin-bottom:8px
+}
+.local-opcional>p {
+    font-size:12px;
+    color:#805469;
+    margin:14px 0
+}
+.local-opcional button {
+    margin-top:14px
+}
+.local-opcional iframe {
+    width:100%;
+    height:280px;
+    border:0;
+    border-radius:12px;
+    margin-top:16px
+}
+.local-opcional #statusLocal {
+    font-size:12px;
+    overflow-wrap:anywhere
+}
+#historicoLegado p {
+    font-size:12px;
+    color:#805469;
+    margin:12px 0 0
+}
+.sr-only {
+    position:absolute;
+    width:1px;
+    height:1px;
+    padding:0;
+    margin:-1px;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+    border:0
+}
+#carregando {
+    padding:24px 0;
+    text-align:center;
+    font-size:14px;
+    color:#805469
+}
+@media(max-width:960px) {
+    .rr-app.rr-acompanhamento .acompanhamento-layout {
+        grid-template-columns:1fr;
+        max-width:680px
+    }
+}
+@media(max-width:600px) {
+    .rr-app.rr-acompanhamento .acompanhamento-layout {
+        width:calc(100% - 28px);
+        margin:20px auto 70px;
+        gap:18px
+    }
+    .opcoes-prazo span {
+        padding:15px 8px
+    }
+    .opcoes-prazo strong {
+        font-size:24px
+    }
+    .acompanhamento-hora {
+        font-size:25px
+    }
+    .acoes-link {
+        align-items:stretch;
+        flex-direction:column
+    }
+    .acoes-link a {
+        text-align:center
+    }
+}
+.rr-app.rr-acompanhamento .botao-checkin {
+    width:100%;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none
+}

@@ -419,79 +419,22 @@
 
 </style>
 
+    <link rel="stylesheet" href="css/refresh.css">
 </head>
 
-<body class="login-body">
+<body class="login-body rr-app">
 
 <div class="login-container">
 
     <!-- LOGO -->
-    <div class="logo-svg">
-
-        <svg viewBox="0 0 200 200">
-
-            <defs>
-
-                <linearGradient
-                    id="grad"
-                    x1="0%"
-                    y1="0%"
-                    x2="100%"
-                    y2="100%"
-                >
-
-                    <stop
-                        offset="0%"
-                        style="stop-color:#ff4d6d"
-                    />
-
-                    <stop
-                        offset="100%"
-                        style="stop-color:#ff80a0"
-                    />
-
-                </linearGradient>
-
-            </defs>
-
-            <circle
-                cx="100"
-                cy="100"
-                r="90"
-                fill="none"
-                stroke="url(#grad)"
-                stroke-width="6"
-            />
-
-            <path
-                d="M110 60
-                   C140 60, 140 120, 100 130
-                   C80 135, 70 120, 80 100
-                   C90 80, 100 60, 110 60Z"
-                fill="url(#grad)"
-            />
-
-            <path
-                d="M90 110
-                   L110 110
-                   L120 130
-                   L100 150
-                   L80 130 Z"
-                fill="none"
-                stroke="url(#grad)"
-                stroke-width="3"
-            />
-
-        </svg>
-
-    </div>
+    <div class="logo-svg rr-auth-brand"><img class="rr-logo" src="assets/logo-rede-rosa-transparente.png" width="1238" height="1271" alt="Rede Rosa — apoio, proteção e empoderamento"></div>
 
 
     <!-- CAIXA DE LOGIN -->
 
     <div class="login-box">
 
-        <h2>Bem-vinda!</h2>
+        <h2 id="saudacaoLogin">Bem-vinda!</h2>
 
         <p>Faça login para continuar</p>
 
@@ -501,7 +444,7 @@
                 id="email"
                 class="login-input"
                 type="email"
-                placeholder="E-mail (Gmail)"
+                aria-label="E-mail (Gmail)" placeholder="E-mail (Gmail)"
                 autocomplete="email"
                 required
             >
@@ -510,7 +453,7 @@
                 id="senha"
                 class="login-input"
                 type="password"
-                placeholder="Senha"
+                aria-label="Senha" placeholder="Senha"
                 autocomplete="current-password"
                 required
             >
@@ -562,63 +505,39 @@
 </button>
 
 
+<script src="js/usuario.js"></script>
+<script src="js/api.js"></script>
 <script>
 
-function entrar(event) {
-
-    event.preventDefault();
-
-    let email = document.getElementById("email").value;
-    let senha = document.getElementById("senha").value;
-
-    fetch("http://localhost:8080/login", {
-
-        method: "POST",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-            email: email,
-            senha: senha
-        })
-
-    })
-
-    .then(response => response.json())
-
-    .then(usuario => {
-
-        if (usuario) {
-
-            localStorage.setItem(
-                "usuario",
-                JSON.stringify(usuario)
-            );
-
-            alert("Login realizado 🌸");
-
-            window.location.href = "home.html";
-
-        } else {
-
-            alert("Email ou senha incorretos");
-
-        }
-
-    })
-
-    .catch(error => {
-
-        console.log(error);
-
-        alert("Erro ao conectar com servidor");
-
-    });
-
+function personalizarSaudacaoLogin() {
+    const usuario = RedeRosaUsuario.ler();
+    document.getElementById("saudacaoLogin").textContent = usuario?.nome
+        ? `Bem-vinda, ${usuario.nome}!`
+        : "Bem-vinda!";
 }
 
+personalizarSaudacaoLogin();
+window.addEventListener("pageshow", personalizarSaudacaoLogin);
+
+async function entrar(event) {
+    event.preventDefault();
+    const botao = event.target.querySelector('button[type="submit"]');
+    if (botao.disabled) return;
+    botao.disabled = true; botao.textContent = "Entrando…";
+    try {
+        const dados = await RedeRosaAPI.request("/login", {
+            method: "POST", autenticada: false,
+            body: { email: document.getElementById("email").value.trim(), senha: document.getElementById("senha").value }
+        });
+        const usuario = RedeRosaUsuario.normalizar(dados);
+        if (!usuario?.id || !usuario.token) throw new Error("O servidor não confirmou seu acesso. Tente novamente.");
+        localStorage.setItem("usuario", JSON.stringify(usuario));
+        const voltar = new URLSearchParams(location.search).get("voltar");
+        window.location.href = ["checkin.html", "chat.html"].includes(voltar) ? voltar : "home.html";
+    } catch (erro) {
+        alert(erro.message);
+    } finally { botao.disabled = false; botao.textContent = "Entrar"; }
+}
 
 function abrirSOS() {
 

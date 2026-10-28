@@ -2291,7 +2291,7 @@ a:hover {
 
 .editar-area{
 
-    display:none;
+
     margin-top:25px;
     padding:25px;
     border-radius:25px;
@@ -3034,8 +3034,8 @@ grid-template-columns:repeat(2,1fr);
     margin:15px 0;
     }
     
-    .mapa-btn:hover
-    
+    .mapa-btn:hover { filter: brightness(.97); }
+
     /* ===== MAPA ===== */
     
     #mapa{
