@@ -908,52 +908,197 @@
         }
     }
 
-    function enviarSOS() {
-        if (contatos.length === 0) {
-            alert("Cadastre pelo menos um contato antes de acionar o SOS.");
-            return;
+    
+function enviarSOS() {
+    if (contatos.length === 0) {
+        alert("Cadastre pelo menos um contato antes de acionar o SOS.");
+        return;
+    }
+
+    let usuario = {};
+
+    try {
+        usuario = JSON.parse(
+            localStorage.getItem("usuario") || "{}"
+        );
+    } catch (erro) {
+        usuario = {};
+    }
+
+    const nomeUsuario = usuario.nome || "Usuária";
+
+    const confirmar = confirm(
+        `Deseja preparar o alerta de emergência para os ${contatos.length} contatos cadastrados?`
+    );
+
+    if (!confirmar) return;
+
+    // Cria uma lista com todos os contatos válidos.
+    const alertas = contatos.map(contato => {
+        let telefone = String(contato.telefone || "")
+            .replace(/\D/g, "");
+
+        // Adiciona o código do Brasil, se necessário.
+        if (telefone && !telefone.startsWith("55")) {
+            telefone = "55" + telefone;
         }
 
-        const usuario =
-            JSON.parse(localStorage.getItem("usuario") || "{}");
+        const mensagem =
+            `🚨 ALERTA REDE ROSA 🌸\n\n` +
+            `Olá ${contato.nome}.\n\n` +
+            `${nomeUsuario} precisa de ajuda.\n\n` +
+            `Ela acionou o botão de emergência.\n` +
+            `Por favor, entre em contato imediatamente. 💗`;
 
-        const nomeUsuario = usuario.nome || "Usuária";
+        return {
+            nome: contato.nome,
+            telefone: telefone,
+            mensagem: mensagem,
+            link: `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`
+        };
+    }).filter(contato => contato.telefone);
 
-        const confirmar = confirm(
-            "Deseja preparar o alerta de emergência para todos os seus contatos?"
-        );
-
-        if (!confirmar) return;
-
-        contatos.forEach((contato, index) => {
-            let telefone = String(contato.telefone).replace(/\D/g, "");
-
-            if (!telefone.startsWith("55")) {
-                telefone = "55" + telefone;
-            }
-
-            const mensagem =
-                `🚨 ALERTA REDE ROSA 🌸\n\n` +
-                `Olá ${contato.nome}.\n\n` +
-                `${nomeUsuario} precisa de ajuda.\n\n` +
-                `Ela acionou o botão de emergência.\n` +
-                `Por favor, entre em contato imediatamente. 💗`;
-
-            const link =
-                `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
-
-            // Abre as conversas com a mensagem preparada.
-            // O WhatsApp ainda exige o envio da mensagem pela usuária.
-            const janela = window.open(link, "_blank");
-
-            if (!janela) {
-                console.warn(
-                    "O navegador bloqueou a abertura para:",
-                    contato.nome
-                );
-            }
-        });
+    if (alertas.length === 0) {
+        alert("Nenhum contato possui um telefone válido.");
+        return;
     }
+
+    // Cria uma janela com os botões de todos os contatos.
+    let painel = document.getElementById("painelSOS");
+
+    if (!painel) {
+        painel = document.createElement("section");
+        painel.id = "painelSOS";
+
+        Object.assign(painel.style, {
+            position: "fixed",
+            inset: "0",
+            zIndex: "9999",
+            background: "rgba(30, 15, 25, 0.65)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "18px",
+            overflowY: "auto"
+        });
+
+        document.body.appendChild(painel);
+    }
+
+    painel.replaceChildren();
+
+    const caixa = document.createElement("div");
+
+    Object.assign(caixa.style, {
+        background: "#ffffff",
+        color: "#35313a",
+        width: "100%",
+        maxWidth: "460px",
+        maxHeight: "90vh",
+        overflowY: "auto",
+        padding: "25px",
+        borderRadius: "20px",
+        boxShadow: "0 10px 40px rgba(0,0,0,0.2)",
+        fontFamily: "Poppins, sans-serif"
+    });
+
+    const titulo = document.createElement("h2");
+    titulo.textContent = "🚨 Alerta de emergência";
+
+    Object.assign(titulo.style, {
+        color: "#e93670",
+        marginBottom: "10px",
+        fontSize: "22px"
+    });
+
+    const descricao = document.createElement("p");
+    descricao.textContent =
+        "Escolha cada contato abaixo para abrir o WhatsApp com a mensagem preparada.";
+
+    Object.assign(descricao.style, {
+        fontSize: "14px",
+        lineHeight: "1.6",
+        marginBottom: "20px"
+    });
+
+    caixa.append(titulo, descricao);
+
+    alertas.forEach((contato, indice) => {
+        const item = document.createElement("div");
+
+        Object.assign(item.style, {
+            border: "1px solid #ffc2d6",
+            background: "#fff5f8",
+            borderRadius: "12px",
+            padding: "14px",
+            marginBottom: "12px"
+        });
+
+        const nome = document.createElement("strong");
+        nome.textContent = `${indice + 1}. ${contato.nome}`;
+
+        const telefone = document.createElement("p");
+        telefone.textContent = contato.telefone;
+
+        Object.assign(telefone.style, {
+            fontSize: "13px",
+            color: "#77727b",
+            margin: "5px 0 12px"
+        });
+
+        const botao = document.createElement("button");
+        botao.type = "button";
+        botao.textContent = "Abrir WhatsApp e preparar mensagem";
+
+        Object.assign(botao.style, {
+            width: "100%",
+            padding: "12px",
+            border: "none",
+            borderRadius: "10px",
+            background: "#ff4d83",
+            color: "#ffffff",
+            fontWeight: "600",
+            cursor: "pointer",
+            fontFamily: "inherit"
+        });
+
+        botao.addEventListener("click", function() {
+            // A abertura acontece diretamente após o clique da usuária.
+            window.open(
+                contato.link,
+                "_blank",
+                "noopener,noreferrer"
+            );
+        });
+
+        item.append(nome, telefone, botao);
+        caixa.appendChild(item);
+    });
+
+    const fechar = document.createElement("button");
+    fechar.type = "button";
+    fechar.textContent = "Fechar";
+
+    Object.assign(fechar.style, {
+        width: "100%",
+        padding: "12px",
+        marginTop: "8px",
+        border: "1px solid #ffc2d6",
+        borderRadius: "10px",
+        background: "#ffffff",
+        color: "#e93670",
+        fontWeight: "600",
+        cursor: "pointer",
+        fontFamily: "inherit"
+    });
+
+    fechar.addEventListener("click", function() {
+        painel.remove();
+    });
+
+    caixa.appendChild(fechar);
+    painel.appendChild(caixa);
+}
 
     carregarContatos();
 </script>
