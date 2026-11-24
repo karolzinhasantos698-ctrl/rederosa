@@ -7,7 +7,7 @@
     const host = location.hostname || 'localhost';
 
     const urlRender = host.endsWith('.vercel.app')
-        ? 'https://rederosa-back.onrender.com' : '';
+        ? 'https://rederosa-back-3.onrender.com' : '';
 
     const base = configurada || urlRender ||
         (location.protocol === 'https:' || location.port === '8080'
