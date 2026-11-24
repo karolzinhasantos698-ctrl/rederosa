@@ -2,7 +2,8 @@
     'use strict';
     const configurada = window.REDE_ROSA_API_URL || document.querySelector('meta[name="api-url"]')?.content;
     const host = location.hostname || 'localhost';
-    const base = configurada || (location.protocol === 'https:' || location.port === '8080'
+    const urlRender = host.endsWith('.vercel.app') ? 'https://rederosa-back-rdg2.onrender.com' : '';
+    const base = configurada || urlRender || (location.protocol === 'https:' || location.port === '8080'
         ? location.origin : 'http://' + host + ':8080');
     const api = base.replace(/\/+$/, '');
     async function request(caminho, { method = 'GET', body, autenticada = true, keepalive = false } = {}) {
