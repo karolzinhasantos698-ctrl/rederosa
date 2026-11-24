@@ -7,7 +7,7 @@
     const host = location.hostname || 'localhost';
 
     const urlRender = host.endsWith('.vercel.app')
-        ? 'https://rederosa-back-3.onrender.com' : '';
+        ? 'https://rederosa-back.onrender.com' : '';
 
     const base = configurada || urlRender ||
         (location.protocol === 'https:' || location.port === '8080'
@@ -16,6 +16,7 @@
     const api = base.replace(/\/+$/, '');
 
     async function request(caminho, { method = 'GET', body, autenticada = true, keepalive = false } = {}) {
+
         const token = window.RedeRosaUsuario?.ler()?.token;
 
         if (autenticada && !token) {
