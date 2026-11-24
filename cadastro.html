@@ -178,153 +178,66 @@ Apoio • Proteção • Empoderamento 💗
 
 
 
+
+<script src="js/api.js"></script>
+
 <script>
 
+async function cadastrar(event) {
 
+    event.preventDefault();
 
-function cadastrar(event){
+    const nome = document.getElementById("nome").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
+    const confirmar = document.getElementById("confirmar").value;
 
+    const botao = event.target.querySelector('button[type="submit"]');
 
-event.preventDefault();
+    if (senha !== confirmar) {
+        alert("As senhas não são iguais!");
+        return;
+    }
 
+    if (!nome || !email || !senha) {
+        alert("Preencha todos os campos!");
+        return;
+    }
 
+    if (botao.disabled) return;
 
+    botao.disabled = true;
+    botao.textContent = "Cadastrando...";
 
+    try {
 
-let nome =
-document.getElementById("nome").value;
+        await RedeRosaAPI.request("/usuarias/cadastro", {
+            method: "POST",
+            autenticada: false,
+            body: {
+                nome: nome,
+                email: email,
+                senha: senha
+            }
+        });
 
+        alert("Cadastro realizado com sucesso 🌸");
 
+        window.location.href = "index.html";
 
-let email =
-document.getElementById("email").value;
+    } catch (erro) {
 
+        alert(erro.message);
 
+    } finally {
 
-let senha =
-document.getElementById("senha").value;
+        botao.disabled = false;
+        botao.textContent = "Criar conta 🌸";
 
-
-
-let confirmar =
-document.getElementById("confirmar").value;
-
-
-
-
-
-
-if(senha !== confirmar){
-
-alert("As senhas não são iguais");
-
-return;
-
+    }
 }
-
-
-
-
-
-
-
-fetch("http://localhost:8080/usuarias/cadastro", {
-
-
-
-method:"POST",
-
-
-
-headers:{
-
-
-"Content-Type":"application/json"
-
-
-},
-
-
-
-
-body:JSON.stringify({
-
-
-nome:nome,
-
-email:email,
-
-senha:senha
-
-
-})
-
-
-
-})
-
-
-
-.then(response=>{
-
-
-if(!response.ok){
-
-throw new Error("Erro no cadastro");
-
-}
-
-
-return response.json();
-
-
-})
-
-
-
-.then(data=>{
-
-
-alert("Cadastro realizado com sucesso 🌸");
-
-
-
-document.querySelector("form").reset();
-
-
-
-console.log(data);
-
-
-
-})
-
-
-
-.catch(error=>{
-
-
-console.log(error);
-
-
-alert("Não foi possível cadastrar");
-
-
-});
-
-
-
-}
-
-
-
-
 
 </script>
-
-
-
-
 
 </body>
 
